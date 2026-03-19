@@ -5,84 +5,130 @@
     <title>Metameta Children's Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <header>
-        <div class="logo">
-            <img src="images/metameta logo.png" alt="Metameta Logo">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <img src="images/metameta logo.png" alt="Metameta Logo">
+                <span>Metameta Children's Home</span>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
                 <li><a href="support.html">Support</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="testimonials.html">Testimonials</a></li>
                 <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+                </ul>
+                <a href="support.html" class="btn btn-light">Donate</a>
+            </nav>
+        </div>
     </header>
 
-    <!-- Hero Section -->
-   <section class="hero">
-    <div class="hero-content">
-        <h1>Every Child Deserves Love, Safety & Hope</h1>
-        <p>
-            At Metameta Children's Home, we provide shelter, education, and emotional support
-            to vulnerable children in Kenya. Together, we can change lives.
-        </p>
-        <div class="hero-buttons">
-            <a href="support.html" class="btn">Donate Now</a>
-            <a href="about.html" class="btn btn-outline">Learn More</a>
-        </div>
-    </div>
-</section>
+    <main>
+        <section class="hero">
+            <div class="container hero-inner reveal">
+                <h1>Every Child Deserves Love, Safety, and Hope</h1>
+                <p>
+                    At Metameta Children's Home, we provide shelter, education, and emotional support
+                    to vulnerable children in Kenya. Together, we can change lives.
+                </p>
+                <div class="hero-actions">
+                    <a href="support.html" class="btn">Donate Now</a>
+                    <a href="about.html" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </section>
 
+        <section class="about-preview">
+            <div class="container split reveal">
+                <div>
+                    <h2 class="section-title">Who We Are</h2>
+                    <p class="section-subtitle">
+                        Metameta Children's Home is a registered organization dedicated to nurturing and
+                        supporting children in need. We believe every child deserves safety, love, and an
+                        opportunity to thrive.
+                    </p>
+                    <div class="cards">
+                        <div class="card">
+                            <h3>Safe Shelter</h3>
+                            <p>Stable housing, daily meals, and a supportive environment.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Education Support</h3>
+                            <p>School fees, supplies, and mentorship for every child.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Whole-Child Care</h3>
+                            <p>Healthcare, counseling, and life skills for the future.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="images/smile.jpeg" alt="Children smiling at Metameta">
+                </div>
+            </div>
+        </section>
 
-    <!-- About Preview -->
-    <section class="about-preview">
-        <h2>Who We Are</h2>
-        <p>
-            Metameta Children's Home is a registered organization dedicated to nurturing and supporting children in need.
-            We believe every child deserves safety, love, and an opportunity to thrive.
-        </p>
-    </section>
+        <section class="needs">
+            <div class="container reveal">
+                <h2 class="section-title">Our Current Needs</h2>
+                <p class="section-subtitle">Direct contributions help us meet these urgent priorities.</p>
+                <div class="cards">
+                    <div class="card">
+                        <h3>Food Supplies</h3>
+                        <p>Rice, beans, vegetables, and nutrition for daily meals.</p>
+                    </div>
+                    <div class="card">
+                        <h3>School Fees & Supplies</h3>
+                        <p>Tuition, books, uniforms, and exam support.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Clothing</h3>
+                        <p>Warm clothes, shoes, and essentials for growing children.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Medical Support</h3>
+                        <p>Routine checkups, emergency care, and medication.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Needs Section -->
-    <section class="needs">
-        <h2>Our Current Needs</h2>
-        <ul>
-            <li>🍚 Food Supplies</li>
-            <li>📚 School Fees & Supplies</li>
-            <li>👕 Clothing</li>
-            <li>🏥 Medical Support</li>
-        </ul>
-    </section>
-
-    <!-- Impact Section -->
-<section class="impact">
-    <h2>Our Impact</h2>
-    <div class="impact-container">
-        <div class="impact-box">
-            <h3>50+</h3>
-            <p>Children Supported</p>
-        </div>
-        <div class="impact-box">
-            <h3>10+</h3>
-            <p>Years of Service</p>
-        </div>
-        <div class="impact-box">
-            <h3>100+</h3>
-            <p>Lives Changed</p>
-        </div>
-    </div>
-</section>
-
+        <section class="impact">
+            <div class="container reveal">
+                <h2 class="section-title">Our Impact</h2>
+                <p class="section-subtitle">Every gift supports a child today and builds a better tomorrow.</p>
+                <div class="impact-container">
+                    <div class="impact-box">
+                        <div class="impact-number" data-count="50" data-suffix="+">50+</div>
+                        <div class="impact-label">Children Supported</div>
+                    </div>
+                    <div class="impact-box">
+                        <div class="impact-number" data-count="10" data-suffix="+">10+</div>
+                        <div class="impact-label">Years of Service</div>
+                    </div>
+                    <div class="impact-box">
+                        <div class="impact-number" data-count="100" data-suffix="+">100+</div>
+                        <div class="impact-label">Lives Changed</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer>
-        <p>© 2026 Metameta Children's Home | All Rights Reserved</p>
+        <div class="container">
+            <p>(c) 2026 Metameta Children's Home | All Rights Reserved</p>
+        </div>
     </footer>
 
 </body>
 </html>
+
+
