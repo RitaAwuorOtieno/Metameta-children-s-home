@@ -25,6 +25,9 @@
                 <li><a href="testimonials.html">Testimonials</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
+            <button class="theme-toggle" aria-label="Toggle dark mode">
+                <span class="theme-icon">☀️</span>
+            </button>
             <a href="support.html" class="btn btn-light">Donate</a>
         </nav>
     </div>
@@ -35,10 +38,13 @@
         <div class="container reveal">
             <h1>Alumni Testimonials</h1>
             <p>Real stories from those who grew with Metameta and are now thriving in the community.</p>
+            <a href="#alumni-submission" class="btn btn-cta" onclick="openAlumniModal(); return false;">
+                <span class="btn-icon">✨</span> Share Your Story
+            </a>
         </div>
     </section>
 
-    <section class="testimonials-showcase">
+    <!-- <section class="testimonials-showcase">
         <div class="container">
             <div class="section-header reveal">
                 <h2 class="section-title">Voices of Our Alumni</h2>
@@ -86,6 +92,19 @@
                         <span class="testimonial-year">2026</span>
                     </div>
                 </article>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Dynamic Alumni Submissions Section -->
+    <section class="alumni-submissions-section" id="alumniSubmissionsSection" style="display: none;">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">🌟 New Alumni Stories</h2>
+                <p class="section-subtitle">Recent stories from our alumni community</p>
+            </div>
+            <div class="testimonial-grid" id="alumniSubmissionsGrid">
+                <!-- Dynamic alumni cards will be inserted here -->
             </div>
         </div>
     </section>
@@ -137,7 +156,7 @@
                         Alumni and supporters can submit a testimonial below. We will contact you before publishing it.
                     </p>
                 </div>
-                <form class="story-form">
+                <form class="story-form" id="alumni-submission">
                     <input type="text" name="full-name" placeholder="Full name" required>
                     <input type="text" name="graduation-year" placeholder="Year or class" required>
                     <input type="text" name="current-role" placeholder="Current role / work / studies">
@@ -149,6 +168,55 @@
         </div>
     </section>
 </main>
+
+<!-- Alumni Submission Modal -->
+<div class="modal-overlay" id="alumniModal">
+    <div class="modal-container">
+        <button class="modal-close" onclick="closeAlumniModal();">&times;</button>
+        <div class="modal-header">
+            <h2>🌟 Share Your Journey</h2>
+            <p>Tell us about your Metameta story and where life has taken you!</p>
+        </div>
+        <form class="alumni-form" id="alumniForm">
+            <div class="photo-upload-section">
+                <label class="photo-upload-label">
+                    <div class="photo-upload-preview" id="photoPreview">
+                        <span class="upload-icon">📸</span>
+                        <span class="upload-text">Click to add your photo</span>
+                    </div>
+                    <input type="file" name="photo" accept="image/*" id="photoInput" onchange="previewPhoto(event)">
+                </label>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="alumniName">Your Name *</label>
+                    <input type="text" id="alumniName" name="alumniName" placeholder="e.g., Jane Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="alumniYear">Year at Metameta *</label>
+                    <input type="text" id="alumniYear" name="alumniYear" placeholder="e.g., 2020 or Class of 2020" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="currentStatus">What are you doing now?</label>
+                <input type="text" id="currentStatus" name="currentStatus" placeholder="e.g., Working as a teacher, University student, Running a business">
+            </div>
+            <div class="form-group">
+                <label for="yourStory">Your Story *</label>
+                <textarea id="yourStory" name="yourStory" rows="4" placeholder="Share your Metameta journey - your memories, growth, and experiences..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="lifeUpdate">How You're Doing Now</label>
+                <textarea id="lifeUpdate" name="lifeUpdate" rows="3" placeholder="Tell us about your life now - your achievements, challenges, hopes, and dreams..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="wordsOfEncouragement">Words of Encouragement</label>
+                <textarea id="wordsOfEncouragement" name="wordsOfEncouragement" rows="2" placeholder="Share a message of hope for current Metameta children..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-submit">Submit Your Story</button>
+        </form>
+    </div>
+</div>
 
 <footer>
     <div class="container">
