@@ -37,6 +37,9 @@
     rgba(10, 61, 98, 0.95)
   );
 }
+*span{
+  color: black;
+}
 
 * {
   margin: 0;
@@ -50,6 +53,24 @@ body {
   line-height: 1.7;
   background-color: var(--brand-light);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.hero {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: 
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url("images/hero.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: white;
 }
 
 /* Theme Toggle Button */
@@ -240,7 +261,7 @@ body {
 .nav a {
   text-decoration: none;
   font-weight: 600;
-  color: white;
+  color: blue;
   padding: 0.5rem 1rem;
   border-radius: 9999px;
   transition: all 0.3s ease;
