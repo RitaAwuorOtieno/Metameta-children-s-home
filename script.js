@@ -1,9 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
 
   /* ===============================
      ACTIVE NAV LINK
   =============================== */
   const currentPath = window.location.pathname.split("/").pop() || "index.html";
+
   document.querySelectorAll(".nav a").forEach(link => {
     if (link.getAttribute("href") === currentPath) {
       link.classList.add("active");
@@ -14,37 +15,18 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===============================
      HAMBURGER MENU
   =============================== */
-  const hamburger = document.querySelector('.hamburger');
-  const nav = document.querySelector('.nav');
+  const hamburger = document.querySelector(".hamburger");
+  const nav = document.querySelector(".nav");
 
   if (hamburger && nav) {
-    hamburger.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('active');
-      hamburger.setAttribute('aria-expanded', isOpen);
+    hamburger.addEventListener("click", () => {
+      nav.classList.toggle("active");
     });
 
-    // Close on link click
     document.querySelectorAll(".nav a").forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
+      link.addEventListener("click", () => {
+        nav.classList.remove("active");
       });
-    });
-
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-        nav.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // Close on ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        nav.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-      }
     });
   }
 
@@ -54,18 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
   =============================== */
   const revealItems = document.querySelectorAll(".reveal");
 
-  if (revealItems.length) {
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  }, { threshold: 0.2 });
 
-    revealItems.forEach(el => observer.observe(el));
-  }
+  revealItems.forEach(el => revealObserver.observe(el));
 
 
   /* ===============================
@@ -73,101 +52,84 @@ document.addEventListener('DOMContentLoaded', () => {
   =============================== */
   const counters = document.querySelectorAll("[data-count]");
 
-  if (counters.length) {
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
 
-        const el = entry.target;
-        const target = +el.dataset.count;
-        const suffix = el.dataset.suffix || "";
-        let current = 0;
-        const step = Math.ceil(target / 60);
+      const el = entry.target;
+      const target = +el.dataset.count;
+      let count = 0;
 
-        const update = () => {
-          current += step;
-          if (current >= target) {
-            el.textContent = target.toLocaleString() + suffix;
-          } else {
-            el.textContent = current.toLocaleString() + suffix;
-            requestAnimationFrame(update);
-          }
-        };
+      const update = () => {
+        count += Math.ceil(target / 50);
+        if (count >= target) {
+          el.textContent = target + "+";
+        } else {
+          el.textContent = count + "+";
+          requestAnimationFrame(update);
+        }
+      };
 
-        update();
-        obs.unobserve(el);
-      });
-    }, { threshold: 0.6 });
+      update();
+      counterObserver.unobserve(el);
+    });
+  });
 
-    counters.forEach(el => observer.observe(el));
-  }
+  counters.forEach(el => counterObserver.observe(el));
 
 
   /* ===============================
      HEADER SCROLL EFFECT
   =============================== */
-  const header = document.querySelector('.header');
+  const header = document.querySelector(".header");
   let lastScroll = 0;
 
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     const current = window.scrollY;
 
     if (!header) return;
 
-    header.classList.toggle('scrolled', current > 50);
+    header.classList.toggle("scrolled", current > 50);
 
-    // Hide on scroll down
     if (current > lastScroll && current > 150) {
-      header.style.transform = 'translateY(-100%)';
+      header.style.transform = "translateY(-100%)";
     } else {
-      header.style.transform = 'translateY(0)';
+      header.style.transform = "translateY(0)";
     }
 
     lastScroll = current;
   });
 
-  const menuBtn = document.querySelector(".menu-toggle");
 
-if (menuBtn) {
-  menuBtn.addEventListener("click", () => {
-    nav.classList.toggle("active");
-  });
-}
+  /* ===============================
+     PROGRESS BAR
+  =============================== */
+  const progressBar = document.getElementById("progress-bar");
 
-window.addEventListener("scroll", () => {
+  window.addEventListener("scroll", () => {
     const scrollTop = document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const percent = (scrollTop / height) * 100;
 
-    const scrolled = (scrollTop / scrollHeight) * 100;
-
-    document.getElementById("progress-bar").style.width = scrolled + "%";
-});
-
-function simulatePayment() {
-  const status = document.getElementById("payment-status");
-  status.textContent = "Processing payment...";
-
-  setTimeout(() => {
-    status.textContent = "✅ Payment request sent to your phone!";
-  }, 2000);
-}
+    if (progressBar) progressBar.style.width = percent + "%";
+  });
 
 
   /* ===============================
-     HERO SLIDER
+     HERO SLIDER (CLEAN VERSION)
   =============================== */
-  const slides = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.dot');
-  const prevBtn = document.querySelector('.slider-prev');
-  const nextBtn = document.querySelector('.slider-next');
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  const nextBtn = document.querySelector(".next");
+  const prevBtn = document.querySelector(".prev");
 
   let currentSlide = 0;
-  let interval;
+  let sliderInterval;
 
   function showSlide(index) {
     slides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === index);
-      if (dots[i]) dots[i].classList.toggle('active', i === index);
+      slide.classList.toggle("active", i === index);
+      if (dots[i]) dots[i].classList.toggle("active", i === index);
     });
     currentSlide = index;
   }
@@ -181,31 +143,31 @@ function simulatePayment() {
   }
 
   function startSlider() {
-    interval = setInterval(nextSlide, 5000);
+    sliderInterval = setInterval(nextSlide, 5000); // 5 seconds (GOOD speed)
   }
 
   function stopSlider() {
-    clearInterval(interval);
+    clearInterval(sliderInterval);
   }
 
   if (slides.length > 0) {
     showSlide(0);
     startSlider();
 
-    nextBtn?.addEventListener('click', nextSlide);
-    prevBtn?.addEventListener('click', prevSlide);
+    nextBtn?.addEventListener("click", nextSlide);
+    prevBtn?.addEventListener("click", prevSlide);
 
     dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => showSlide(i));
+      dot.addEventListener("click", () => showSlide(i));
     });
 
-    const slider = document.querySelector('.hero-slider');
-    slider?.addEventListener('mouseenter', stopSlider);
-    slider?.addEventListener('mouseleave', startSlider);
+    const slider = document.querySelector(".hero-slider");
+    slider?.addEventListener("mouseenter", stopSlider);
+    slider?.addEventListener("mouseleave", startSlider);
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') nextSlide();
-      if (e.key === 'ArrowLeft') prevSlide();
+    document.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight") nextSlide();
+      if (e.key === "ArrowLeft") prevSlide();
     });
   }
 
@@ -213,130 +175,74 @@ function simulatePayment() {
   /* ===============================
      THEME TOGGLE
   =============================== */
-  const toggle = document.querySelector('.theme-toggle');
-  const icon = document.querySelector('.theme-icon');
+  const toggle = document.querySelector(".theme-toggle");
+  const icon = document.querySelector(".theme-icon");
 
-  const savedTheme = localStorage.getItem('theme');
-
-  if (savedTheme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    if (icon) icon.textContent = '🌙';
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+    if (icon) icon.textContent = "🌙";
   }
 
-  toggle?.addEventListener('click', () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  toggle?.addEventListener("click", () => {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
 
     if (isDark) {
-      document.documentElement.removeAttribute('data-theme');
-      if (icon) icon.textContent = '☀️';
-      localStorage.setItem('theme', 'light');
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("theme", "light");
+      if (icon) icon.textContent = "☀️";
     } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      if (icon) icon.textContent = '🌙';
-      localStorage.setItem('theme', 'dark');
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+      if (icon) icon.textContent = "🌙";
     }
   });
 
 
   /* ===============================
-     SMOOTH SCROLL
+     CHATBOT
   =============================== */
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (!target) return;
+  const chatInput = document.getElementById("chat-input");
+  const chatBody = document.getElementById("chat-body");
 
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
+  chatInput?.addEventListener("keypress", e => {
+    if (e.key === "Enter") {
+      const msg = chatInput.value.trim();
+      if (!msg) return;
 
-});
+      chatBody.innerHTML += `<p><strong>You:</strong> ${msg}</p>`;
 
-const chatInput = document.getElementById("chat-input");
-const chatBody = document.getElementById("chat-body");
+      let reply = "We will get back to you soon 😊";
 
-chatInput.addEventListener("keypress", function(e) {
-  if (e.key === "Enter") {
-    const msg = chatInput.value;
-    chatBody.innerHTML += `<p><strong>You:</strong> ${msg}</p>`;
+      if (msg.toLowerCase().includes("donate")) {
+        reply = "You can donate via the Support page 💙";
+      }
 
-    let reply = "We will get back to you soon 😊";
-
-    if (msg.toLowerCase().includes("donate")) {
-      reply = "You can donate via the Support page 💙";
+      chatBody.innerHTML += `<p><strong>Bot:</strong> ${reply}</p>`;
+      chatInput.value = "";
     }
-
-    chatBody.innerHTML += `<p><strong>Bot:</strong> ${reply}</p>`;
-    chatInput.value = "";
-  }
-});
-
-function saveMessage(e) {
-  e.preventDefault();
-
-  const name = e.target[0].value;
-  const email = e.target[1].value;
-  const message = e.target[2].value;
-
-  const data = { name, email, message };
-
-  let messages = JSON.parse(localStorage.getItem("messages")) || [];
-  messages.push(data);
-
-  localStorage.setItem("messages", JSON.stringify(messages));
-
-  alert("Message saved!");
-}
-
-const slides = document.querySelectorAll(".slide");
-const dots = document.querySelectorAll(".dot");
-const nextBtn = document.querySelector(".next");
-const prevBtn = document.querySelector(".prev");
-
-let current = 0;
-let interval;
-
-/* SHOW SLIDE */
-function showSlide(index) {
-  slides.forEach((slide, i) => {
-    slide.classList.toggle("active", i === index);
-    dots[i].classList.toggle("active", i === index);
   });
-  current = index;
-}
 
-/* NEXT / PREV */
-function nextSlide() {
-  showSlide((current + 1) % slides.length);
-}
 
-function prevSlide() {
-  showSlide((current - 1 + slides.length) % slides.length);
-}
+  /* ===============================
+     FORM SAVE (LOCAL)
+  =============================== */
+  window.saveMessage = function(e) {
+    e.preventDefault();
 
-/* AUTO SLIDE */
-function startSlider() {
-  interval = setInterval(nextSlide, 1000);
-}
+    const form = e.target;
+    const data = {
+      name: form[0].value,
+      email: form[1].value,
+      message: form[2].value
+    };
 
-function stopSlider() {
-  clearInterval(interval);
-}
+    const messages = JSON.parse(localStorage.getItem("messages")) || [];
+    messages.push(data);
 
-/* EVENTS */
-nextBtn?.addEventListener("click", nextSlide);
-prevBtn?.addEventListener("click", prevSlide);
+    localStorage.setItem("messages", JSON.stringify(messages));
 
-dots.forEach((dot, i) => {
-  dot.addEventListener("click", () => showSlide(i));
+    alert("Message saved!");
+    form.reset();
+  };
+
 });
-
-/* PAUSE ON HOVER */
-const slider = document.querySelector(".hero-slider");
-slider?.addEventListener("mouseenter", stopSlider);
-slider?.addEventListener("mouseleave", startSlider);
-
-/* INIT */
-showSlide(0);
-startSlider();

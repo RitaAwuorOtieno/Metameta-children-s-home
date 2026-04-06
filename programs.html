@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Metameta Children's Home | Hope for Every Child</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Metameta Children's Home | Hope for Every Child</title>
 
     <!-- SEO -->
     <meta name="description" content="Metameta Children's Home provides shelter, education, and hope to vulnerable children in Kenya. Support us to change lives.">
+    <meta name="keywords" content="children home Kenya, orphanage Nairobi, charity Kenya, Metameta Children's Home">
+    <meta name="author" content="Metameta Children's Home">
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
@@ -17,15 +20,17 @@
 
 <body>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 <header class="header">
     <div class="container header-container">
-        
+
+        <!-- LOGO -->
         <div class="logo">
-            <img src="images/metameta logo.png" alt="Metameta Children's Home Logo">
+            <img src="images/metameta-logo.png" alt="Metameta Children's Home Logo">
             <span>Metameta Children's Home</span>
         </div>
 
+        <!-- NAV -->
         <nav class="nav" id="nav-menu">
             <ul class="nav-links">
                 <li><a href="index.html" class="active">Home</a></li>
@@ -36,184 +41,160 @@
                 <li><a href="testimonials.html">Testimonials</a></li>
                 <li><a href="contact.html">Contact</a></li>
 
-                <div class="nav-actions">
-    <button class="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-icon">☀️</span>
-    </button>
-</div>
+                <li class="nav-actions">
+                    <button class="theme-toggle" aria-label="Toggle theme">
+                        <span class="theme-icon">☀️</span>
+                    </button>
+                </li>
             </ul>
-             <br>
+        </nav>
 
+        <!-- HAMBURGER (IMPORTANT FOR MOBILE) -->
+        <div class="hamburger" aria-label="Menu" aria-expanded="false">
+            ☰
+        </div>
 
-
-</nav>
-       
-
-
-        <!-- <div class="nav-actions">
-                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
-               
-            </div> -->
-              
     </div>
 </header>
 
+<!-- ================= HERO SLIDER ================= -->
 <section class="hero-slider">
 
-  <div class="slide active">
-    <img src="images/home.jpeg" alt="Children smiling">
-    <div class="slide-content">
-      <h1>Every Child Deserves Love</h1>
-      <p>Providing care, hope, and a future.</p>
+    <div class="slide active">
+        <img src="images/home.jpeg" alt="Children smiling">
+        <div class="slide-content">
+            <h1>Every Child Deserves Love</h1>
+            <p>Providing care, hope, and a future.</p>
+        </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <img src="images/school.jpeg" alt="Kids learning">
-    <div class="slide-content">
-      <h1>Education Changes Lives</h1>
-      <p>Empowering children through learning.</p>
+    <div class="slide">
+        <img src="images/school.jpeg" alt="Kids learning">
+        <div class="slide-content">
+            <h1>Education Changes Lives</h1>
+            <p>Empowering children through learning.</p>
+        </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <img src="images/smile.jpeg" alt="Happy children">
-    <div class="slide-content">
-      <h1>Building a Better Future</h1>
-      <p>Together we can make a difference.</p>
+    <div class="slide">
+        <img src="images/smile.jpeg" alt="Happy children">
+        <div class="slide-content">
+            <h1>Building a Better Future</h1>
+            <p>Together we can make a difference.</p>
+        </div>
     </div>
-  </div>
 
-  <!-- NAV BUTTONS -->
-  <button class="slider-btn prev">&#10094;</button>
-  <button class="slider-btn next">&#10095;</button>
+    <!-- SLIDER CONTROLS -->
+    <button class="slider-btn prev">&#10094;</button>
+    <button class="slider-btn next">&#10095;</button>
 
 </section>
 
-    <section class="programs-intro">
-        <div class="container reveal">
-            <h2 class="section-title">Programs at Metameta</h2>
-            <p class="section-subtitle">
-                Each program is designed to meet a real need - from early childhood care to digital skills.
-                Together, they build confidence, healthy routines, and opportunity.
-            </p>
-        </div>
-    </section>
+<!-- ================= PROGRAMS INTRO ================= -->
+<section class="programs-intro">
+    <div class="container reveal">
+        <h2 class="section-title">Programs at Metameta</h2>
+        <p class="section-subtitle">
+            Each program meets a real need — from care to education and digital skills.
+        </p>
+    </div>
+</section>
 
-    <section class="programs-showcase">
-        <div class="container">
-            <article class="program-spotlight reveal">
-                <div class="program-visual">
-                    <div class="program-image-grid">
-                        <a href="images/daycare1.jpeg" class="program-image-link" target="_blank" rel="noopener">
-                            <img src="images/daycare1.jpeg" alt="Daycare children learning together">
-                        </a>
-                        <a href="images/daycare2.jpeg" class="program-image-link" target="_blank" rel="noopener">
-                            <img src="images/daycare2.jpeg" alt="Daycare children playing and smiling">
-                        </a>
-                    </div>
-                    <div class="program-badge">01</div>
-                </div>
-                <div class="program-content">
-                    <h3>Daycare Program</h3>
-                    <p>A warm, structured space for young children to grow and learn during the day.</p>
-                    <ul>
-                        <li>Safe supervision and play-based learning</li>
-                        <li>Early childhood routines and social skills</li>
-                        <li>Healthy snacks and nap time support</li>
-                    </ul>
-                </div>
-            </article>
+<!-- ================= PROGRAMS ================= -->
+<section class="programs-showcase">
 
-            <article class="program-spotlight reverse reveal">
-                <div class="program-visual">
-                    <div class="program-icon">🥗</div>
-                    <div class="program-card-bg">
-                        <h4>Daily nourishment</h4>
-                        <p>Meals that fuel growth, focus, and energy.</p>
-                    </div>
-                    <div class="program-badge">02</div>
-                </div>
-                <div class="program-content">
-                    <h3>Feeding Program</h3>
-                    <p>Daily meals that keep children strong, energized, and ready to learn.</p>
-                    <ul>
-                        <li>Nutritious breakfasts and hot lunches</li>
-                        <li>Seasonal fruits and vegetables</li>
-                        <li>Food security support for vulnerable families</li>
-                    </ul>
-                </div>
-            </article>
+    <div class="container">
 
-            <article class="program-spotlight reveal">
-                <div class="program-visual">
-                    <div class="program-icon">📚</div>
-                    <div class="program-card-bg">
-                        <h4>Stories and study time</h4>
-                        <p>Books, mentoring, and calm spaces to read.</p>
-                    </div>
-                    <div class="program-badge">03</div>
+        <article class="program-spotlight reveal">
+            <div class="program-visual">
+                <div class="program-image-grid">
+                    <img src="images/daycare1.jpeg" alt="Daycare learning">
+                    <img src="images/daycare2.jpeg" alt="Children playing">
                 </div>
-                <div class="program-content">
-                    <h3>Library & Reading Program</h3>
-                    <p>Books, story time, and literacy support for every reading level.</p>
-                    <ul>
-                        <li>Access to storybooks and textbooks</li>
-                        <li>Reading circles and homework help</li>
-                        <li>Quiet study space for focused learning</li>
-                    </ul>
-                </div>
-            </article>
+                <div class="program-badge">01</div>
+            </div>
+            <div class="program-content">
+                <h3>Daycare Program</h3>
+                <p>Safe and nurturing early childhood development.</p>
+            </div>
+        </article>
 
-            <article class="program-spotlight reverse reveal">
-                <div class="program-visual">
-                    <div class="program-icon">💻</div>
-                    <div class="program-card-bg">
-                        <h4>Digital skills</h4>
-                        <p>Confidence with tools needed for modern learning.</p>
-                    </div>
-                    <div class="program-badge">04</div>
+        <article class="program-spotlight reverse reveal">
+            <div class="program-visual">
+                <div class="program-icon">🥗</div>
+                <div class="program-card-bg">
+                    <h4>Daily nourishment</h4>
+                    <p>Healthy meals for strong growth.</p>
                 </div>
-                <div class="program-content">
-                    <h3>Computer Program</h3>
-                    <p>Digital literacy and practical skills for school, work, and daily life.</p>
-                    <ul>
-                        <li>Typing, internet research, and basic software</li>
-                        <li>Guided projects and educational tools</li>
-                        <li>Mentorship for future career paths</li>
-                    </ul>
+                <div class="program-badge">02</div>
+            </div>
+            <div class="program-content">
+                <h3>Feeding Program</h3>
+                <p>Daily nutritious meals for all children.</p>
+            </div>
+        </article>
+
+        <article class="program-spotlight reveal">
+            <div class="program-visual">
+                <div class="program-icon">📚</div>
+                <div class="program-card-bg">
+                    <h4>Learning space</h4>
+                    <p>Books and study support.</p>
                 </div>
-            </article>
-        </div>
-    </section>
+                <div class="program-badge">03</div>
+            </div>
+            <div class="program-content">
+                <h3>Library Program</h3>
+                <p>Improving literacy and learning habits.</p>
+            </div>
+        </article>
 
-    <section class="container split reveal">
-        <div>
-            <h2 class="section-title">Why These Programs Matter</h2>
-            <p class="section-subtitle">
-                We focus on the essentials: safety, nutrition, literacy, and technology. These programs
-                support children today while preparing them for independent futures.
-            </p>
-            <a href="support.html" class="btn">Support A Program</a>
-        </div>
-        <div class="image-card">
-            <img src="images/daycare2.jpeg" alt="Children learning and playing together">
-        </div>
-    </section>
-</main>
+        <article class="program-spotlight reverse reveal">
+            <div class="program-visual">
+                <div class="program-icon">💻</div>
+                <div class="program-card-bg">
+                    <h4>Digital skills</h4>
+                    <p>Preparing for the future.</p>
+                </div>
+                <div class="program-badge">04</div>
+            </div>
+            <div class="program-content">
+                <h3>Computer Program</h3>
+                <p>Basic ICT and digital literacy training.</p>
+            </div>
+        </article>
 
+    </div>
+</section>
+
+<!-- ================= CALL TO ACTION ================= -->
+<section class="container split reveal">
+    <div>
+        <h2 class="section-title">Why These Programs Matter</h2>
+        <p class="section-subtitle">
+            We focus on safety, education, and skills for independent futures.
+        </p>
+        <a href="support.html" class="btn">Support A Program</a>
+    </div>
+
+    <div class="image-card">
+        <img src="images/daycare2.jpeg" alt="Children learning together">
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
 <footer>
     <div class="container">
-        <p>(c) 2026 Metameta Children's Home | All Rights Reserved</p>
+        <p>&copy; 2026 Metameta Children's Home | All Rights Reserved</p>
     </div>
 </footer>
 
+<!-- ================= CHATBOT ================= -->
 <div id="chatbot">
-  <div id="chat-header">Chat with us 💬</div>
-  <div id="chat-body"></div>
-  <input type="text" id="chat-input" placeholder="Type a message...">
+    <div id="chat-header">Chat with us 💬</div>
+    <div id="chat-body"></div>
+    <input type="text" id="chat-input" placeholder="Type a message...">
 </div>
 
 </body>
 </html>
-

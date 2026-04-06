@@ -20,123 +20,99 @@
 <!-- HEADER -->
 <header class="header">
     <div class="container header-container">
-        
+
         <div class="logo">
-            <img src="images/metameta logo.png" alt="Metameta Children's Home Logo">
+            <img src="images/metameta-logo.png" alt="Metameta Children's Home Logo">
             <span>Metameta Children's Home</span>
         </div>
 
         <nav class="nav" id="nav-menu">
             <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="programs.html">Programs</a></li>
-                <li><a href="support.html">Support Us</a></li>
+                <li><a href="support.html" class="active">Support Us</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="testimonials.html">Testimonials</a></li>
                 <li><a href="contact.html">Contact</a></li>
-
-                <div class="nav-actions">
-    <button class="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-icon">☀️</span>
-    </button>
-</div>
             </ul>
-             <br>
 
+            <div class="nav-actions">
+                <button class="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon">☀️</span>
+                </button>
+            </div>
+        </nav>
 
-
-</nav>
-       
-
-
-        <!-- <div class="nav-actions">
-                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
-               
-            </div> -->
-              
     </div>
 </header>
 
-<section class="hero-slider">
-
-  <div class="slide active">
-    <img src="images/home.jpeg" alt="Children smiling">
-    <div class="slide-content">
-      <h1>Every Child Deserves Love</h1>
-      <p>Providing care, hope, and a future.</p>
+<!-- HERO (OPTIONAL BUT IMPROVED LOOK) -->
+<section class="hero-small">
+    <div class="hero-overlay">
+        <h1>Support & Donations</h1>
+        <p>Every contribution helps us give children a better future</p>
     </div>
-  </div>
-
-  <div class="slide">
-    <img src="images/school.jpeg" alt="Kids learning">
-    <div class="slide-content">
-      <h1>Education Changes Lives</h1>
-      <p>Empowering children through learning.</p>
-    </div>
-  </div>
-
-  <div class="slide">
-    <img src="images/smile.jpeg" alt="Happy children">
-    <div class="slide-content">
-      <h1>Building a Better Future</h1>
-      <p>Together we can make a difference.</p>
-    </div>
-  </div>
-
-  <!-- NAV BUTTONS -->
-  <button class="slider-btn prev">&#10094;</button>
-  <button class="slider-btn next">&#10095;</button>
-
 </section>
 
-    <section class="donation-section container reveal">
-        <div class="donation-box">
-            <h2>Bank Transfer</h2>
-            <p><strong>Account Name:</strong> Metameta Development Centre</p>
-            <p><strong>Account Number:</strong> 01134154075900</p>
-            <p>Please contact us for bank name and branch details.</p>
+<!-- DONATION SECTION -->
+<section class="section reveal">
+    <div class="container">
+
+        <h2 class="section-title">Ways to Support Us</h2>
+
+        <div class="grid-3">
+
+            <!-- BANK -->
+            <div class="card">
+                <h3>Bank Transfer</h3>
+                <p><strong>Account Name:</strong> Metameta Development Centre</p>
+                <p><strong>Account Number:</strong> 01134154075900</p>
+                <p>Please contact us for bank details (branch & bank name).</p>
+            </div>
+
+            <!-- MPESA -->
+            <div class="card">
+                <h3>Donate via M-Pesa</h3>
+                <p><strong>Paybill:</strong> 123456</p>
+                <p><strong>Account:</strong> Your Name</p>
+
+                <input type="number" placeholder="Enter Amount (KES)" id="amount">
+
+                <button class="btn primary" onclick="simulatePayment()">
+                    Proceed Donation
+                </button>
+
+                <p id="payment-status"></p>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="card">
+                <h3>Direct Contact</h3>
+                <p><strong>Phone:</strong> 0791 533 154</p>
+                <p>Call or WhatsApp for quick support or partnerships.</p>
+
+                <a href="contact.html" class="btn">Contact Us</a>
+            </div>
+
         </div>
 
-       <section class="section">
-  <div class="container">
-    <h2>Donate via M-Pesa</h2>
-
-    <div class="mpesa-box">
-      <p><strong>Paybill:</strong> 123456</p>
-      <p><strong>Account:</strong> Your Name</p>
-
-      <input type="number" placeholder="Enter Amount (KES)" id="amount">
-
-      <button class="btn primary" onclick="simulatePayment()">Proceed</button>
-
-      <p id="payment-status"></p>
     </div>
-  </div>
 </section>
 
-        <div class="donation-box">
-            <h2>Direct Contact</h2>
-            <p><strong>Director's Phone:</strong> 0791 533 154</p>
-            <p>Call or WhatsApp for immediate support options.</p>
-            <a href="contact.html" class="btn">Contact Us</a>
-        </div>
-    </section>
-</main>
-
+<!-- FOOTER -->
 <footer>
     <div class="container">
-        <p>(c) 2026 Metameta Children's Home | All Rights Reserved</p>
+        <p>&copy; 2026 Metameta Children's Home | All Rights Reserved</p>
     </div>
 </footer>
 
+<!-- CHATBOT -->
 <div id="chatbot">
-  <div id="chat-header">Chat with us 💬</div>
-  <div id="chat-body"></div>
-  <input type="text" id="chat-input" placeholder="Type a message...">
+    <div id="chat-header">Chat with us 💬</div>
+    <div id="chat-body"></div>
+    <input type="text" id="chat-input" placeholder="Type a message...">
 </div>
 
 </body>
 </html>
-
-
