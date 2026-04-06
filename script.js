@@ -1,3 +1,22 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDjZjgSoVNXjIKVui9ZG1K6nrqi6HEFK8g",
+  authDomain: "metameta-82db5.firebaseapp.com",
+  databaseURL: "https://metameta-82db5-default-rtdb.firebaseio.com",
+  projectId: "metameta-82db5",
+  storageBucket: "metameta-82db5.firebasestorage.app",
+  messagingSenderId: "153087607234",
+  appId: "1:153087607234:web:b0883c1c192fe06447965b"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ===============================
@@ -143,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function startSlider() {
-    sliderInterval = setInterval(nextSlide, 5000); // 5 seconds (GOOD speed)
+    sliderInterval = setInterval(nextSlide, 3000); // 5 seconds (GOOD speed)
   }
 
   function stopSlider() {
@@ -246,3 +265,17 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
 });
+
+function openImage(img) {
+    const modal = document.createElement("div");
+    modal.classList.add("image-modal");
+
+    modal.innerHTML = `
+        <div class="image-modal-content">
+            <span class="close" onclick="this.parentElement.parentElement.remove()">&times;</span>
+            <img src="${img.src}" alt="Expanded Image">
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}
