@@ -2,91 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gallery - Metameta Children's Home</title>
+    <title>Metameta Children's Home | Hope for Every Child</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <meta name="description" content="Metameta Children's Home provides shelter, education, and hope to vulnerable children in Kenya. Support us to change lives.">
+
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Script -->
     <script src="script.js" defer></script>
 </head>
+
 <body>
 
-<header class="site-header">
-    <div class="container">
+<!-- HEADER -->
+<header class="header">
+    <div class="container header-container">
+        
         <div class="logo">
-            <img src="images/metameta logo.png" alt="Metameta Logo">
+            <img src="images/metameta logo.png" alt="Metameta Children's Home Logo">
             <span>Metameta Children's Home</span>
         </div>
-        <nav class="nav">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
+
+        <nav class="nav" id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
                 <li><a href="programs.html">Programs</a></li>
-                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Support Us</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="testimonials.html">Testimonials</a></li>
                 <li><a href="contact.html">Contact</a></li>
 
-                
-            <div class="nav-actions">
-                <button class="theme-toggle" aria-label="Toggle theme">
-                    <span class="theme-icon">☀️</span>
-                </button>
-            </div>
+                <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon">☀️</span>
+    </button>
+</div>
             </ul>
-             </nav>
-        
+             <br>
+
+
+
+</nav>
+       
+
+
+        <!-- <div class="nav-actions">
+                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+               
+            </div> -->
+              
     </div>
 </header>
 
-<main>
-    <section class="gallery-hero">
-        <div class="container reveal">
-            <h1>Our Moments & Impact</h1>
-            <p>Every smile tells a story of hope and transformation.</p>
-        </div>
-    </section>
+<section class="hero small-hero">
+  <div class="container">
+    <h1>About Metameta Children's Home</h1>
+    <p>Serving children with love, dignity, and hope since 2004.</p>
+  </div>
+</section>
 
-    <section class="gallery-container container reveal">
-        <div class="gallery-item">
-            <a href="images/chilled.jpeg" target="_blank" rel="noopener">
-                <img src="images/chilled.jpeg" alt="Children relaxing together">
-            </a>
-        </div>
-        <div class="gallery-item">
-            <a href="images/gifts.jpeg" target="_blank" rel="noopener">
-                <img src="images/gifts.jpeg" alt="Children receiving gifts">
-            </a>
-        </div>
-        <div class="gallery-item">
-            <a href="images/photo1.jpeg" target="_blank" rel="noopener">
-                <img src="images/photo1.jpeg" alt="Children group photo">
-            </a>
-        </div>
-        <div class="gallery-item">
-            <a href="images/school.jpeg" target="_blank" rel="noopener">
-                <img src="images/school.jpeg" alt="Education support">
-            </a>
-        </div>
-        <div class="gallery-item">
-            <a href="images/visitors.jpeg" target="_blank" rel="noopener">
-                <img src="images/visitors.jpeg" alt="Visitors at Metameta">
-            </a>
-        </div>
-        <div class="gallery-item">
-            <a href="images/smile.jpeg" target="_blank" rel="noopener">
-                <img src="images/smile.jpeg" alt="Smiling children">
-            </a>
-        </div>
-        <div class="gallery-item">
-            <a href="images/home.jpeg" target="_blank" rel="noopener">
-                <img src="images/home.jpeg" alt="Metameta Home building">
-            </a>
-        </div>
-        <div class="gallery-item">
-            <a href="images/kabetevisit.jpeg" target="_blank" rel="noopener">
-                <img src="images/kabetevisit.jpeg" alt="Kabete visit at Metameta">
-            </a>
-        </div>
-    </section>
+    <section class="section reveal">
+  <div class="container">
+    <h2>Our Moments</h2>
+
+    <div class="gallery-grid">
+      <img src="images/chilled.jpeg" alt="Children relaxing together">
+      <img src="images/daycare1.jpeg" alt="Daycare activity">
+      <img src="images/home.jpeg" alt="Group photo">
+      <img src="images/kabetevisit.jpeg" alt="Educational activity">
+      <img src="images/gifts.jpeg" alt="Community event">
+      <img src="images/visitors.jpeg" alt="Celebration">
+      <img src="images/daycare2.jpeg" alt="Outdoor activity">
+    </div>
+  </div>
+</section>
 </main>
 
 <footer>
@@ -94,6 +87,12 @@
         <p>(c) 2026 Metameta Children's Home | All Rights Reserved</p>
     </div>
 </footer>
+
+<div id="chatbot">
+  <div id="chat-header">Chat with us 💬</div>
+  <div id="chat-body"></div>
+  <input type="text" id="chat-input" placeholder="Type a message...">
+</div>
 
 </body>
 </html>

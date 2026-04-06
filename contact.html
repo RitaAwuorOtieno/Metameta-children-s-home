@@ -2,63 +2,110 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Contact Us - Metameta Children's Home</title>
+    <title>Metameta Children's Home | Hope for Every Child</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <meta name="description" content="Metameta Children's Home provides shelter, education, and hope to vulnerable children in Kenya. Support us to change lives.">
+
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Script -->
     <script src="script.js" defer></script>
 </head>
-<body>
 
-<header class="site-header">
-    <div class="container">
+<body>
+    <div id="progress-bar"></div>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="container header-container">
+        
         <div class="logo">
-            <img src="images/metameta logo.png" alt="Metameta Logo">
+            <img src="images/metameta logo.png" alt="Metameta Children's Home Logo">
             <span>Metameta Children's Home</span>
         </div>
-        <nav class="nav">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
+
+        <nav class="nav" id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
                 <li><a href="programs.html">Programs</a></li>
-                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Support Us</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="testimonials.html">Testimonials</a></li>
                 <li><a href="contact.html">Contact</a></li>
 
-                
-            <div class="nav-actions">
-                <button class="theme-toggle" aria-label="Toggle theme">
-                    <span class="theme-icon">☀️</span>
-                </button>
-            </div>
+                <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon">☀️</span>
+    </button>
+</div>
             </ul>
-            </nav>
-        
-                 
-           
+             <br>
+
+
+
+</nav>
+       
+
+
+        <!-- <div class="nav-actions">
+                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+               
+            </div> -->
+              
     </div>
 </header>
 
-<main>
-    <section class="contact-hero">
-        <div class="container reveal">
-            <h1>Get in Touch</h1>
-            <p>We would love to hear from you. Reach out to support, partner, or visit us.</p>
-        </div>
-    </section>
+<section class="hero-slider">
 
-    <section class="contact-container container reveal">
-        <form name="contact" method="POST" data-netlify="true" class="contact-form">
-            <input type="hidden" name="form-name" value="contact">
+  <div class="slide active">
+    <img src="images/home.jpeg" alt="Children smiling">
+    <div class="slide-content">
+      <h1>Every Child Deserves Love</h1>
+      <p>Providing care, hope, and a future.</p>
+    </div>
+  </div>
 
-            <input type="text" name="name" placeholder="Your Full Name" required>
-            <input type="email" name="email" placeholder="Your Email Address" required>
-            <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
+  <div class="slide">
+    <img src="images/school.jpeg" alt="Kids learning">
+    <div class="slide-content">
+      <h1>Education Changes Lives</h1>
+      <p>Empowering children through learning.</p>
+    </div>
+  </div>
 
-            <button type="submit" class="btn">Send Message</button>
-        </form>
+  <div class="slide">
+    <img src="images/smile.jpeg" alt="Happy children">
+    <div class="slide-content">
+      <h1>Building a Better Future</h1>
+      <p>Together we can make a difference.</p>
+    </div>
+  </div>
 
-        <div class="contact-info">
+  <!-- NAV BUTTONS -->
+  <button class="slider-btn prev">&#10094;</button>
+  <button class="slider-btn next">&#10095;</button>
+
+</section>
+
+   <section class="section reveal">
+  <div class="container">
+    <h2>Contact Us</h2>
+
+    <form class="contact-form" onsubmit="saveMessage(event)">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" rows="5" required></textarea>
+      <button class="btn primary" type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+       
+   
+    <div class="contact-info">
             <div>
                 <h2>Contact Details</h2>
                 <p><strong>Phone:</strong> 0791 533 154</p>
@@ -80,6 +127,12 @@
         <p>(c) 2026 Metameta Children's Home | All Rights Reserved</p>
     </div>
 </footer>
+
+<div id="chatbot">
+  <div id="chat-header">Chat with us 💬</div>
+  <div id="chat-body"></div>
+  <input type="text" id="chat-input" placeholder="Type a message...">
+</div>
 
 </body>
 </html>

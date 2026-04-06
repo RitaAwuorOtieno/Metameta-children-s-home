@@ -17,6 +17,7 @@
 
 <body>
 
+    <div id="progress-bar"></div>
 <!-- HEADER -->
 <header class="header">
     <div class="container header-container">
@@ -59,19 +60,36 @@
 </header>
 
 <!-- HERO -->
-<section class="hero">
-    <div class="container hero-content">
-        <h1>Every Child Deserves a Future Full of Hope</h1>
-        <p>
-            We provide a safe home, quality education, and emotional support 
-            to vulnerable children across Kenya — helping them grow into confident, empowered individuals.
-        </p>
+<section class="hero-slider">
 
-        <div class="hero-buttons">
-            <a href="support.html" class="btn primary">Donate Now</a>
-            <a href="about.html" class="btn secondary">Learn More</a>
-        </div>
+  <div class="slide active">
+    <img src="images/home.jpeg" alt="Children smiling">
+    <div class="slide-content">
+      <h1>Every Child Deserves Love</h1>
+      <p>Providing care, hope, and a future.</p>
     </div>
+  </div>
+
+  <div class="slide">
+    <img src="images/school.jpeg" alt="Kids learning">
+    <div class="slide-content">
+      <h1>Education Changes Lives</h1>
+      <p>Empowering children through learning.</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="images/smile.jpeg" alt="Happy children">
+    <div class="slide-content">
+      <h1>Building a Better Future</h1>
+      <p>Together we can make a difference.</p>
+    </div>
+  </div>
+
+  <!-- NAV BUTTONS -->
+  <button class="slider-btn prev">&#10094;</button>
+  <button class="slider-btn next">&#10095;</button>
+
 </section>
 
 <!-- ABOUT -->
@@ -205,6 +223,12 @@
         <p>© 2026 Metameta Children's Home. All Rights Reserved.</p>
     </div>
 </footer>
+
+<div id="chatbot">
+  <div id="chat-header">Chat with us 💬</div>
+  <div id="chat-body"></div>
+  <input type="text" id="chat-input" placeholder="Type a message...">
+</div>
 
 </body>
 </html>
