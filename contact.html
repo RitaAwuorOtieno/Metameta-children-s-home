@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="styles.css">
 
     <!-- Script -->
+         <!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
     <script src="script.js" defer></script>
 </head>
 
@@ -48,7 +51,7 @@
         </nav>
 
         <!-- Mobile Menu Button -->
-        <div class="hamburger">☰</div>
+        <div class="menu-toggle">☰</div>
 
     </div>
 </header>
@@ -71,17 +74,12 @@
             <div class="contact-form-wrapper">
                 <h2>Send Us a Message</h2>
 
-                <form class="contact-form" onsubmit="saveMessage(event)">
-                    
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="Your Message" rows="6" required></textarea>
-
-                    <button class="btn primary" type="submit">
-                        Send Message
-                    </button>
-
-                </form>
+                <form onsubmit="saveMessage(event)">
+  <input type="text" placeholder="Your Name" required>
+  <input type="email" placeholder="Your Email" required>
+  <textarea placeholder="Your Message" required></textarea>
+  <button type="submit">Send Message</button>
+</form>
             </div>
 
             <!-- CONTACT INFO -->

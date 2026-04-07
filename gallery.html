@@ -2,46 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gallery | Metameta Children's Home</title>
+    <title>Metameta Children's Home | Hope for Every Child</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO -->
-    <meta name="description" content="Explore moments from Metameta Children's Home - activities, visits, and community impact in Kenya.">
+    <meta name="keywords" content="children home Kenya, orphanage Nairobi, donate Kenya, help children">
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 
     <!-- Script -->
+
+    <!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
     <script src="script.js" defer></script>
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
+    <div id="progress-bar"></div>
+<!-- HEADER -->
 <header class="header">
     <div class="container header-container">
-
+        
         <div class="logo">
             <img src="images/metameta-logo.png" alt="Metameta Children's Home Logo">
             <span>Metameta Children's Home</span>
         </div>
 
-        <nav class="nav">
+        <nav class="nav" id="nav-menu">
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="programs.html">Programs</a></li>
                 <li><a href="support.html">Support Us</a></li>
-                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="testimonials.html">Testimonials</a></li>
                 <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
 
+                <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon">☀️</span>
+    </button>
+</div>
+            </ul>
+             <br>
+
+
+
+</nav>
+
+<div class="menu-toggle">☰</div>
+       
+
+
+        <!-- <div class="nav-actions">
+                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+               
+            </div> -->
+              
     </div>
 </header>
 
 <!-- ================= HERO ================= -->
-<section class="small-hero">
+<section class="hero small-hero">
   <div class="container">
     <h1>Our Gallery</h1>
     <p>Moments of love, learning, and impact at Metameta Children's Home.</p>
@@ -52,25 +77,50 @@
 <section class="section reveal">
   <div class="container">
 
-    <h2>Our Moments</h2>
+    <h2 class="section-title">Our Moments</h2>
 
     <div class="gallery-grid">
 
-      <img src="images/chilled.jpeg" alt="Children relaxing together" loading="lazy">
-      <img src="images/daycare1.jpeg" alt="Daycare learning activity" loading="lazy">
-      <img src="images/home.jpeg" alt="Children group photo" loading="lazy">
-      <img src="images/kabetevisit.jpeg" alt="Educational visit activity" loading="lazy">
-      <img src="images/gifts.jpeg" alt="Gift giving event" loading="lazy">
-      <img src="images/visitors.jpeg" alt="Visitors interacting with children" loading="lazy">
-      <img src="images/daycare2.jpeg" alt="Outdoor learning activity" loading="lazy">
+      <div class="gallery-item">
+        <img src="images/chilled.jpeg" alt="" onclick="openLightbox(this)">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/daycare1.jpeg" alt="" onclick="openLightbox(this)">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/home.jpeg" alt="" onclick="openLightbox(this)">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/kabetevisit.jpeg" alt="" onclick="openLightbox(this)">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/gifts.jpeg" alt="" onclick="openLightbox(this)">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/visitors.jpeg" alt="" onclick="openLightbox(this)">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/daycare2.jpeg" alt="" onclick="openLightbox(this)">
+      </div>
 
     </div>
 
   </div>
 </section>
 
+<!-- ================= LIGHTBOX ================= -->
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="">
+</div>
+
 <!-- ================= FOOTER ================= -->
-<footer>
+<footer class="footer">
     <div class="container">
         <p>&copy; 2026 Metameta Children's Home | All Rights Reserved</p>
     </div>

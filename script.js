@@ -1,9 +1,6 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
+// ===============================
+// FIREBASE INIT
+// ===============================
 const firebaseConfig = {
   apiKey: "AIzaSyDjZjgSoVNXjIKVui9ZG1K6nrqi6HEFK8g",
   authDomain: "metameta-82db5.firebaseapp.com",
@@ -15,8 +12,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
+// Database reference
+const db = firebase.database();
+
+
+// ===============================
+// RUN AFTER PAGE LOAD
+// ===============================
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ===============================
@@ -32,22 +36,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ===============================
-     HAMBURGER MENU
+     MOBILE MENU
   =============================== */
-  const hamburger = document.querySelector(".hamburger");
+  const menuBtn = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".nav");
 
-  if (hamburger && nav) {
-    hamburger.addEventListener("click", () => {
+  // if (menuBtn && nav) {
+    menuBtn.addEventListener("click", () => {
       nav.classList.toggle("active");
     });
-
-    document.querySelectorAll(".nav a").forEach(link => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("active");
-      });
-    });
-  }
+  // }
 
 
   /* ===============================
@@ -55,15 +53,17 @@ document.addEventListener("DOMContentLoaded", () => {
   =============================== */
   const revealItems = document.querySelectorAll(".reveal");
 
-  const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-      }
-    });
-  }, { threshold: 0.2 });
+  if (revealItems.length > 0) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    }, { threshold: 0.2 });
 
-  revealItems.forEach(el => revealObserver.observe(el));
+    revealItems.forEach(el => observer.observe(el));
+  }
 
 
   /* ===============================
@@ -71,30 +71,32 @@ document.addEventListener("DOMContentLoaded", () => {
   =============================== */
   const counters = document.querySelectorAll("[data-count]");
 
-  const counterObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
+  if (counters.length > 0) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
 
-      const el = entry.target;
-      const target = +el.dataset.count;
-      let count = 0;
+        const el = entry.target;
+        const target = +el.dataset.count;
+        let count = 0;
 
-      const update = () => {
-        count += Math.ceil(target / 50);
-        if (count >= target) {
-          el.textContent = target + "+";
-        } else {
-          el.textContent = count + "+";
-          requestAnimationFrame(update);
-        }
-      };
+        const update = () => {
+          count += Math.ceil(target / 50);
+          if (count >= target) {
+            el.textContent = target + "+";
+          } else {
+            el.textContent = count + "+";
+            requestAnimationFrame(update);
+          }
+        };
 
-      update();
-      counterObserver.unobserve(el);
+        update();
+        observer.unobserve(el);
+      });
     });
-  });
 
-  counters.forEach(el => counterObserver.observe(el));
+    counters.forEach(el => observer.observe(el));
+  }
 
 
   /* ===============================
@@ -126,16 +128,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const progressBar = document.getElementById("progress-bar");
 
   window.addEventListener("scroll", () => {
+    if (!progressBar) return;
+
     const scrollTop = document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const percent = (scrollTop / height) * 100;
 
-    if (progressBar) progressBar.style.width = percent + "%";
+    progressBar.style.width = percent + "%";
   });
 
 
   /* ===============================
-     HERO SLIDER (CLEAN VERSION)
+     HERO SLIDER
   =============================== */
   const slides = document.querySelectorAll(".slide");
   const dots = document.querySelectorAll(".dot");
@@ -143,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.querySelector(".prev");
 
   let currentSlide = 0;
-  let sliderInterval;
+  let interval;
 
   function showSlide(index) {
     slides.forEach((slide, i) => {
@@ -162,11 +166,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function startSlider() {
-    sliderInterval = setInterval(nextSlide, 3000); // 5 seconds (GOOD speed)
+    interval = setInterval(nextSlide, 2000);
   }
 
   function stopSlider() {
-    clearInterval(sliderInterval);
+    clearInterval(interval);
   }
 
   if (slides.length > 0) {
@@ -183,38 +187,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const slider = document.querySelector(".hero-slider");
     slider?.addEventListener("mouseenter", stopSlider);
     slider?.addEventListener("mouseleave", startSlider);
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "ArrowRight") nextSlide();
-      if (e.key === "ArrowLeft") prevSlide();
-    });
   }
 
 
   /* ===============================
-     THEME TOGGLE
+     THEME TOGGLE (FIXED)
   =============================== */
   const toggle = document.querySelector(".theme-toggle");
-  const icon = document.querySelector(".theme-icon");
 
-  if (localStorage.getItem("theme") === "dark") {
-    document.documentElement.setAttribute("data-theme", "dark");
-    if (icon) icon.textContent = "🌙";
-  }
+  if (toggle) {
+    const savedTheme = localStorage.getItem("theme");
 
-  toggle?.addEventListener("click", () => {
-    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-
-    if (isDark) {
-      document.documentElement.removeAttribute("data-theme");
-      localStorage.setItem("theme", "light");
-      if (icon) icon.textContent = "☀️";
-    } else {
-      document.documentElement.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-      if (icon) icon.textContent = "🌙";
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark");
+      toggle.textContent = "☀️";
     }
-  });
+
+    toggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        toggle.textContent = "☀️";
+      } else {
+        localStorage.setItem("theme", "light");
+        toggle.textContent = "🌙";
+      }
+    });
+  }
 
 
   /* ===============================
@@ -242,40 +242,51 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  /* ===============================
-     FORM SAVE (LOCAL)
-  =============================== */
-  window.saveMessage = function(e) {
-    e.preventDefault();
+  // ===============================
+// SAVE FORM TO FIREBASE
+// ===============================
+window.saveMessage = function(e) {
+  e.preventDefault();
 
-    const form = e.target;
-    const data = {
-      name: form[0].value,
-      email: form[1].value,
-      message: form[2].value
-    };
+  const form = e.target;
 
-    const messages = JSON.parse(localStorage.getItem("messages")) || [];
-    messages.push(data);
-
-    localStorage.setItem("messages", JSON.stringify(messages));
-
-    alert("Message saved!");
-    form.reset();
+  const data = {
+    name: form[0].value,
+    email: form[1].value,
+    message: form[2].value,
+    date: new Date().toISOString()
   };
 
-});
+  // Push to Firebase
+  db.ref("messages").push(data)
+    .then(() => {
+      alert("Message sent successfully 💙");
+      form.reset();
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error sending message");
+    });
+};
 
-function openImage(img) {
-    const modal = document.createElement("div");
-    modal.classList.add("image-modal");
 
-    modal.innerHTML = `
-        <div class="image-modal-content">
-            <span class="close" onclick="this.parentElement.parentElement.remove()">&times;</span>
-            <img src="${img.src}" alt="Expanded Image">
-        </div>
-    `;
+/* ===============================
+   LIGHTBOX
+=============================== */
+function openLightbox(img) {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
 
-    document.body.appendChild(modal);
+  if (lightbox && lightboxImg) {
+    lightbox.style.display = "flex";
+    lightboxImg.src = img.src;
+  }
 }
+
+function closeLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  if (lightbox) {
+    lightbox.style.display = "none";
+  }
+}
+});

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard | Metameta Children's Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="admin.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container header-container">
+    <h2>📊 Admin Dashboard</h2>
+    <button onclick="logout()" class="btn">Logout</button>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+
+    <h2>📩 Messages Inbox</h2>
+
+    <div id="stats"></div>
+
+    <div id="messages-container" class="admin-grid"></div>
+
+  </div>
+</section>
+
+</body>
+</html>
