@@ -81,3 +81,14 @@ function logout() {
     window.location.href = "login.html";
   });
 }
+
+// ================= AUTH PROTECTION =================
+const ADMIN_EMAIL = "ritaawuor53@gmail.com"; // 👈 CHANGE THIS
+
+auth.onAuthStateChanged(user => {
+  if (!user || user.email !== ADMIN_EMAIL) {
+    window.location.href = "login.html";
+  } else {
+    loadMessages(); // only load if correct admin
+  }
+});

@@ -1,157 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Metameta Children's Home | Hope for Every Child</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="keywords" content="children home Kenya, orphanage Nairobi, donate Kenya, help children">
-
-    <link rel="stylesheet" href="styles.css">
-
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <title>Metameta Children's Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<div id="progress-bar"></div>
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-container">
 
-<!-- ================= HEADER ================= -->
-<header class="header">
-    <div class="container header-container">
-
-        <!-- LOGO -->
-        <div class="logo">
-            <img src="images/metameta-logo.png" alt="Metameta Children's Home Logo">
-            <span>Metameta Children's Home</span>
-        </div>
-
-        <!-- NAVIGATION -->
-        <nav class="nav" id="nav-menu">
-            <ul class="nav-links">
-
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="programs.html">Programs</a></li>
-                <li><a href="support.html">Support Us</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="admin.html">Admin</a></li>
-
-                <!-- THEME TOGGLE -->
-                <li class="nav-actions">
-                    <button class="theme-toggle" aria-label="Toggle theme">
-                        🌙
-                    </button>
-                </li>
-
-            </ul>
-        </nav>
-
-        <!-- HAMBURGER MENU -->
-        <div class="menu-toggle">☰</div>
-
+    <div class="logo">
+      <img src="images/metameta-logo.png" alt="Logo">
+      <span>Metameta Children’s Home</span>
     </div>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+    <nav class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
+
+      <div class="dropdown">
+        <a href="Programs.html">Programs ▾</a>
+        <div class="dropdown-content">
+          <a href="#">Education Support</a>
+          <a href="#">Shelter</a>
+          <a href="#">Feeding Program</a>
+          <a href="#">Counseling</a>
+        </div>
+      </div>
+
+      <a href="Events.html">Events</a>
+      <a href="Contact.html">Contact</a>
+
+      <div class="nav-actions mobile">
+        <button class="login">Profile</button>
+        <button class="signup">Logout</button>
+      </div>
+    </nav>
+
+    <div class="nav-actions desktop">
+      <button class="login">Login</button>
+      <button class="signup">Sign Up</button>
+    </div>
+
+    <button class="donate">Donate</button>
+
+  </div>
 </header>
 
-<!-- ================= HERO SLIDER ================= -->
+<!-- HERO -->
 <section class="hero-slider">
-
-    <div class="slide active">
-        <img src="images/home.jpeg" alt="Children smiling">
-        <div class="slide-content">
-            <h1>Every Child Deserves Love</h1>
-            <p>Providing care, hope, and a future.</p>
-
-            <div class="hero-buttons">
-                <a href="support.html" class="btn primary">Donate Now</a>
-                <a href="about.html" class="btn secondary">Learn More</a>
-            </div>
-        </div>
+  <div class="slide active">
+    <img src="images/home.jpeg">
+    <div class="slide-content">
+      <h1>Every Child Deserves Love</h1>
+      <p>Providing care, hope, and a future.</p>
+      <a href="#" class="btn">Donate Now</a>
     </div>
-
-    <div class="slide">
-        <img src="images/school.jpeg" alt="Kids learning">
-        <div class="slide-content">
-            <h1>Education Changes Lives</h1>
-            <p>Empowering children through learning.</p>
-        </div>
-    </div>
-
-    <div class="slide">
-        <img src="images/smile.jpeg" alt="Happy children">
-        <div class="slide-content">
-            <h1>Building a Better Future</h1>
-            <p>Together we can make a difference.</p>
-        </div>
-    </div>
-
-    <button class="slider-btn prev">&#10094;</button>
-    <button class="slider-btn next">&#10095;</button>
-
+  </div>
 </section>
 
-<!-- ================= ABOUT ================= -->
-<section class="section about">
-    <div class="container split">
+<!-- ABOUT -->
+<section>
+  <div class="container split">
 
-        <div class="text">
-            <h2>Who We Are</h2>
-            <p>
-                Metameta Children's Home is a dedicated organization committed to caring for children in need.
-            </p>
+    <div>
+      <h2>Who We Are</h2>
+      <p>We care for children and give them hope.</p>
 
-            <div class="features">
-                <div class="feature">
-                    <h3>🏠 Safe Shelter</h3>
-                    <p>Secure housing and meals.</p>
-                </div>
-
-                <div class="feature">
-                    <h3>📚 Education</h3>
-                    <p>School support and mentorship.</p>
-                </div>
-
-                <div class="feature">
-                    <h3>❤️ Care & Support</h3>
-                    <p>Healthcare and counseling.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="image">
-            <img src="images/smile.jpeg" alt="Children smiling">
-        </div>
-
+      <div class="features">
+        <div class="feature">🏠 Safe Shelter</div>
+        <div class="feature">📚 Education</div>
+        <div class="feature">❤️ Care & Support</div>
+      </div>
     </div>
+
+    <div>
+      <img src="images/smile.jpeg">
+    </div>
+
+  </div>
 </section>
 
-<!-- ================= CTA ================= -->
+<!-- CTA -->
 <section class="cta">
-    <div class="container">
-        <h2>Be the Reason a Child Smiles Today</h2>
-        <a href="support.html" class="btn primary">Support a Child</a>
-    </div>
+  <div class="container">
+    <h2>Be the Reason a Child Smiles</h2>
+    <a href="#" class="btn">Support a Child</a>
+  </div>
 </section>
 
-<!-- ================= FOOTER ================= -->
+<!-- FOOTER -->
 <footer class="footer">
-    <div class="container">
-        <p>© 2026 Metameta Children's Home</p>
-    </div>
+  <p>© 2026 Metameta Children's Home</p>
 </footer>
 
-<!-- CHATBOT -->
-<div id="chatbot">
-    <div id="chat-header">Chat with us 💬</div>
-    <div id="chat-body"></div>
-    <input type="text" id="chat-input" placeholder="Type a message...">
-</div>
+<script>
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+toggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+</script>
 
 </body>
 </html>
