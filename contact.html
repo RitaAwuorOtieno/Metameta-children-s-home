@@ -1,124 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Contact Us | Metameta Children's Home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Contact | Metameta Children's Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO -->
-    <meta name="description" content="Contact Metameta Children's Home in Kenya. Get in touch for donations, visits, or partnerships.">
+  <!-- SEO -->
+  <meta name="description" content="Contact Metameta Children's Home for donations, visits, volunteering, or partnerships.">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css">
 
-    <!-- Script -->
-         <!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-    <script src="script.js" defer></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <script src="script.js" defer></script>
 </head>
 
 <body>
 
-<!-- ================= PROGRESS BAR ================= -->
-<div id="progress-bar"></div>
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="nav-container">
 
-<!-- ================= HEADER ================= -->
-<header class="header">
-    <div class="container header-container">
-
-        <div class="logo">
-            <img src="images/metameta-logo.png" alt="Metameta Children's Home Logo">
-            <span>Metameta Children's Home</span>
-        </div>
-
-        <nav class="nav" id="nav-menu">
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="programs.html">Programs</a></li>
-                <li><a href="support.html">Support Us</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="contact.html" class="active">Contact</a></li>
-
-                <li class="nav-actions">
-                    <button class="theme-toggle" aria-label="Toggle theme">
-                        <span class="theme-icon">☀️</span>
-                    </button>
-                </li>
-            </ul>
-        </nav>
-
-        <!-- Mobile Menu Button -->
-        <div class="menu-toggle">☰</div>
-
+    <div class="logo">
+      <img src="images/metameta-logo.png" alt="Logo">
+      <span>Metameta Children’s Home</span>
     </div>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+    <nav class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="events.html">Events</a>
+      <a href="contact.html" class="active">Contact</a>
+
+      <div class="nav-actions mobile">
+        <button class="login">Profile</button>
+        <button class="signup">Logout</button>
+      </div>
+    </nav>
+
+    <div class="nav-actions desktop">
+      <button class="login">Login</button>
+      <button class="signup">Sign Up</button>
+    </div>
+
+    <button class="donate" onclick="window.location.href='donate.html'">Donate</button>
+
+  </div>
 </header>
 
 <!-- ================= HERO ================= -->
-<section class="small-hero">
-    <div class="container">
-        <h1>Contact Us</h1>
-        <p>We would love to hear from you. Reach out for support, visits, or partnerships.</p>
+<section class="hero-slider">
+  <div class="slide active">
+    <img src="images/home.jpeg" alt="Contact Metameta">
+    <div class="slide-content">
+      <h1>Get In Touch</h1>
+      <p>We would love to hear from you</p>
     </div>
+  </div>
 </section>
 
 <!-- ================= CONTACT SECTION ================= -->
-<section class="section reveal">
-    <div class="container">
+<section>
+  <div class="container">
 
-        <div class="contact-grid">
+    <div class="contact-grid">
 
-            <!-- CONTACT FORM -->
-            <div class="contact-form-wrapper">
-                <h2>Send Us a Message</h2>
+      <!-- FORM -->
+      <div class="contact-form-wrapper">
+        <h2>Send Us a Message</h2>
 
-                <form onsubmit="saveMessage(event)">
-  <input type="text" placeholder="Your Name" required>
-  <input type="email" placeholder="Your Email" required>
-  <textarea placeholder="Your Message" required></textarea>
-  <button type="submit">Send Message</button>
-</form>
-            </div>
+        <form onsubmit="saveMessage(event)">
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+          <textarea placeholder="Your Message" required></textarea>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
 
-            <!-- CONTACT INFO -->
-            <div class="contact-info card">
+      <!-- INFO -->
+      <div class="contact-info card">
 
-                <h2>Contact Details</h2>
+        <h2>Contact Details</h2>
 
-                <p><strong>📞 Phone:</strong> 0791 533 154</p>
-                <p><strong>🏢 Organization:</strong> Metameta Development Centre</p>
-                <p><strong>📧 Email:</strong> info@metameta.org</p>
-                <p><strong>📍 Location:</strong> Kenya</p>
+        <p><strong>📞 Phone:</strong> 0791 533 154</p>
+        <p><strong>📧 Email:</strong> info@metameta.org</p>
+        <p><strong>📍 Location:</strong> Nairobi, Kenya</p>
 
-                <hr>
+        <hr style="margin:15px 0;">
 
-                <h3>Visit Us</h3>
-                <p>Schedule a visit or volunteer to meet the children and our team.</p>
+        <h3>Visit Us</h3>
+        <p>Come spend time with the children or volunteer with us.</p>
 
-                <a href="support.html" class="btn">Become a Partner</a>
+        <a href="events.html" class="btn">View Events</a>
 
-            </div>
-
-        </div>
+      </div>
 
     </div>
+
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta">
+  <div class="container">
+    <h2>Support Our Mission</h2>
+    <p>Your contribution can change a child’s life.</p>
+    <a href="donate.html" class="btn">Donate Now</a>
+  </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
-<footer>
-    <div class="container">
-        <p>&copy; 2026 Metameta Children's Home | All Rights Reserved</p>
-    </div>
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Metameta Children's Home | All Rights Reserved</p>
+  </div>
 </footer>
 
 <!-- ================= CHATBOT ================= -->
 <div id="chatbot">
-    <div id="chat-header">Chat with us 💬</div>
-    <div id="chat-body"></div>
-    <input type="text" id="chat-input" placeholder="Type a message...">
+  <div id="chat-header">Chat with us 💬</div>
+  <div id="chat-body"></div>
+  <input type="text" id="chat-input" placeholder="Type a message...">
 </div>
+
+<!-- ================= MENU SCRIPT ================= -->
+<script>
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+toggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+</script>
+
+<script>
+const navbar = document.querySelector(".navbar");
+
+window.addEventListener("scroll", () => {
+  if (!navbar) return;
+
+  if (window.scrollY > 50) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+});
+</script>
 
 </body>
 </html>

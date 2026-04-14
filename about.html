@@ -1,193 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Metameta Children's Home | Hope for Every Child</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>About Us | Metameta Children's Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO -->
-    <meta name="description" content="Metameta Children's Home provides shelter, education, and hope to vulnerable children in Kenya. Support us to change lives.">
+  <!-- SEO -->
+  <meta name="description" content="Learn more about Metameta Children's Home, our mission, vision, and the impact we are making in the lives of children.">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
 
-    <!-- Script -->
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
-    <!-- FIREBASE -->
-   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-    <script src="script.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header class="header">
-    <div class="container header-container">
-        
-        <div class="logo">
-            <img src="images/metameta-logo.png" alt="Metameta Children's Home Logo">
-            <span>Metameta Children's Home</span>
-        </div>
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="nav-container">
 
-        <nav class="nav" id="nav-menu">
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="programs.html">Programs</a></li>
-                <li><a href="support.html">Support Us</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="contact.html">Contact</a></li>
-
-                <div class="nav-actions">
-    <button class="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-icon">☀️</span>
-    </button>
-</div>
-            </ul>
-             <br>
-
-
-
-</nav>
-
-<div class="menu-toggle">☰</div>
-       
-
-
-        <!-- <div class="nav-actions">
-                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
-               
-            </div> -->
-              
+    <div class="logo">
+      <img src="images/metameta-logo.png" alt="Metameta Logo">
+      <span>Metameta Children’s Home</span>
     </div>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+    <nav class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="events.html">Events</a>
+      <a href="contact.html">Contact</a>
+
+      <div class="nav-actions mobile">
+        <button class="login">Profile</button>
+        <button class="signup">Logout</button>
+      </div>
+    </nav>
+
+    <div class="nav-actions desktop">
+      <button class="login">Login</button>
+      <button class="signup">Sign Up</button>
+    </div>
+
+    <button class="donate">Donate</button>
+
+  </div>
 </header>
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
 <section class="hero-slider">
-
   <div class="slide active">
     <img src="images/home.jpeg" alt="Children smiling">
     <div class="slide-content">
-      <h1>Every Child Deserves Love</h1>
-      <p>Providing care, hope, and a future.</p>
+      <h1>About Us</h1>
+      <p>Giving every child a place to belong</p>
     </div>
   </div>
-
-  <div class="slide">
-    <img src="images/school.jpeg" alt="Kids learning">
-    <div class="slide-content">
-      <h1>Education Changes Lives</h1>
-      <p>Empowering children through learning.</p>
-    </div>
-  </div>
-
-  <div class="slide">
-    <img src="images/smile.jpeg" alt="Happy children">
-    <div class="slide-content">
-      <h1>Building a Better Future</h1>
-      <p>Together we can make a difference.</p>
-    </div>
-  </div>
-
-  <!-- NAV BUTTONS -->
-  <button class="slider-btn prev">&#10094;</button>
-  <button class="slider-btn next">&#10095;</button>
-
 </section>
 
-<!-- ABOUT CONTENT -->
-<section class="section">
-    <div class="container">
+<!-- ================= ABOUT CONTENT ================= -->
+<section>
+  <div class="container">
 
-        <!-- WHO WE ARE -->
-        <div class="text-center reveal">
-            <h2>Who We Are</h2>
-            <p class="subtitle">
-                Since 2004, Metameta Children's Home has been dedicated to providing
-                a safe, nurturing, and empowering environment for vulnerable children.
-            </p>
+    <!-- WHO WE ARE -->
+    <div class="text-center reveal">
+      <h2>Who We Are</h2>
+      <p>
+        Since 2004, Metameta Children's Home has been a safe haven for vulnerable children.
+        We are committed to nurturing, educating, and empowering every child to build a brighter future.
+      </p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats reveal" style="margin-top: 40px;">
+      <div class="stat">
+        <h3>2004</h3>
+        <p>Year Founded</p>
+      </div>
+      <div class="stat">
+        <h3>48</h3>
+        <p>Children Supported</p>
+      </div>
+      <div class="stat">
+        <h3>20+</h3>
+        <p>Years of Service</p>
+      </div>
+    </div>
+
+    <!-- MISSION & VISION -->
+    <div class="split reveal" style="margin-top: 50px;">
+
+      <div>
+        <h2>Our Mission</h2>
+        <p>
+          To provide holistic care including shelter, education, healthcare,
+          emotional support, and guidance — empowering children to live meaningful lives.
+        </p>
+
+        <h2 style="margin-top: 20px;">Our Vision</h2>
+        <p>
+          A society where every child is valued, protected, and given equal opportunity to thrive.
+        </p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>❤️ Love First</h3>
+          <p>We create a safe and nurturing home for every child.</p>
         </div>
 
-        <!-- STATS -->
-        <div class="stats reveal">
-            <div class="stat">
-                <h3 data-count="2004">2004</h3>
-                <p>Year Founded</p>
-            </div>
-            <div class="stat">
-                <h3 data-count="48">48</h3>
-                <p>Children Supported</p>
-            </div>
-            <div class="stat">
-                <h3 data-count="20" data-suffix="+">20+</h3>
-                <p>Years of Service</p>
-            </div>
+        <div class="card">
+          <h3>📚 Education</h3>
+          <p>We empower children through learning and mentorship.</p>
         </div>
 
-        <!-- MISSION & VALUES -->
-        <div class="split reveal">
-
-            <div>
-                <h2>Our Mission</h2>
-                <p>
-                    To provide holistic care including shelter, education, healthcare,
-                    emotional support, and spiritual guidance — empowering children
-                    to build independent and meaningful futures.
-                </p>
-
-                <h2>Our Vision</h2>
-                <p>
-                    A society where every child is valued, protected, and given equal
-                    opportunity to reach their full potential.
-                </p>
-            </div>
-
-            <div class="cards">
-                <div class="card">
-                    <h3>❤️ Love First</h3>
-                    <p>We create a safe, family-like home for every child.</p>
-                </div>
-
-                <div class="card">
-                    <h3>📈 Growth</h3>
-                    <p>Education and life skills for a better future.</p>
-                </div>
-
-                <div class="card">
-                    <h3>🤝 Community</h3>
-                    <p>Strong partnerships with families and supporters.</p>
-                </div>
-            </div>
-
+        <div class="card">
+          <h3>🤝 Community</h3>
+          <p>We grow together with support from partners and well-wishers.</p>
         </div>
-
-        <!-- DIRECTOR MESSAGE -->
-        <div class="card reveal" style="margin-top: 40px;">
-            <h3>A Message From The Director</h3>
-            <p>
-                Since 2004, our goal has been simple — to give children not only a place to stay,
-                but a place to belong. Every child deserves love, dignity, and hope.
-                We are grateful for every supporter who walks this journey with us.
-            </p>
-        </div>
+      </div>
 
     </div>
+
+    <!-- DIRECTOR MESSAGE -->
+    <div class="card reveal" style="margin-top: 50px;">
+      <h3>A Message From The Director</h3>
+      <p>
+        Our mission has always been simple — to give children not just a place to stay,
+        but a place to call home. Every child deserves love, dignity, and hope.
+        We thank every supporter who walks this journey with us.
+      </p>
+    </div>
+
+  </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ================= CTA ================= -->
+<section class="cta">
+  <div class="container">
+    <h2>Join Us in Changing Lives</h2>
+    <p>Your support can make a difference in a child’s future.</p>
+    <a href="donate.html" class="btn">Donate Now</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
 <footer class="footer">
-    <div class="container">
-        <p>© 2026 Metameta Children's Home. All Rights Reserved.</p>
-    </div>
+  <div class="container">
+    <p>© 2026 Metameta Children's Home. All Rights Reserved.</p>
+  </div>
 </footer>
 
+<!-- CHATBOT -->
 <div id="chatbot">
   <div id="chat-header">Chat with us 💬</div>
   <div id="chat-body"></div>
   <input type="text" id="chat-input" placeholder="Type a message...">
 </div>
+
+<!-- MENU SCRIPT -->
+<script>
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+toggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+</script>
+
+<script>
+const navbar = document.querySelector(".navbar");
+
+window.addEventListener("scroll", () => {
+  if (!navbar) return;
+
+  if (window.scrollY > 50) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+});
+</script>
 
 </body>
 </html>

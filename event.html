@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Events | Metameta Children's Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="See our events, outreach programs, and real stories from Metameta Children's Home.">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="nav-container">
+
+    <div class="logo">
+      <img src="images/metameta-logo.png" alt="Logo">
+      <span>Metameta Children’s Home</span>
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+    <nav class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="events.html" class="active">Events</a>
+      <a href="contact.html">Contact</a>
+
+      <div class="nav-actions mobile">
+        <button class="login">Profile</button>
+        <button class="signup">Logout</button>
+      </div>
+    </nav>
+
+    <div class="nav-actions desktop">
+      <button class="login">Login</button>
+      <button class="signup">Sign Up</button>
+    </div>
+
+    <button class="donate" onclick="window.location.href='donate.html'">Donate</button>
+
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero-slider">
+  <div class="slide active">
+    <img src="images/home.jpeg" alt="Children smiling">
+    <div class="slide-content">
+      <h1>Our Events & Impact</h1>
+      <p>Bringing hope through community, outreach, and love</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EVENTS INTRO ================= -->
+<section>
+  <div class="container reveal" style="text-align:center;">
+    <h2>Our Events</h2>
+    <p style="max-width:700px; margin:auto;">
+      We regularly organize charity visits, outreach programs, and community events
+      that bring joy and support to the children at Metameta.
+    </p>
+  </div>
+</section>
+
+<!-- ================= EVENTS LIST ================= -->
+<section>
+  <div class="container cards">
+
+    <div class="card reveal">
+      <h3>🎉 Charity Visits</h3>
+      <p>We host regular visits where supporters spend time with the children.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>🎁 Donation Drives</h3>
+      <p>Clothes, food, and essentials are collected and distributed.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>📚 Education Events</h3>
+      <p>Workshops, mentorship, and learning activities.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>🎂 Celebrations</h3>
+      <p>Birthdays and special days are celebrated with love and joy.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= ALUMNI STORIES ================= -->
+<section class="alumni-section">
+  <div class="container">
+
+    <div class="section-header" style="text-align:center;">
+      <h2>Voices of Our Alumni</h2>
+      <p>Stories of transformation and hope</p>
+    </div>
+
+    <div class="gallery-grid">
+
+      <div class="gallery-item">
+        <a href="images/Rita.jpeg" target="_blank">
+          <img src="images/Rita.jpeg" alt="Rita Alumni">
+        </a>
+        <div class="caption">
+          <h4>Rita A.</h4>
+          <p>"Metameta gave me stability and education."</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <a href="images/Stacy.jpeg" target="_blank">
+          <img src="images/Stacy.jpeg" alt="Stacy Alumni">
+        </a>
+        <div class="caption">
+          <h4>Annastacia M.</h4>
+          <p>"I now work as a digital assistant."</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <a href="images/silas.jpeg" target="_blank">
+          <img src="images/silas.jpeg" alt="Silas Alumni">
+        </a>
+        <div class="caption">
+          <h4>Silas A.</h4>
+          <p>"I gained confidence and purpose."</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= JOURNEY ================= -->
+<section>
+  <div class="container">
+
+    <h2 style="text-align:center;">A Child’s Journey</h2>
+
+    <div class="cards" style="margin-top:30px;">
+
+      <div class="card">
+        <h3>Before</h3>
+        <p>Unstable life, limited access to education and basic needs.</p>
+      </div>
+
+      <div class="card">
+        <h3>At Metameta</h3>
+        <p>Safe home, education, mentorship, and emotional support.</p>
+      </div>
+
+      <div class="card">
+        <h3>After</h3>
+        <p>Independent, confident, and contributing to society.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta">
+  <div class="container">
+    <h2>Be Part of Our Next Event</h2>
+    <p>Join us, volunteer, or support our mission.</p>
+    <a href="contact.html" class="btn">Get Involved</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Metameta Children's Home | All Rights Reserved</p>
+  </div>
+</footer>
+
+<!-- ================= CHATBOT ================= -->
+<div id="chatbot">
+  <div id="chat-header">Chat 💬</div>
+  <div id="chat-body"></div>
+  <input type="text" id="chat-input" placeholder="Type message...">
+</div>
+
+<!-- ================= MENU SCRIPT ================= -->
+<script>
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+toggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+</script>
+
+<script>
+const navbar = document.querySelector(".navbar");
+
+window.addEventListener("scroll", () => {
+  if (!navbar) return;
+
+  if (window.scrollY > 50) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+});
+</script>
+
+</body>
+</html>
