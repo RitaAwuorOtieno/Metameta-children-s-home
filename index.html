@@ -44,15 +44,27 @@
 </header>
 
 <!-- HERO -->
-<section class="hero-slider">
-  <div class="slide active">
-    <img src="images/home.jpeg" alt="Children smiling">
-    <div class="slide-content">
-      <h1>Every Child Deserves Love</h1>
-      <p>Providing care, hope, and a future.</p>
+<section class="hero-video">
+
+  <!-- VIDEO -->
+  <video autoplay muted loop playsinline class="hero-bg">
+    <source src="videos/children.mp4" type="video/mp4">
+  </video>
+
+  <!-- DARK OVERLAY -->
+  <div class="hero-overlay"></div>
+
+  <!-- CONTENT -->
+  <div class="hero-content">
+    <h1>Every Child Deserves Love</h1>
+    <p>Providing care, hope, and a future.</p>
+
+    <div class="hero-buttons">
       <a href="support.html" class="btn">Donate Now</a>
+      <a href="about.html" class="btn secondary">Learn More</a>
     </div>
   </div>
+
 </section>
 
 <!-- ABOUT -->
@@ -112,6 +124,21 @@ window.addEventListener("scroll", () => {
   } else {
     navbar.classList.remove("scrolled");
   }
+});
+</script>
+
+<script>
+const reveals = document.querySelectorAll(".reveal");
+
+window.addEventListener("scroll", () => {
+  reveals.forEach(el => {
+    const windowHeight = window.innerHeight;
+    const elementTop = el.getBoundingClientRect().top;
+
+    if (elementTop < windowHeight - 100) {
+      el.classList.add("active");
+    }
+  });
 });
 </script>
 
