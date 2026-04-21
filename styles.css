@@ -9,16 +9,12 @@
 
 html, body {
   overflow-x: hidden;
-}
-
-html {
   scroll-behavior: smooth;
 }
 
 /* ================= ROOT ================= */
 :root {
   --purple: #9300a1;
-  --purple-light: #f3e5f5;
   --green: #2e7d32;
   --orange: #ff9800;
   --card: #ffffff;
@@ -28,22 +24,54 @@ html {
 /* ================= BODY ================= */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f9fff9;
+  background: #f9fff9;
   color: #333;
   line-height: 1.6;
-  padding-top: 80px; /* prevents navbar overlap */
+  padding-top: 80px;
+  animation: pageLoad 0.6s ease;
 }
 
-/* ================= CONTAINER ================= */
+@keyframes pageLoad {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= LAYOUT ================= */
 .container {
   max-width: 1100px;
   margin: auto;
   padding: 0 20px;
 }
 
-/* ================= SECTIONS ================= */
 section {
   padding: 60px 0;
+}
+
+/* ================= BUTTON ================= */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  background: var(--purple);
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 2px solid white;
 }
 
 /* ================= NAVBAR ================= */
@@ -55,20 +83,16 @@ section {
 
   background: rgba(255,255,255,0.65);
   backdrop-filter: blur(14px);
-
   border-bottom: 1px solid rgba(0,0,0,0.06);
-  transition: all 0.3s ease;
+  transition: 0.3s ease;
 }
 
-/* SHRINK EFFECT (FIXED) */
 .navbar.scrolled {
   padding: 6px 0;
   background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(18px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-/* NAV CONTAINER */
 .nav-container {
   display: flex;
   justify-content: space-between;
@@ -76,7 +100,7 @@ section {
   padding: 12px 20px;
 }
 
-/* ================= LOGO ================= */
+/* LOGO */
 .logo {
   display: flex;
   align-items: center;
@@ -87,46 +111,39 @@ section {
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
-.logo span {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--green);
-}
-
-/* shrink logo */
 .navbar.scrolled .logo img {
   height: 40px;
   width: 40px;
 }
 
-.navbar.scrolled .logo span {
-  font-size: 16px;
+.logo span {
+  font-weight: 700;
+  color: var(--green);
 }
 
-/* ================= NAV LINKS ================= */
+/* NAV LINKS */
 .nav-links {
   display: flex;
-  align-items: center;
   gap: 18px;
+  align-items: center;
 }
 
 .nav-links a {
   text-decoration: none;
   color: #333;
-  font-weight: 500;
   position: relative;
+  font-weight: 500;
 }
 
-/* underline animation */
 .nav-links a::after {
   content: "";
   position: absolute;
   bottom: -5px;
   left: 0;
-  width: 0%;
+  width: 0;
   height: 2px;
   background: var(--orange);
   transition: 0.3s;
@@ -136,52 +153,11 @@ section {
   width: 100%;
 }
 
-.nav-links a:hover {
-  color: var(--orange);
-}
-
 .nav-links a.active {
   color: var(--purple);
 }
 
-/* ================= BUTTONS ================= */
-.nav-actions button {
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.login {
-  background: transparent;
-  border: 1px solid var(--purple);
-  color: var(--purple);
-}
-
-.login:hover {
-  background: var(--purple);
-  color: white;
-}
-
-.signup {
-  background: var(--purple);
-  color: white;
-}
-
-.signup:hover {
-  background: #6d0077;
-}
-
-.donate {
-  background: #e53935;
-  color: white;
-  margin-left: 10px;
-  padding: 6px 14px;
-  border-radius: 20px;
-}
-
-/* ================= MOBILE ================= */
+/* MOBILE */
 .menu-toggle {
   display: none;
   font-size: 26px;
@@ -189,40 +165,31 @@ section {
 }
 
 @media (max-width: 768px) {
-
-  .menu-toggle {
-    display: block;
-  }
+  .menu-toggle { display: block; }
 
   .nav-links {
     position: absolute;
     top: 70px;
     left: 0;
     width: 100%;
-    background: white;
+    background: #fff;
     flex-direction: column;
     display: none;
     padding: 10px 0;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   }
 
   .nav-links.active {
     display: flex;
   }
-
-  .nav-actions.desktop {
-    display: none;
-  }
 }
 
-/* ================= HERO VIDEO ================= */
+/* ================= HERO ================= */
 .hero-video {
   position: relative;
   height: 90vh;
   overflow: hidden;
 }
 
-/* VIDEO */
 .hero-bg {
   position: absolute;
   width: 100%;
@@ -230,7 +197,7 @@ section {
   object-fit: cover;
 }
 
-/* OVERLAY */
+/* overlay */
 .hero-video::after {
   content: "";
   position: absolute;
@@ -238,7 +205,7 @@ section {
   background: rgba(0,0,0,0.55);
 }
 
-/* CONTENT */
+/* content */
 .hero-overlay {
   position: relative;
   z-index: 2;
@@ -247,12 +214,12 @@ section {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
   text-align: center;
+  color: white;
   padding: 20px;
 }
 
-/* TEXT ANIMATION */
+/* HERO ANIMATION */
 .hero-overlay h1,
 .hero-overlay p,
 .hero-buttons {
@@ -265,61 +232,17 @@ section {
 .hero-overlay p { animation-delay: 0.6s; }
 .hero-buttons { animation-delay: 0.9s; }
 
-/* BUTTONS */
 .hero-buttons {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.btn.secondary {
-  background: transparent;
-  border: 2px solid white;
-}
-
-/* ANIMATION */
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ================= SCROLL ANIMATION ================= */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ================= BUTTON ================= */
-.btn {
-  display: inline-block;
-  padding: 0.8rem 1.8rem;
-  border-radius: 30px;
-  background: var(--purple);
-  color: white;
-  text-decoration: none;
-  margin-top: 12px;
-  transition: all 0.3s ease;
-}
-
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-}
-
 /* ================= CARDS ================= */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
   gap: 20px;
-  margin-top: 20px;
 }
 
 .card {
@@ -327,14 +250,108 @@ section {
   padding: 20px;
   border-radius: 14px;
   box-shadow: var(--shadow);
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+/* ================= REVEAL ANIMATION ================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* LEFT / RIGHT / ZOOM */
+.reveal-left,
+.reveal-right,
+.reveal-zoom {
+  opacity: 0;
+  transition: 0.8s ease;
+}
+
+
+/* ================= GLOBAL IMAGE FIX ================= */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.reveal-left { transform: translateX(-60px); }
+.reveal-right { transform: translateX(60px); }
+.reveal-zoom { transform: scale(0.85); }
+
+.reveal-left.active,
+.reveal-right.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-zoom.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ================= STATS ================= */
+.stats-section {
+  text-align: center;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.stat-box h2 {
+  font-size: 40px;
+  color: var(--purple);
+}
+
+/* ================= TESTIMONIALS ================= */
+.testimonials {
+  background: #f3e5f5;
+  text-align: center;
+}
+
+.testimonial-box {
+  display: none;
+}
+
+.testimonial-box.active {
+  display: block;
 }
 
 /* ================= CTA ================= */
 .cta {
   text-align: center;
-  background: linear-gradient(135deg,#9300a1,#2e7d32);
+  background: linear-gradient(135deg, var(--purple), var(--green));
   color: white;
   padding: 70px 20px;
+}
+
+#admin-link {
+  color: #e53935;
+  font-weight: 600;
+}
+
+#scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--purple), var(--orange));
+  z-index: 9999;
+  transition: width 0.1s ease;
 }
 
 /* ================= FOOTER ================= */
@@ -345,11 +362,23 @@ section {
   padding: 20px;
 }
 
-/* ================= FLOAT ================= */
-@keyframes float {
-  50% { transform: translateY(-10px); }
+/* ================= ANIMATIONS ================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* FLOAT */
 .float {
   animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% { transform: translateY(-10px); }
 }

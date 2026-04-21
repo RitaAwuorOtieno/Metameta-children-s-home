@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | Metameta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<section class="page-hero">
+  <div class="page-hero-content">
+    <h1>Create Account</h1>
+    <p>Join us and make a difference</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+
+    <div class="card" style="max-width:400px; margin:auto;">
+      <h2>Register</h2>
+
+      <input type="email" id="register-email" placeholder="Email" style="width:100%; margin:10px 0; padding:10px;">
+      <input type="password" id="register-password" placeholder="Password" style="width:100%; margin:10px 0; padding:10px;">
+
+      <button class="btn" onclick="handleRegister()">Sign Up</button>
+
+      <p style="margin-top:10px;">
+        Already have an account? <a href="login.html">Login</a>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="script.js"></script>
+
+<script>
+function handleRegister() {
+  const email = document.getElementById("register-email").value;
+  const password = document.getElementById("register-password").value;
+
+  registerUser(email, password);
+}
+</script>
+
+</body>
+</html>

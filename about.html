@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO -->
-  <meta name="description" content="Learn more about Metameta Children's Home, our mission, vision, and the impact we are making in the lives of children.">
+  <meta name="description" content="Learn more about Metameta Children's Home, our mission, vision, and impact.">
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
@@ -25,117 +25,130 @@
   <div class="nav-container">
 
     <div class="logo">
-      <img src="images/metameta-logo.png" alt="Metameta Logo">
+      <img src="images/metameta-logo.png" alt="Logo">
       <span>Metameta Children’s Home</span>
     </div>
 
     <div class="menu-toggle" id="menu-toggle">☰</div>
 
     <nav class="nav-links" id="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html" class="active">About</a>
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
       <a href="programs.html">Programs</a>
       <a href="events.html">Events</a>
       <a href="contact.html">Contact</a>
+      <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
 
       <div class="nav-actions mobile">
         <button class="login">Profile</button>
-        <button class="signup">Logout</button>
+        <button class="login" onclick="window.location.href='login.html'">Login</button>
+<button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
       </div>
     </nav>
 
-    <div class="nav-actions desktop">
-      <button class="login">Login</button>
-      <button class="signup">Sign Up</button>
-    </div>
 
     <button class="donate">Donate</button>
 
   </div>
 </header>
 
-<!-- ================= HERO ================= -->
-<section class="hero-slider">
-  <div class="slide active">
-    <img src="images/home.jpeg" alt="Children smiling" class="float">
-    <div class="slide-content">
-      <h1>About Us</h1>
-      <p>Giving every child a place to belong</p>
+<!-- ================= PAGE HERO ================= -->
+<section class="page-hero">
+
+  <img src="images/babiessmiles.jpeg" alt="About Metameta">
+
+  <div class="page-hero-overlay">
+    <h1>About Us</h1>
+    <p>Giving every child a place to belong</p>
+  </div>
+
+</section>
+
+<!-- ================= WHO WE ARE ================= -->
+<section class="section">
+  <div class="container split">
+
+    <div class="reveal-left">
+      <h2>Our Story</h2>
+<p>
+Metameta Children's Home began with a simple vision — to provide a safe place
+for children who had nowhere else to go. What started as a small initiative
+has grown into a family that continues to transform lives every day.
+</p>
+
+<p>
+Over the years, we have supported dozens of children, helping them
+transition from vulnerability to independence through education,
+care, and mentorship.
+</p>
     </div>
+
+    <div class="reveal-right">
+      <img src="images/smile.jpeg" alt="Children smiling" class="float">
+    </div>
+
   </div>
 </section>
 
-<!-- ================= ABOUT CONTENT ================= -->
-<section>
+<!-- ================= IMPACT STATS ================= -->
+<section class="stats-section reveal">
+  <div class="container stats-grid">
+
+    <div class="stat-box">
+      <h2 class="counter" data-target="2004">0</h2>
+      <p>Founded</p>
+    </div>
+
+    <div class="stat-box">
+      <h2 class="counter" data-target="48">0</h2>
+      <p>Children Supported</p>
+    </div>
+
+    <div class="stat-box">
+      <h2 class="counter" data-target="20">0</h2>
+      <p>Years of Impact</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= MISSION & VALUES ================= -->
+<section class="section reveal">
   <div class="container">
 
-    <!-- WHO WE ARE -->
-    <div class="text-center reveal">
-      <h2>Who We Are</h2>
-      <p>
-        Since 2004, Metameta Children's Home has been a safe haven for vulnerable children.
-        We are committed to nurturing, educating, and empowering every child to build a brighter future.
-      </p>
-    </div>
+    <h2 class="section-title">Our Journey</h2>
 
-    <!-- STATS -->
-    <div class="stats reveal" style="margin-top: 40px;">
-      <div class="stat">
+    <div class="cards stagger">
+
+      <div class="card">
         <h3>2004</h3>
-        <p>Year Founded</p>
-      </div>
-      <div class="stat">
-        <h3>48</h3>
-        <p>Children Supported</p>
-      </div>
-      <div class="stat">
-        <h3>20+</h3>
-        <p>Years of Service</p>
-      </div>
-    </div>
-
-    <!-- MISSION & VISION -->
-    <div class="split reveal" style="margin-top: 50px;">
-
-      <div>
-        <h2>Our Mission</h2>
-        <p>
-          To provide holistic care including shelter, education, healthcare,
-          emotional support, and guidance — empowering children to live meaningful lives.
-        </p>
-
-        <h2 style="margin-top: 20px;">Our Vision</h2>
-        <p>
-          A society where every child is valued, protected, and given equal opportunity to thrive.
-        </p>
+        <p>Metameta Children's Home was founded.</p>
       </div>
 
-      <div class="cards">
-        <div class="card">
-          <h3>❤️ Love First</h3>
-          <p>We create a safe and nurturing home for every child.</p>
-        </div>
+      <div class="card">
+        <h3>2010</h3>
+        <p>Expanded to support more children.</p>
+      </div>
 
-        <div class="card">
-          <h3>📚 Education</h3>
-          <p>We empower children through learning and mentorship.</p>
-        </div>
-
-        <div class="card">
-          <h3>🤝 Community</h3>
-          <p>We grow together with support from partners and well-wishers.</p>
-        </div>
+      <div class="card">
+        <h3>2020</h3>
+        <p>Introduced digital skills programs.</p>
       </div>
 
     </div>
 
-    <!-- DIRECTOR MESSAGE -->
-    <div class="card reveal" style="margin-top: 50px;">
+  </div>
+</section>
+
+<!-- ================= DIRECTOR MESSAGE ================= -->
+<section class="section">
+  <div class="container">
+
+    <div class="card reveal-zoom">
       <h3>A Message From The Director</h3>
       <p>
         Our mission has always been simple — to give children not just a place to stay,
         but a place to call home. Every child deserves love, dignity, and hope.
-        We thank every supporter who walks this journey with us.
       </p>
     </div>
 
@@ -143,29 +156,24 @@
 </section>
 
 <!-- ================= CTA ================= -->
-<section class="cta">
+<section class="cta reveal-zoom">
   <div class="container">
     <h2>Join Us in Changing Lives</h2>
-    <p>Your support can make a difference in a child’s future.</p>
-    <a href="donate.html" class="btn">Donate Now</a>
+    <p>Your support can make a difference.</p>
+    <a href="support.html" class="btn">Donate Now</a>
   </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
   <div class="container">
-    <p>© 2026 Metameta Children's Home. All Rights Reserved.</p>
+    <p>© 2026 Metameta Children's Home</p>
   </div>
 </footer>
 
-<!-- CHATBOT -->
-<div id="chatbot">
-  <div id="chat-header">Chat with us 💬</div>
-  <div id="chat-body"></div>
-  <input type="text" id="chat-input" placeholder="Type a message...">
-</div>
+<!-- ================= SCRIPTS ================= -->
 
-<!-- MENU SCRIPT -->
+<!-- MOBILE MENU -->
 <script>
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
@@ -175,6 +183,7 @@ toggle.addEventListener("click", () => {
 });
 </script>
 
+<!-- NAVBAR SCROLL -->
 <script>
 const navbar = document.querySelector(".navbar");
 
@@ -189,5 +198,68 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
+<!-- SCROLL ANIMATIONS -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const elements = document.querySelectorAll(
+    ".reveal, .reveal-left, .reveal-right, .reveal-zoom, .stagger"
+  );
+
+  const revealOnScroll = () => {
+    elements.forEach(el => {
+      const windowHeight = window.innerHeight;
+      const elementTop = el.getBoundingClientRect().top;
+
+      if (elementTop < windowHeight - 100) {
+        el.classList.add("active");
+      }
+    });
+  };
+
+  revealOnScroll();
+  window.addEventListener("scroll", revealOnScroll);
+
+});
+</script>
+
+<!-- COUNTER -->
+<script>
+const counters = document.querySelectorAll(".counter");
+
+counters.forEach(counter => {
+  const update = () => {
+    const target = +counter.getAttribute("data-target");
+    const current = +counter.innerText;
+
+    const increment = target / 100;
+
+    if (current < target) {
+      counter.innerText = Math.ceil(current + increment);
+      setTimeout(update, 20);
+    } else {
+      counter.innerText = target;
+    }
+  };
+
+  update();
+});
+</script>
+
+<script>
+window.addEventListener("scroll", () => {
+  const scrollBar = document.getElementById("scroll-bar");
+
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+  const scrolled = (scrollTop / scrollHeight) * 100;
+
+  scrollBar.style.width = scrolled + "%";
+});
+</script>
+
 </body>
+
+<div id="scroll-bar"></div>
 </html>

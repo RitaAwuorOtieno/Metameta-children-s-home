@@ -5,16 +5,9 @@
   <title>Contact | Metameta Children's Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO -->
   <meta name="description" content="Contact Metameta Children's Home for donations, visits, volunteering, or partnerships.">
 
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-  <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -36,65 +29,73 @@
       <a href="programs.html">Programs</a>
       <a href="events.html">Events</a>
       <a href="contact.html" class="active">Contact</a>
+      <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
 
       <div class="nav-actions mobile">
         <button class="login">Profile</button>
-        <button class="signup">Logout</button>
+        <button class="login" onclick="window.location.href='login.html'">Login</button>
+<button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
       </div>
     </nav>
-
-    <div class="nav-actions desktop">
-      <button class="login">Login</button>
-      <button class="signup">Sign Up</button>
-    </div>
 
     <button class="donate" onclick="window.location.href='donate.html'">Donate</button>
 
   </div>
 </header>
 
-<!-- ================= HERO ================= -->
-<section class="hero-slider">
-  <div class="slide active">
-    <img src="images/home.jpeg" alt="Contact Metameta">
-    <div class="slide-content">
-      <h1>Get In Touch</h1>
-      <p>We would love to hear from you</p>
-    </div>
+<!-- ================= HERO (VIDEO STYLE) ================= -->
+<section class="hero-video">
+
+  <video autoplay muted loop playsinline class="hero-bg">
+    <source src="videos/children.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay">
+    <h1>Get In Touch</h1>
+    <p>We would love to hear from you</p>
   </div>
+
 </section>
 
 <!-- ================= CONTACT SECTION ================= -->
-<section>
+<section class="reveal">
   <div class="container">
 
-    <div class="contact-grid">
+    <div class="split">
 
       <!-- FORM -->
-      <div class="contact-form-wrapper">
+      <div class="reveal-left">
+
         <h2>Send Us a Message</h2>
 
-        <form onsubmit="saveMessage(event)">
+        <form onsubmit="saveMessage(event)" class="card">
+
           <input type="text" placeholder="Your Name" required>
           <input type="email" placeholder="Your Email" required>
           <textarea placeholder="Your Message" required></textarea>
+
           <button type="submit" class="btn">Send Message</button>
+
         </form>
+
       </div>
 
       <!-- INFO -->
-      <div class="contact-info card">
+      <div class="reveal-right card">
 
         <h2>Contact Details</h2>
 
-        <p><strong>📞 Phone:</strong> 0791 533 154</p>
-        <p><strong>📧 Email:</strong> info@metameta.org</p>
-        <p><strong>📍 Location:</strong> Nairobi, Kenya</p>
+        <p>📞 <strong>0791 533 154</strong></p>
+        <p>📧 info@metameta.org</p>
+        <p>📍 Nairobi, Kenya</p>
 
         <hr style="margin:15px 0;">
 
         <h3>Visit Us</h3>
-        <p>Come spend time with the children or volunteer with us.</p>
+        <p>
+          Come spend time with the children, volunteer, or partner with us
+          in changing lives.
+        </p>
 
         <a href="events.html" class="btn">View Events</a>
 
@@ -106,10 +107,10 @@
 </section>
 
 <!-- ================= CTA ================= -->
-<section class="cta">
+<section class="cta reveal-zoom">
   <div class="container">
     <h2>Support Our Mission</h2>
-    <p>Your contribution can change a child’s life.</p>
+    <p>Your message, visit, or donation can change a child’s life.</p>
     <a href="donate.html" class="btn">Donate Now</a>
   </div>
 </section>
@@ -121,14 +122,9 @@
   </div>
 </footer>
 
-<!-- ================= CHATBOT ================= -->
-<div id="chatbot">
-  <div id="chat-header">Chat with us 💬</div>
-  <div id="chat-body"></div>
-  <input type="text" id="chat-input" placeholder="Type a message...">
-</div>
+<!-- ================= SCRIPTS ================= -->
 
-<!-- ================= MENU SCRIPT ================= -->
+<!-- MENU -->
 <script>
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
@@ -138,6 +134,7 @@ toggle.addEventListener("click", () => {
 });
 </script>
 
+<!-- NAVBAR SCROLL -->
 <script>
 const navbar = document.querySelector(".navbar");
 
@@ -152,5 +149,79 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
+<!-- SCROLL ANIMATION -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const elements = document.querySelectorAll(
+    ".reveal, .reveal-left, .reveal-right, .reveal-zoom"
+  );
+
+  const revealOnScroll = () => {
+    elements.forEach(el => {
+      const windowHeight = window.innerHeight;
+      const elementTop = el.getBoundingClientRect().top;
+
+      if (elementTop < windowHeight - 100) {
+        el.classList.add("active");
+      }
+    });
+  };
+
+  revealOnScroll();
+  window.addEventListener("scroll", revealOnScroll);
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const links = document.querySelectorAll(".nav-links a");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  links.forEach(link => {
+    const linkPage = link.getAttribute("href");
+
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const links = document.querySelectorAll(".nav-links a");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  links.forEach(link => {
+    const linkPage = link.getAttribute("href");
+
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+});
+</script>
+
+<script>
+window.addEventListener("scroll", () => {
+  const scrollBar = document.getElementById("scroll-bar");
+
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+  const scrolled = (scrollTop / scrollHeight) * 100;
+
+  scrollBar.style.width = scrolled + "%";
+});
+</script>
+
 </body>
+
+<div id="scroll-bar"></div>
 </html>

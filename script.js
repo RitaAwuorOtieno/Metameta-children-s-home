@@ -290,3 +290,122 @@ function closeLightbox() {
   }
 }
 });
+
+function loginUser(email, password) {
+  auth.signInWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      alert("Login successful!");
+      window.location.href = "profile.html";
+    })
+    .catch(error => {
+      alert(error.message);
+    });
+}
+
+function registerUser(email, password) {
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      alert("Account created!");
+      window.location.href = "profile.html";
+    })
+    .catch(error => {
+      alert(error.message);
+    });
+}
+
+function logoutUser() {
+  auth.signOut().then(() => {
+    alert("Logged out!");
+    window.location.href = "index.html";
+  });
+}
+
+/* ================= ADD EVENT ================= */
+function addEvent() {
+  const title = document.getElementById("event-title").value;
+  const desc = document.getElementById("event-desc").value;
+  const date = document.getElementById("event-date").value;
+
+  const newEventRef = db.ref("events").push();
+
+  newEventRef.set({
+    title,
+    description: desc,
+    date
+  });
+
+  alert("Event added!");
+
+  document.getElementById("event-title").value = "";
+  document.getElementById("event-desc").value = "";
+  document.getElementById("event-date").value = "";
+}
+
+/* ================= LOAD EVENTS (ADMIN VIEW) ================= */
+function loadEvents() {
+  const list = document.getElementById("event-list");
+
+  db.ref("events").on("value", snapshot => {
+    list.innerHTML = "";
+
+    snapshot.forEach(child => {
+      const data = child.val();
+
+      list.innerHTML += `
+        <div class="card">
+          <h3>${data.title}</h3>
+          <p>${data.description}</p>
+          <small>${data.date}</small>
+        </div>
+      `;
+    });
+  });
+}
+
+/* AUTO RUN IF ON ADMIN PAGE */
+if (document.getElementById("event-list")) {
+  loadEvents();
+}
+
+function loadPublicEvents() {
+  const container = document.getElementById("events-container");
+
+  if (!container) return;
+
+  db.ref("events").on("value", snapshot => {
+    container.innerHTML = "";
+
+    snapshot.forEach(child => {
+      const e = child.val();
+
+      container.innerHTML += `
+        <div class="card reveal">
+          <h3>${e.title}</h3>
+          <p>${e.description}</p>
+          <small>${e.date}</small>
+        </div>
+      `;
+    });
+  });
+}
+
+loadPublicEvents();
+
+auth.onAuthStateChanged(user => {
+  const adminLink = document.getElementById("admin-link");
+
+  if (!adminLink) return;
+
+  if (user) {
+    // 🔐 CHANGE THIS EMAIL TO YOUR ADMIN EMAIL
+    const adminEmail = "ritaawuor53@gmail.com";
+
+    if (user.email === adminEmail) {
+      adminLink.style.display = "inline-block";
+    } else {
+      adminLink.style.display = "none";
+    }
+  } else {
+    adminLink.style.display = "none";
+  }
+});

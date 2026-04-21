@@ -6,17 +6,9 @@
 
   <title>Programs | Metameta Children's Home</title>
 
-  <!-- SEO -->
   <meta name="description" content="Explore programs at Metameta Children's Home including education, feeding, shelter, and digital skills training.">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-  <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -38,93 +30,92 @@
       <a href="programs.html" class="active">Programs</a>
       <a href="events.html">Events</a>
       <a href="contact.html">Contact</a>
+      <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
 
       <div class="nav-actions mobile">
         <button class="login">Profile</button>
-        <button class="signup">Logout</button>
+        <button class="login" onclick="window.location.href='login.html'">Login</button>
+<button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
       </div>
     </nav>
-
-    <div class="nav-actions desktop">
-      <button class="login">Login</button>
-      <button class="signup">Sign Up</button>
-    </div>
 
     <button class="donate" onclick="window.location.href='donate.html'">Donate</button>
 
   </div>
 </header>
 
-<!-- ================= HERO ================= -->
-<section class="hero-slider">
-  <div class="slide active">
-    <img src="images/home.jpeg" alt="Children smiling">
-    <div class="slide-content">
-      <h1>Our Programs</h1>
-      <p>Supporting every child through care, education, and opportunity</p>
-    </div>
+<!-- ================= HERO (VIDEO STYLE) ================= -->
+<section class="hero-video">
+
+  <video autoplay muted loop playsinline class="hero-bg">
+    <source src="videos/children.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay">
+    <h1>Our Programs</h1>
+    <p>Supporting every child through care, education, and opportunity</p>
   </div>
+
 </section>
 
 <!-- ================= INTRO ================= -->
-<section>
-  <div class="container reveal">
-    <h2 style="text-align:center;">Programs at Metameta</h2>
-    <p style="text-align:center; max-width:700px; margin:auto;">
-      Each program is designed to meet real needs — from daily care to long-term empowerment.
-      We believe every child deserves support in every stage of life.
+<section class="reveal">
+  <div class="container text-center">
+
+    <h2 class="section-title">What We Do</h2>
+    <p class="section-subtitle">
+      Our programs are designed to nurture, educate, and empower every child
+      for a brighter and independent future.
     </p>
+
   </div>
 </section>
 
-<!-- ================= PROGRAMS ================= -->
+<!-- ================= PROGRAMS GRID ================= -->
 <section>
   <div class="container">
 
-    <div class="cards">
+    <div class="cards stagger">
 
       <div class="card reveal">
         <h3>🏠 Shelter & Care</h3>
         <p>
-          We provide a safe and loving home environment where children feel secure,
-          valued, and part of a family.
+          A safe, loving environment where children feel protected, valued, and at home.
         </p>
       </div>
 
       <div class="card reveal">
         <h3>🥗 Feeding Program</h3>
         <p>
-          Nutritious meals are provided daily to ensure healthy growth and development.
+          Daily nutritious meals that support healthy growth and well-being.
         </p>
       </div>
 
       <div class="card reveal">
-        <h3>📚 Education Support</h3>
+        <h3>📚 Education</h3>
         <p>
-          We support school attendance, provide learning materials,
-          and encourage academic excellence.
+          School support, materials, and mentorship to encourage academic success.
         </p>
       </div>
 
       <div class="card reveal">
-        <h3>💻 Computer Training</h3>
+        <h3>💻 Digital Skills</h3>
         <p>
-          Children are introduced to digital skills to prepare them for the modern world.
+          Basic ICT training to prepare children for modern opportunities.
         </p>
       </div>
 
       <div class="card reveal">
-        <h3>❤️ Counseling & Mentorship</h3>
+        <h3>❤️ Counseling</h3>
         <p>
-          Emotional support and mentorship help children heal,
-          grow, and build confidence.
+          Emotional healing and mentorship to build confidence and resilience.
         </p>
       </div>
 
       <div class="card reveal">
         <h3>⚽ Talent Development</h3>
         <p>
-          Sports and creative activities help children discover and develop their talents.
+          Sports and creative programs that unlock each child’s potential.
         </p>
       </div>
 
@@ -133,15 +124,34 @@
   </div>
 </section>
 
-<!-- ================= WHY IT MATTERS ================= -->
-<section class="cta">
+<!-- ================= FEATURE SECTION ================= -->
+<section class="reveal">
+  <div class="container split">
+
+    <div class="reveal-left">
+      <h2>Beyond Basic Needs</h2>
+      <p>
+        At Metameta, we don’t just provide care — we build futures.
+        Every program is designed to give children the skills,
+        confidence, and opportunities they need to succeed in life.
+      </p>
+
+      <a href="donate.html" class="btn">Support a Program</a>
+    </div>
+
+    <div class="reveal-right">
+      <img src="images/daycare1.jpeg" alt="Children smiling" class="float">
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta reveal-zoom">
   <div class="container">
-    <h2>Why These Programs Matter</h2>
-    <p>
-      Every program plays a role in shaping a child’s future — from basic needs
-      to long-term independence.
-    </p>
-    <a href="donate.html" class="btn">Support a Program</a>
+    <h2>Be Part of the Impact</h2>
+    <p>Your support helps us run and expand these life-changing programs.</p>
+    <a href="donate.html" class="btn">Donate Now</a>
   </div>
 </section>
 
@@ -152,14 +162,9 @@
   </div>
 </footer>
 
-<!-- ================= CHATBOT ================= -->
-<div id="chatbot">
-  <div id="chat-header">Chat with us 💬</div>
-  <div id="chat-body"></div>
-  <input type="text" id="chat-input" placeholder="Type a message...">
-</div>
+<!-- ================= SCRIPTS ================= -->
 
-<!-- ================= MENU SCRIPT ================= -->
+<!-- MOBILE MENU -->
 <script>
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
@@ -169,6 +174,7 @@ toggle.addEventListener("click", () => {
 });
 </script>
 
+<!-- NAVBAR SCROLL -->
 <script>
 const navbar = document.querySelector(".navbar");
 
@@ -183,5 +189,62 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
+<!-- SCROLL ANIMATIONS -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const elements = document.querySelectorAll(
+    ".reveal, .reveal-left, .reveal-right, .reveal-zoom, .stagger"
+  );
+
+  const revealOnScroll = () => {
+    elements.forEach(el => {
+      const windowHeight = window.innerHeight;
+      const elementTop = el.getBoundingClientRect().top;
+
+      if (elementTop < windowHeight - 100) {
+        el.classList.add("active");
+      }
+    });
+  };
+
+  revealOnScroll();
+  window.addEventListener("scroll", revealOnScroll);
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const links = document.querySelectorAll(".nav-links a");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  links.forEach(link => {
+    const linkPage = link.getAttribute("href");
+
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+});
+</script>
+
+<script>
+window.addEventListener("scroll", () => {
+  const scrollBar = document.getElementById("scroll-bar");
+
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+  const scrolled = (scrollTop / scrollHeight) * 100;
+
+  scrollBar.style.width = scrolled + "%";
+});
+</script>
+
 </body>
+
+<div id="scroll-bar"></div>
 </html>

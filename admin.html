@@ -1,40 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Admin Dashboard | Metameta Children's Home</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-<link rel="stylesheet" href="styles.css">
+<h1>Admin Dashboard</h1>
 
-<!-- Firebase -->
+<!-- CREATE EVENT -->
+<div class="card">
+  <h2>Create Event</h2>
+
+  <input type="text" id="event-title" placeholder="Event Title">
+  <textarea id="event-desc" placeholder="Event Description"></textarea>
+  <input type="date" id="event-date">
+
+  <button class="btn" onclick="addEvent()">Save Event</button>
+</div>
+
+<hr>
+
+<!-- EVENT LIST -->
+<h2>All Events</h2>
+<div id="event-list"></div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
-<script src="admin.js" defer></script>
-</head>
+<script src="script.js">
 
-<body>
+</script>
+<script>
+auth.onAuthStateChanged(user => {
+  if (!user) {
+    window.location.href = "login.html";
+  }
+});
 
-<header class="header">
-  <div class="container header-container">
-    <h2>📊 Admin Dashboard</h2>
-    <button onclick="logout()" class="btn">Logout</button>
-  </div>
-</header>
-
-<section class="section">
-  <div class="container">
-
-    <h2>📩 Messages Inbox</h2>
-
-    <div id="stats"></div>
-
-    <div id="messages-container" class="admin-grid"></div>
-
-  </div>
-</section>
+</script>
 
 </body>
 </html>

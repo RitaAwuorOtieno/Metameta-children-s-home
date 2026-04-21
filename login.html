@@ -1,31 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Admin Login</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="styles.css">
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
-<script src="login.js" defer></script>
+  <meta charset="UTF-8">
+  <title>Login | Metameta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<div class="login-container">
+<section class="page-hero">
+  <div class="page-hero-content">
+    <h1>Login</h1>
+    <p>Access your account</p>
+  </div>
+</section>
 
-  <h2>🔐 Admin Login</h2>
+<section>
+  <div class="container">
 
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password">
+    <div class="card" style="max-width:400px; margin:auto;">
+      <h2>Login</h2>
 
-  <button onclick="login()">Login</button>
+      <input type="email" id="login-email" placeholder="Email" style="width:100%; margin:10px 0; padding:10px;">
+      <input type="password" id="login-password" placeholder="Password" style="width:100%; margin:10px 0; padding:10px;">
 
-</div>
+      <button class="btn" onclick="handleLogin()">Login</button>
+
+      <p style="margin-top:10px;">
+        Don't have an account? <a href="register.html">Sign up</a>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="script.js"></script>
+
+<script>
+function handleLogin() {
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
+  loginUser(email, password);
+}
+</script>
 
 </body>
 </html>

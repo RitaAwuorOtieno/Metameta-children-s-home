@@ -30,94 +30,110 @@
     <div class="menu-toggle" id="menu-toggle">☰</div>
 
     <nav class="nav-links" id="nav-links">
-      <a href="index.html">Home</a>
+      <a href="index.html" class="active">Home</a>
       <a href="about.html">About</a>
       <a href="programs.html">Programs</a>
       <a href="events.html">Events</a>
       <a href="contact.html">Contact</a>
-      <a href="donate.html" class="active">Donate</a>
+      <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
 
       <div class="nav-actions mobile">
         <button class="login">Profile</button>
-        <button class="signup">Logout</button>
+        <button class="login" onclick="window.location.href='login.html'">Login</button>
+<button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
       </div>
     </nav>
 
-    <div class="nav-actions desktop">
-      <button class="login">Login</button>
-      <button class="signup">Sign Up</button>
-    </div>
+
+    <button class="donate">Donate</button>
 
   </div>
 </header>
 
 <!-- ================= HERO ================= -->
-<section class="hero-slider">
-  <div class="slide active">
-    <img src="images/home.jpeg" alt="Donation support">
-    <div class="slide-content">
-      <h1>Change a Child’s Life Today</h1>
-      <p>Your support brings food, education, and hope</p>
-    </div>
+<section class="hero-video">
+
+  <img src="images/kidshelping.jpeg" class="hero-bg" alt="Helping children">
+
+  <div class="hero-overlay">
+    <h1>Give Hope. Change a Life.</h1>
+    <p>Every donation feeds, educates, and protects a child</p>
+
+    <a href="#donation" class="btn">Start Giving</a>
   </div>
+
 </section>
 
-<!-- ================= DONATION INTRO ================= -->
-<section>
-  <div class="container" style="text-align:center;">
-    <h2>Ways to Support Us</h2>
-    <p style="max-width:700px; margin:auto;">
-      Every contribution—big or small—helps us provide food, shelter, education,
-      and love to vulnerable children at Metameta Children’s Home.
-    </p>
-  </div>
-</section>
-
-<!-- ================= DONATION OPTIONS ================= -->
-<section>
+<!-- ================= IMPACT STATS ================= -->
+<section class="reveal">
   <div class="container cards">
+
+    <div class="card">
+      <h2>48+</h2>
+      <p>Children Supported</p>
+    </div>
+
+    <div class="card">
+      <h2>20+</h2>
+      <p>Years of Service</p>
+    </div>
+
+    <div class="card">
+      <h2>100%</h2>
+      <p>Goes Directly to Children</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= DONATION SECTION ================= -->
+<section id="donation" class="container reveal">
+
+  <h2 style="text-align:center;">Ways to Support Us</h2>
+
+  <div class="cards">
+
+    <!-- MPESA (HIGHLIGHTED MAIN OPTION) -->
+    <div class="card highlight">
+      <h3>📱 M-Pesa Donation (Fastest)</h3>
+      <p><strong>Paybill:</strong> 123456</p>
+      <p><strong>Account:</strong> Your Name</p>
+
+      <input type="number" placeholder="Enter Amount (KES)" id="amount"
+        style="width:100%; padding:10px; margin:10px 0;">
+
+      <button class="btn" onclick="simulatePayment()">
+        Donate Now
+      </button>
+
+      <p id="payment-status" style="margin-top:10px;"></p>
+    </div>
 
     <!-- BANK -->
     <div class="card">
       <h3>🏦 Bank Transfer</h3>
       <p><strong>Account Name:</strong> Metameta Development Centre</p>
       <p><strong>Account Number:</strong> 01134154075900</p>
-      <p>Contact us for bank details (branch & bank name).</p>
-    </div>
-
-    <!-- MPESA -->
-    <div class="card">
-      <h3>📱 M-Pesa Donation</h3>
-      <p><strong>Paybill:</strong> 123456</p>
-      <p><strong>Account:</strong> Your Name</p>
-
-      <input type="number" placeholder="Enter Amount (KES)" id="amount" style="width:100%; padding:10px; margin:10px 0;">
-
-      <button class="btn" onclick="simulatePayment()">
-        Donate Now
-      </button>
-
-      <p id="payment-status" style="margin-top:10px; font-weight:bold;"></p>
+      <p>Contact us for bank branch details.</p>
     </div>
 
     <!-- CONTACT -->
     <div class="card">
       <h3>📞 Direct Support</h3>
-      <p><strong>Phone:</strong> 0791 533 154</p>
-      <p>Call or WhatsApp us for partnerships and donations.</p>
-
+      <p>0791 533 154</p>
+      <p>Call or WhatsApp for partnerships</p>
       <a href="contact.html" class="btn">Contact Us</a>
     </div>
 
   </div>
+
 </section>
 
-<!-- ================= IMPACT CTA ================= -->
-<section class="cta">
+<!-- ================= TRUST MESSAGE ================= -->
+<section class="cta reveal">
   <div class="container">
-    <h2>Your Donation Makes a Real Impact</h2>
-    <p>Help us feed, educate, and protect every child in our care.</p>
-    <a href="contact.html" class="btn">Become a Partner</a>
+    <h2>Transparent & Trusted Giving</h2>
+    <p>Every donation is used directly for food, education, and care of the children.</p>
   </div>
 </section>
 
@@ -138,6 +154,7 @@ toggle.addEventListener("click", () => {
 });
 </script>
 
+<!-- ================= NAV SCROLL EFFECT ================= -->
 <script>
 const navbar = document.querySelector(".navbar");
 
@@ -152,5 +169,37 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const links = document.querySelectorAll(".nav-links a");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  links.forEach(link => {
+    const linkPage = link.getAttribute("href");
+
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+});
+</script>
+
+<script>
+window.addEventListener("scroll", () => {
+  const scrollBar = document.getElementById("scroll-bar");
+
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+  const scrolled = (scrollTop / scrollHeight) * 100;
+
+  scrollBar.style.width = scrolled + "%";
+});
+</script>
+
 </body>
+
+<div id="scroll-bar"></div>
 </html>

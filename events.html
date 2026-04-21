@@ -8,12 +8,6 @@
   <meta name="description" content="See our events, outreach programs, and real stories from Metameta Children's Home.">
 
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-  <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -35,151 +29,127 @@
       <a href="programs.html">Programs</a>
       <a href="events.html" class="active">Events</a>
       <a href="contact.html">Contact</a>
+      <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
 
       <div class="nav-actions mobile">
         <button class="login">Profile</button>
-        <button class="signup">Logout</button>
+        <button class="login" onclick="window.location.href='login.html'">Login</button>
+<button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
       </div>
     </nav>
-
-    <div class="nav-actions desktop">
-      <button class="login">Login</button>
-      <button class="signup">Sign Up</button>
-    </div>
 
     <button class="donate" onclick="window.location.href='donate.html'">Donate</button>
 
   </div>
 </header>
 
-<!-- ================= HERO ================= -->
-<section class="hero-slider">
-  <div class="slide active">
-    <img src="images/home.jpeg" alt="Children smiling">
-    <div class="slide-content">
-      <h1>Our Events & Impact</h1>
-      <p>Bringing hope through community, outreach, and love</p>
-    </div>
+<!-- ================= HERO (VIDEO STYLE) ================= -->
+<section class="hero-video">
+
+  <video autoplay muted loop playsinline class="hero-bg">
+    <source src="videos/children.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay">
+    <h1>Our Events & Impact</h1>
+    <p>Bringing hope through community, outreach, and love</p>
+  </div>
+
+</section>
+
+<!-- ================= INTRO ================= -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Our Events</h2>
+    <div id="events-container" class="cards"></div>
   </div>
 </section>
 
-<!-- ================= EVENTS INTRO ================= -->
+<!-- ================= EVENTS CARDS ================= -->
 <section>
-  <div class="container reveal" style="text-align:center;">
-    <h2>Our Events</h2>
-    <p style="max-width:700px; margin:auto;">
-      We regularly organize charity visits, outreach programs, and community events
-      that bring joy and support to the children at Metameta.
-    </p>
-  </div>
-</section>
-
-<!-- ================= EVENTS LIST ================= -->
-<section>
-  <div class="container cards">
+  <div class="container cards stagger">
 
     <div class="card reveal">
       <h3>🎉 Charity Visits</h3>
-      <p>We host regular visits where supporters spend time with the children.</p>
+      <p>Supporters visit, spend time with children, and share love and encouragement.</p>
     </div>
 
     <div class="card reveal">
       <h3>🎁 Donation Drives</h3>
-      <p>Clothes, food, and essentials are collected and distributed.</p>
+      <p>We collect food, clothes, and essentials for the children’s daily needs.</p>
     </div>
 
     <div class="card reveal">
-      <h3>📚 Education Events</h3>
-      <p>Workshops, mentorship, and learning activities.</p>
+      <h3>📚 Education Workshops</h3>
+      <p>Learning sessions, mentorship programs, and skill-building activities.</p>
     </div>
 
     <div class="card reveal">
       <h3>🎂 Celebrations</h3>
-      <p>Birthdays and special days are celebrated with love and joy.</p>
+      <p>We celebrate birthdays and milestones to make every child feel valued.</p>
     </div>
 
   </div>
 </section>
 
 <!-- ================= ALUMNI STORIES ================= -->
-<section class="alumni-section">
+<section class="reveal">
   <div class="container">
 
-    <div class="section-header" style="text-align:center;">
-      <h2>Voices of Our Alumni</h2>
-      <p>Stories of transformation and hope</p>
+    <div class="text-center">
+      <h2 class="section-title">Voices of Our Alumni</h2>
+      <p class="section-subtitle">Real stories of transformation and hope</p>
     </div>
 
-    <div class="gallery-grid">
+    <div class="cards stagger">
 
-      <div class="gallery-item">
-        <a href="images/Rita.jpeg" target="_blank">
-          <img src="images/Rita.jpeg" alt="Rita Alumni">
-        </a>
-        <div class="caption">
-          <h4>Rita A.</h4>
-          <p>"Metameta gave me stability and education."</p>
-        </div>
+      <div class="card">
+        <h3>Rita A.</h3>
+        <p>"Metameta gave me stability and education."</p>
       </div>
 
-      <div class="gallery-item">
-        <a href="images/Stacy.jpeg" target="_blank">
-          <img src="images/Stacy.jpeg" alt="Stacy Alumni">
-        </a>
-        <div class="caption">
-          <h4>Annastacia M.</h4>
-          <p>"I now work as a digital assistant."</p>
-        </div>
+      <div class="card">
+        <h3>Annastacia M.</h3>
+        <p>"I now work as a digital assistant."</p>
       </div>
 
-      <div class="gallery-item">
-        <a href="images/silas.jpeg" target="_blank">
-          <img src="images/silas.jpeg" alt="Silas Alumni">
-        </a>
-        <div class="caption">
-          <h4>Silas A.</h4>
-          <p>"I gained confidence and purpose."</p>
-        </div>
+      <div class="card">
+        <h3>Silas A.</h3>
+        <p>"I gained confidence and purpose."</p>
       </div>
 
     </div>
+
   </div>
 </section>
 
 <!-- ================= JOURNEY ================= -->
-<section>
-  <div class="container">
+<section class="reveal">
+  <div class="container split">
 
-    <h2 style="text-align:center;">A Child’s Journey</h2>
+    <div class="reveal-left">
+      <h2>A Child’s Journey</h2>
+      <p>
+        Every child’s story changes through care, education, and love.
+        From hardship to hope — this is the impact we create.
+      </p>
 
-    <div class="cards" style="margin-top:30px;">
+      <a href="contact.html" class="btn">Get Involved</a>
+    </div>
 
-      <div class="card">
-        <h3>Before</h3>
-        <p>Unstable life, limited access to education and basic needs.</p>
-      </div>
-
-      <div class="card">
-        <h3>At Metameta</h3>
-        <p>Safe home, education, mentorship, and emotional support.</p>
-      </div>
-
-      <div class="card">
-        <h3>After</h3>
-        <p>Independent, confident, and contributing to society.</p>
-      </div>
-
+    <div class="reveal-right">
+      <img src="images/smile.jpeg" alt="Happy children" class="float">
     </div>
 
   </div>
 </section>
 
 <!-- ================= CTA ================= -->
-<section class="cta">
+<section class="cta reveal-zoom">
   <div class="container">
     <h2>Be Part of Our Next Event</h2>
-    <p>Join us, volunteer, or support our mission.</p>
-    <a href="contact.html" class="btn">Get Involved</a>
+    <p>Join us, volunteer, or support our mission today.</p>
+    <a href="contact.html" class="btn">Join Us</a>
   </div>
 </section>
 
@@ -190,14 +160,8 @@
   </div>
 </footer>
 
-<!-- ================= CHATBOT ================= -->
-<div id="chatbot">
-  <div id="chat-header">Chat 💬</div>
-  <div id="chat-body"></div>
-  <input type="text" id="chat-input" placeholder="Type message...">
-</div>
+<!-- ================= SCRIPTS ================= -->
 
-<!-- ================= MENU SCRIPT ================= -->
 <script>
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
@@ -221,5 +185,61 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const elements = document.querySelectorAll(
+    ".reveal, .reveal-left, .reveal-right, .reveal-zoom, .stagger"
+  );
+
+  const revealOnScroll = () => {
+    elements.forEach(el => {
+      const windowHeight = window.innerHeight;
+      const elementTop = el.getBoundingClientRect().top;
+
+      if (elementTop < windowHeight - 100) {
+        el.classList.add("active");
+      }
+    });
+  };
+
+  revealOnScroll();
+  window.addEventListener("scroll", revealOnScroll);
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const links = document.querySelectorAll(".nav-links a");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  links.forEach(link => {
+    const linkPage = link.getAttribute("href");
+
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+});
+</script>
+
+<script>
+window.addEventListener("scroll", () => {
+  const scrollBar = document.getElementById("scroll-bar");
+
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+  const scrolled = (scrollTop / scrollHeight) * 100;
+
+  scrollBar.style.width = scrolled + "%";
+});
+</script>
+
 </body>
+
+<div id="scroll-bar"></div>
 </html>
