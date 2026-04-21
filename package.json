@@ -1,0 +1,24 @@
+{
+  "name": "metameta-childrens-home",
+  "version": "1.0.0",
+  "description": "Metameta Children's Home",
+  "main": "admin.js",
+  "scripts": {
+    "build": "echo 'Build script needed'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RitaAwuorOtieno/Metameta-children-s-home.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/RitaAwuorOtieno/Metameta-children-s-home/issues"
+  },
+  "homepage": "https://github.com/RitaAwuorOtieno/Metameta-children-s-home#readme"
+}
+
+
+
