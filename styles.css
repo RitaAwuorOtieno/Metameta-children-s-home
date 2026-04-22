@@ -15,16 +15,19 @@ html, body {
 /* ================= ROOT ================= */
 :root {
   --purple: #9300a1;
-  --green: #2e7d32;
-  --orange: #ff9800;
+  --green: #14bba6;
+  --orange: #e5e7eb;
   --card: #ffffff;
   --shadow: 0 6px 20px rgba(0,0,0,0.08);
+  --yellow: #FFFF00;
+  --light-blue: #ADD8E6;
+  --soft-gray: #f5f5f5;
 }
 
 /* ================= BODY ================= */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #f9fff9;
+  background: var(--soft-gray);
   color: #333;
   line-height: 1.6;
   padding-top: 80px;
@@ -58,20 +61,23 @@ section {
   display: inline-block;
   padding: 0.8rem 1.8rem;
   border-radius: 30px;
-  background: var(--purple);
-  color: #fff;
+  background: var(--yellow);
+  color: #000;
   text-decoration: none;
   transition: 0.3s ease;
+
 }
+
 
 .btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  background-color: var(--light-blue);
 }
 
 .btn.secondary {
-  background: transparent;
-  border: 2px solid white;
+  background: var(--light-blue);
+  border: 2px solid var(--light-blue);
 }
 
 /* ================= NAVBAR ================= */
@@ -82,7 +88,7 @@ section {
   z-index: 1000;
   
 
-  background: purple;
+  background: darkblue;
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(0,0,0,0.06);
   transition: 0.3s ease;
@@ -90,7 +96,7 @@ section {
 
 .navbar.scrolled {
   padding: 6px 0;
-  background: rgba(255,255,255,0.85);
+  background: rgba(131, 2, 109, 0.85);
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
@@ -101,6 +107,10 @@ section {
   padding: 12px 20px;
 }
 
+.nav-buttons {
+  background-color: yellowgreen;
+}
+
 /* LOGO */
 .logo {
   display: flex;
@@ -109,8 +119,8 @@ section {
 }
 
 .logo img {
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
   transition: 0.3s ease;
 }
@@ -256,6 +266,7 @@ section {
 
 .card:hover {
   transform: translateY(-10px);
+  background-color: var(--light-blue);
 }
 
 /* ================= REVEAL ANIMATION ================= */
