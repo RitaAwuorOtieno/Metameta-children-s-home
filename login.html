@@ -9,45 +9,33 @@
 
 <body>
 
-<section class="page-hero">
-  <div class="page-hero-content">
-    <h1>Login</h1>
-    <p>Access your account</p>
+<div class="auth-container">
+
+  <div class="auth-card">
+    <h2>Welcome Back 👋</h2>
+    <p>Login to continue</p>
+
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+
+    <button class="btn" onclick="loginUser()">Login</button>
+
+    <p id="login-error" style="color:red; margin-top:10px;"></p>
+
+    <p style="margin-top:10px;">
+      Don’t have an account?
+      <a href="signup.html">Sign Up</a>
+    </p>
   </div>
-</section>
 
-<section>
-  <div class="container">
+</div>
 
-    <div class="card" style="max-width:400px; margin:auto;">
-      <h2>Login</h2>
-
-      <input type="email" id="login-email" placeholder="Email" style="width:100%; margin:10px 0; padding:10px;">
-      <input type="password" id="login-password" placeholder="Password" style="width:100%; margin:10px 0; padding:10px;">
-
-      <button class="btn" onclick="handleLogin()">Login</button>
-
-      <p style="margin-top:10px;">
-        Don't have an account? <a href="register.html">Sign up</a>
-      </p>
-    </div>
-
-  </div>
-</section>
-
+<!-- Firebase (ORDER MATTERS) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script src="script.js"></script>
-
-<script>
-function handleLogin() {
-  const email = document.getElementById("login-email").value;
-  const password = document.getElementById("login-password").value;
-
-  loginUser(email, password);
-}
-</script>
 
 </body>
 </html>

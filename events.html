@@ -30,12 +30,6 @@
       <a href="events.html" class="active">Events</a>
       <a href="contact.html">Contact</a>
       <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
-
-      <div class="nav-actions mobile">
-        <button class="login">Profile</button>
-        <button class="login" onclick="window.location.href='login.html'">Login</button>
-<button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
-      </div>
     </nav>
 
     <button class="donate" onclick="window.location.href='donate.html'">Donate</button>
@@ -43,7 +37,7 @@
   </div>
 </header>
 
-<!-- ================= HERO (VIDEO STYLE) ================= -->
+<!-- ================= HERO ================= -->
 <section class="hero-video">
 
   <video autoplay muted loop playsinline class="hero-bg">
@@ -57,89 +51,14 @@
 
 </section>
 
-<!-- ================= INTRO ================= -->
+<!-- ================= EVENTS SECTION (FIXED) ================= -->
 <section>
   <div class="container">
-    <h2 class="section-title">Our Events</h2>
+
+    <h2 class="section-title">Upcoming Events</h2>
+
+    <!-- ✅ ONLY ONE CONTAINER (IMPORTANT FIX) -->
     <div id="events-container" class="cards"></div>
-  </div>
-</section>
-
-<!-- ================= EVENTS CARDS ================= -->
-<section>
-  <div class="container cards stagger">
-
-    <div class="card reveal">
-      <h3>🎉 Charity Visits</h3>
-      <p>Supporters visit, spend time with children, and share love and encouragement.</p>
-    </div>
-
-    <div class="card reveal">
-      <h3>🎁 Donation Drives</h3>
-      <p>We collect food, clothes, and essentials for the children’s daily needs.</p>
-    </div>
-
-    <div class="card reveal">
-      <h3>📚 Education Workshops</h3>
-      <p>Learning sessions, mentorship programs, and skill-building activities.</p>
-    </div>
-
-    <div class="card reveal">
-      <h3>🎂 Celebrations</h3>
-      <p>We celebrate birthdays and milestones to make every child feel valued.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ================= ALUMNI STORIES ================= -->
-<section class="reveal">
-  <div class="container">
-
-    <div class="text-center">
-      <h2 class="section-title">Voices of Our Alumni</h2>
-      <p class="section-subtitle">Real stories of transformation and hope</p>
-    </div>
-
-    <div class="cards stagger">
-
-      <div class="card">
-        <h3>Rita A.</h3>
-        <p>"Metameta gave me stability and education."</p>
-      </div>
-
-      <div class="card">
-        <h3>Annastacia M.</h3>
-        <p>"I now work as a digital assistant."</p>
-      </div>
-
-      <div class="card">
-        <h3>Silas A.</h3>
-        <p>"I gained confidence and purpose."</p>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- ================= JOURNEY ================= -->
-<section class="reveal">
-  <div class="container split">
-
-    <div class="reveal-left">
-      <h2>A Child’s Journey</h2>
-      <p>
-        Every child’s story changes through care, education, and love.
-        From hardship to hope — this is the impact we create.
-      </p>
-
-      <a href="contact.html" class="btn">Get Involved</a>
-    </div>
-
-    <div class="reveal-right">
-      <img src="images/smile.jpeg" alt="Happy children" class="float">
-    </div>
 
   </div>
 </section>
@@ -160,8 +79,15 @@
   </div>
 </footer>
 
-<!-- ================= SCRIPTS ================= -->
+<!-- ================= FIREBASE ================= -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
+<!-- YOUR MAIN SCRIPT -->
+<script src="script.js"></script>
+
+<!-- MENU TOGGLE -->
 <script>
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
@@ -171,12 +97,11 @@ toggle.addEventListener("click", () => {
 });
 </script>
 
+<!-- SCROLL EFFECT -->
 <script>
 const navbar = document.querySelector(".navbar");
 
 window.addEventListener("scroll", () => {
-  if (!navbar) return;
-
   if (window.scrollY > 50) {
     navbar.classList.add("scrolled");
   } else {
@@ -185,61 +110,5 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const elements = document.querySelectorAll(
-    ".reveal, .reveal-left, .reveal-right, .reveal-zoom, .stagger"
-  );
-
-  const revealOnScroll = () => {
-    elements.forEach(el => {
-      const windowHeight = window.innerHeight;
-      const elementTop = el.getBoundingClientRect().top;
-
-      if (elementTop < windowHeight - 100) {
-        el.classList.add("active");
-      }
-    });
-  };
-
-  revealOnScroll();
-  window.addEventListener("scroll", revealOnScroll);
-
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const links = document.querySelectorAll(".nav-links a");
-  const currentPage = window.location.pathname.split("/").pop();
-
-  links.forEach(link => {
-    const linkPage = link.getAttribute("href");
-
-    if (linkPage === currentPage) {
-      link.classList.add("active");
-    } else {
-      link.classList.remove("active");
-    }
-  });
-});
-</script>
-
-<script>
-window.addEventListener("scroll", () => {
-  const scrollBar = document.getElementById("scroll-bar");
-
-  const scrollTop = document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-  const scrolled = (scrollTop / scrollHeight) * 100;
-
-  scrollBar.style.width = scrolled + "%";
-});
-</script>
-
 </body>
-
-<div id="scroll-bar"></div>
 </html>

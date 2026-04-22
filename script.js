@@ -11,46 +11,33 @@ const firebaseConfig = {
   appId: "1:153087607234:web:b0883c1c192fe06447965b"
 };
 
+// ================= ADMIN CONFIG =================
+const ADMIN_EMAIL = "ritaawuor53@gmail.com";
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Database reference
+// Services
+const auth = firebase.auth();
 const db = firebase.database();
 
 
 // ===============================
-// RUN AFTER PAGE LOAD
+// DOM READY
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===============================
-     ACTIVE NAV LINK
-  =============================== */
-  const currentPath = window.location.pathname.split("/").pop() || "index.html";
-
-  document.querySelectorAll(".nav a").forEach(link => {
-    if (link.getAttribute("href") === currentPath) {
-      link.classList.add("active");
-    }
-  });
-
-
-  /* ===============================
-     MOBILE MENU
-  =============================== */
+  // ================= MOBILE MENU =================
   const menuBtn = document.querySelector(".menu-toggle");
-  const nav = document.querySelector(".nav");
+  const nav = document.querySelector(".nav-links");
 
-  // if (menuBtn && nav) {
+  if (menuBtn && nav) {
     menuBtn.addEventListener("click", () => {
       nav.classList.toggle("active");
     });
-  // }
+  }
 
-
-  /* ===============================
-     REVEAL ON SCROLL
-  =============================== */
+  // ================= REVEAL ON SCROLL =================
   const revealItems = document.querySelectorAll(".reveal");
 
   if (revealItems.length > 0) {
@@ -65,10 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     revealItems.forEach(el => observer.observe(el));
   }
 
-
-  /* ===============================
-     COUNTER ANIMATION
-  =============================== */
+  // ================= COUNTERS =================
   const counters = document.querySelectorAll("[data-count]");
 
   if (counters.length > 0) {
@@ -98,128 +82,27 @@ document.addEventListener("DOMContentLoaded", () => {
     counters.forEach(el => observer.observe(el));
   }
 
-
-  /* ===============================
-     HEADER SCROLL EFFECT
-  =============================== */
-  const header = document.querySelector(".header");
+  // ================= HEADER SCROLL =================
+  const header = document.querySelector(".navbar");
   let lastScroll = 0;
 
   window.addEventListener("scroll", () => {
     const current = window.scrollY;
 
-    if (!header) return;
+    if (header) {
+      header.classList.toggle("scrolled", current > 50);
 
-    header.classList.toggle("scrolled", current > 50);
-
-    if (current > lastScroll && current > 150) {
-      header.style.transform = "translateY(-100%)";
-    } else {
-      header.style.transform = "translateY(0)";
-    }
-
-    lastScroll = current;
-  });
-
-
-  /* ===============================
-     PROGRESS BAR
-  =============================== */
-  const progressBar = document.getElementById("progress-bar");
-
-  window.addEventListener("scroll", () => {
-    if (!progressBar) return;
-
-    const scrollTop = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const percent = (scrollTop / height) * 100;
-
-    progressBar.style.width = percent + "%";
-  });
-
-
-  /* ===============================
-     HERO SLIDER
-  =============================== */
-  const slides = document.querySelectorAll(".slide");
-  const dots = document.querySelectorAll(".dot");
-  const nextBtn = document.querySelector(".next");
-  const prevBtn = document.querySelector(".prev");
-
-  let currentSlide = 0;
-  let interval;
-
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle("active", i === index);
-      if (dots[i]) dots[i].classList.toggle("active", i === index);
-    });
-    currentSlide = index;
-  }
-
-  function nextSlide() {
-    showSlide((currentSlide + 1) % slides.length);
-  }
-
-  function prevSlide() {
-    showSlide((currentSlide - 1 + slides.length) % slides.length);
-  }
-
-  function startSlider() {
-    interval = setInterval(nextSlide, 2000);
-  }
-
-  function stopSlider() {
-    clearInterval(interval);
-  }
-
-  if (slides.length > 0) {
-    showSlide(0);
-    startSlider();
-
-    nextBtn?.addEventListener("click", nextSlide);
-    prevBtn?.addEventListener("click", prevSlide);
-
-    dots.forEach((dot, i) => {
-      dot.addEventListener("click", () => showSlide(i));
-    });
-
-    const slider = document.querySelector(".hero-slider");
-    slider?.addEventListener("mouseenter", stopSlider);
-    slider?.addEventListener("mouseleave", startSlider);
-  }
-
-
-  /* ===============================
-     THEME TOGGLE (FIXED)
-  =============================== */
-  const toggle = document.querySelector(".theme-toggle");
-
-  if (toggle) {
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme === "dark") {
-      document.body.classList.add("dark");
-      toggle.textContent = "☀️";
-    }
-
-    toggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-
-      if (document.body.classList.contains("dark")) {
-        localStorage.setItem("theme", "dark");
-        toggle.textContent = "☀️";
+      if (current > lastScroll && current > 150) {
+        header.style.transform = "translateY(-100%)";
       } else {
-        localStorage.setItem("theme", "light");
-        toggle.textContent = "🌙";
+        header.style.transform = "translateY(0)";
       }
-    });
-  }
 
+      lastScroll = current;
+    }
+  });
 
-  /* ===============================
-     CHATBOT
-  =============================== */
+  // ================= CHATBOT =================
   const chatInput = document.getElementById("chat-input");
   const chatBody = document.getElementById("chat-body");
 
@@ -241,11 +124,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+});
 
-  // ===============================
-// SAVE FORM TO FIREBASE
+
 // ===============================
-window.saveMessage = function(e) {
+// SAVE MESSAGE TO FIREBASE
+// ===============================
+window.saveMessage = function (e) {
   e.preventDefault();
 
   const form = e.target;
@@ -257,7 +142,6 @@ window.saveMessage = function(e) {
     date: new Date().toISOString()
   };
 
-  // Push to Firebase
   db.ref("messages").push(data)
     .then(() => {
       alert("Message sent successfully 💙");
@@ -270,142 +154,346 @@ window.saveMessage = function(e) {
 };
 
 
-/* ===============================
-   LIGHTBOX
-=============================== */
-function openLightbox(img) {
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
+// ===============================
+// AUTH FUNCTIONS
+// ===============================
+function loginUser() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const errorBox = document.getElementById("login-error");
 
-  if (lightbox && lightboxImg) {
-    lightbox.style.display = "flex";
-    lightboxImg.src = img.src;
-  }
-}
-
-function closeLightbox() {
-  const lightbox = document.getElementById("lightbox");
-  if (lightbox) {
-    lightbox.style.display = "none";
-  }
-}
-});
-
-function loginUser(email, password) {
   auth.signInWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      alert("Login successful!");
-      window.location.href = "profile.html";
+    .then((userCredential) => {
+      const user = userCredential.user;
+
+      if (user.email === ADMIN_EMAIL) {
+        window.location.href = "admin.html";
+      } else {
+        window.location.href = "profile.html";
+      }
     })
-    .catch(error => {
-      alert(error.message);
+    .catch(err => {
+      if (errorBox) {
+        errorBox.textContent = err.message;
+      } else {
+        alert(err.message);
+      }
     });
 }
 
-function registerUser(email, password) {
+function signupUser() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
   auth.createUserWithEmailAndPassword(email, password)
-    .then(userCredential => {
+    .then(() => {
       alert("Account created!");
-      window.location.href = "profile.html";
+      window.location.href = "index.html";
     })
-    .catch(error => {
-      alert(error.message);
-    });
+    .catch(err => alert(err.message));
 }
 
 function logoutUser() {
   auth.signOut().then(() => {
-    alert("Logged out!");
     window.location.href = "index.html";
   });
 }
 
-/* ================= ADD EVENT ================= */
-function addEvent() {
-  const title = document.getElementById("event-title").value;
-  const desc = document.getElementById("event-desc").value;
-  const date = document.getElementById("event-date").value;
 
-  const newEventRef = db.ref("events").push();
+// ===============================
+// AUTH STATE (UI + SECURITY)
+// ===============================
+auth.onAuthStateChanged(user => {
+  const loginBtn = document.querySelector(".login");
+  const signupBtn = document.querySelector(".signup");
+  const adminLink = document.getElementById("admin-link");
 
-  newEventRef.set({
-    title,
-    description: desc,
-    date
+  if (user) {
+
+    // PROFILE BUTTON
+    if (loginBtn) {
+      loginBtn.textContent = "Profile";
+      loginBtn.onclick = () => window.location.href = "profile.html";
+    }
+
+    // LOGOUT BUTTON
+    if (signupBtn) {
+      signupBtn.textContent = "Logout";
+      signupBtn.onclick = logoutUser;
+    }
+
+    // ADMIN LINK
+    if (adminLink) {
+      if (user.email === ADMIN_EMAIL) {
+        adminLink.style.display = "inline-block";
+      } else {
+        adminLink.style.display = "none";
+      }
+    }
+
+    // ADMIN PAGE PROTECTION
+    if (window.location.pathname.includes("admin.html")) {
+      if (user.email !== ADMIN_EMAIL) {
+        alert("Access denied");
+        window.location.href = "index.html";
+      }
+    }
+
+  } else {
+
+    // NOT LOGGED IN
+    if (loginBtn) {
+      loginBtn.textContent = "Login";
+      loginBtn.onclick = () => window.location.href = "login.html";
+    }
+
+    if (signupBtn) {
+      signupBtn.textContent = "Sign Up";
+      signupBtn.onclick = () => window.location.href = "signup.html";
+    }
+
+    if (adminLink) {
+      adminLink.style.display = "none";
+    }
+
+    // BLOCK ADMIN PAGE
+    if (window.location.pathname.includes("admin.html")) {
+      alert("Please login first");
+      window.location.href = "login.html";
+    }
+  }
+});
+
+
+// ===============================
+// SIMULATE MPESA PAYMENT
+// ===============================
+function simulatePayment() {
+  const amount = document.getElementById("amount").value;
+  const user = auth.currentUser;
+
+  if (!user) {
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  db.ref("donations").push({
+    amount: amount,
+    email: user.email,
+    date: new Date().toLocaleString()
   });
 
-  alert("Event added!");
-
-  document.getElementById("event-title").value = "";
-  document.getElementById("event-desc").value = "";
-  document.getElementById("event-date").value = "";
+  document.getElementById("payment-status").innerText =
+    "Payment successful (simulated)";
 }
 
-/* ================= LOAD EVENTS (ADMIN VIEW) ================= */
-function loadEvents() {
-  const list = document.getElementById("event-list");
+// ================= LOAD MESSAGES =================
+function loadMessages() {
+  const container = document.getElementById("messages-list");
+  if (!container) return;
 
-  db.ref("events").on("value", snapshot => {
-    list.innerHTML = "";
+  db.ref("messages").on("value", snapshot => {
+    container.innerHTML = "";
 
     snapshot.forEach(child => {
-      const data = child.val();
+      const msg = child.val();
 
-      list.innerHTML += `
-        <div class="card">
-          <h3>${data.title}</h3>
-          <p>${data.description}</p>
-          <small>${data.date}</small>
+      container.innerHTML += `
+        <div class="card" style="margin-top:10px;">
+          <strong>${msg.name}</strong><br>
+          <small>${msg.email}</small>
+          <p>${msg.message}</p>
         </div>
       `;
     });
   });
 }
 
-/* AUTO RUN IF ON ADMIN PAGE */
-if (document.getElementById("event-list")) {
+
+// ================= LOAD DONATIONS =================
+function loadDonations() {
+  const container = document.getElementById("donations-list");
+  if (!container) return;
+
+  db.ref("donations").on("value", snapshot => {
+    container.innerHTML = "";
+
+    snapshot.forEach(child => {
+      const d = child.val();
+
+      container.innerHTML += `
+        <div class="card" style="margin-top:10px;">
+          <strong>KES ${d.amount}</strong><br>
+          <small>${d.email}</small><br>
+          <small>${d.date}</small>
+        </div>
+      `;
+    });
+  });
+}
+
+
+// ================= AUTO LOAD ADMIN DATA =================
+document.addEventListener("DOMContentLoaded", () => {
   loadEvents();
+  loadMessages();
+  loadDonations();
+});
+
+
+// ================= ADD EVENT =================
+function addEvent() {
+  const title = document.getElementById("event-title").value;
+  const desc = document.getElementById("event-desc").value;
+  const date = document.getElementById("event-date").value;
+  const image = document.getElementById("event-image").value;
+
+  if (!title || !desc || !date) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  db.ref("events").push({
+    title,
+    description: desc,
+    date,
+    image: image || "images/default.jpg"
+  })
+  .then(() => {
+    alert("Event added successfully");
+    console.log("EVENT SAVED TO FIREBASE ✅");
+  })
+  .catch(err => {
+    console.error("ERROR:", err);
+  });
 }
 
 function loadPublicEvents() {
   const container = document.getElementById("events-container");
 
-  if (!container) return;
+  if (!container) {
+    console.log("❌ events-container not found");
+    return;
+  }
+
+  db.ref("events").on("value", snapshot => {
+
+    console.log("📡 RAW DATA:", snapshot.val());
+
+    const data = snapshot.val();
+
+    container.innerHTML = "";
+
+    if (!data) {
+      container.innerHTML = "<p>No events found</p>";
+      return;
+    }
+
+    Object.entries(data).forEach(([id, e]) => {
+
+      container.innerHTML += `
+        <div class="card" style="margin-bottom:15px;">
+
+          <img src="${e.image || 'images/home.jpeg'}"
+               style="width:100%; height:180px; object-fit:cover; border-radius:10px;">
+
+          <h3>${e.title || 'No title'}</h3>
+          <p>${e.description || ''}</p>
+          <small>${e.date || ''}</small>
+
+        </div>
+      `;
+    });
+
+    console.log("✅ EVENTS RENDERED SUCCESSFULLY");
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadEvents();
+});
+
+function deleteEvent(id) {
+  if (confirm("Are you sure you want to delete this event?")) {
+    db.ref("events/" + id).remove()
+      .then(() => alert("Event deleted"))
+      .catch(err => alert(err.message));
+  }
+}
+
+function editEvent(id, title, desc, date) {
+
+  const newTitle = prompt("Edit title:", title);
+  const newDesc = prompt("Edit description:", desc);
+  const newDate = prompt("Edit date:", date);
+
+  if (!newTitle || !newDesc || !newDate) return;
+
+  db.ref("events/" + id).update({
+    title: newTitle,
+    description: newDesc,
+    date: newDate
+  })
+  .then(() => alert("Event updated"))
+  .catch(err => alert(err.message));
+}
+
+function loadPublicEvents() {
+  const container = document.getElementById("events-container");
+
+  if (!container) {
+    console.log("events-container NOT FOUND on this page");
+    return;
+  }
 
   db.ref("events").on("value", snapshot => {
     container.innerHTML = "";
+
+    if (!snapshot.exists()) {
+      container.innerHTML = "<p>No events yet.</p>";
+      return;
+    }
 
     snapshot.forEach(child => {
       const e = child.val();
 
       container.innerHTML += `
-        <div class="card reveal">
+        <div class="card reveal-zoom">
+
+          <img src="${e.image || 'images/home.jpeg'}"
+               style="width:100%; height:200px; object-fit:cover; border-radius:10px;">
+
           <h3>${e.title}</h3>
           <p>${e.description}</p>
           <small>${e.date}</small>
+
         </div>
       `;
     });
+
+    console.log("Events loaded successfully ✔");
   });
 }
 
-loadPublicEvents();
-
-auth.onAuthStateChanged(user => {
-  const adminLink = document.getElementById("admin-link");
-
-  if (!adminLink) return;
-
-  if (user) {
-    // 🔐 CHANGE THIS EMAIL TO YOUR ADMIN EMAIL
-    const adminEmail = "ritaawuor53@gmail.com";
-
-    if (user.email === adminEmail) {
-      adminLink.style.display = "inline-block";
-    } else {
-      adminLink.style.display = "none";
-    }
-  } else {
-    adminLink.style.display = "none";
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  loadPublicEvents();
 });
+
+// ===============================
+// FIREBASE TEST FUNCTIONS (GLOBAL SAFE)
+// ===============================
+
+window.testEventWrite = function () {
+  console.log("🧪 testEventWrite running...");
+
+  db.ref("events").push({
+    title: "Test Event",
+    description: "This is a test event",
+    date: "2026-01-01",
+    image: "images/home.jpeg"
+  })
+  .then(() => console.log("✅ EVENT WRITE SUCCESS"))
+  .catch(err => console.error("❌ ERROR:", err));
+};
+

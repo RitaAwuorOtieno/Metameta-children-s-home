@@ -31,11 +31,11 @@
       <a href="contact.html" class="active">Contact</a>
       <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
 
-      <div class="nav-actions mobile">
+      <!-- <div class="nav-actions mobile">
         <button class="login">Profile</button>
         <button class="login" onclick="window.location.href='login.html'">Login</button>
 <button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
-      </div>
+      </div> -->
     </nav>
 
     <button class="donate" onclick="window.location.href='donate.html'">Donate</button>
@@ -123,6 +123,11 @@
 </footer>
 
 <!-- ================= SCRIPTS ================= -->
+
+<!-- Firebase (ORDER MATTERS) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <!-- MENU -->
 <script>

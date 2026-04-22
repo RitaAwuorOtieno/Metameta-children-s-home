@@ -1,33 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Profile</title>
+  <meta charset="UTF-8">
+  <title>Profile | Metameta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<h2>User Profile</h2>
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <span>Metameta Dashboard</span>
+    </div>
 
-<div id="user-info">
-  Loading...
-</div>
+    <button class="donate" onclick="logout()">Logout</button>
+  </div>
+</header>
 
-<button onclick="logoutUser()" class="btn">Logout</button>
+<!-- PROFILE CONTENT -->
+<section>
+  <div class="container">
 
+    <div class="card">
+      <h2>My Profile</h2>
+      <p><strong>Email:</strong> <span id="user-email"></span></p>
+    </div>
+
+    <div class="card">
+      <h3>My Donations</h3>
+      <div id="user-donations"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <script src="script.js"></script>
 
 <script>
+// PROTECT PAGE + LOAD USER DATA
 auth.onAuthStateChanged(user => {
-  if (user) {
-    document.getElementById("user-info").innerHTML = `
-      <p><strong>Email:</strong> ${user.email}</p>
-      <p><strong>User ID:</strong> ${user.uid}</p>
-    `;
-  } else {
+
+  if (!user) {
+    // NOT LOGGED IN → SEND BACK
     window.location.href = "login.html";
+    return;
   }
+
+  // SHOW USER EMAIL
+  document.getElementById("user-email").innerText = user.email;
+
+  // LOAD USER DONATIONS
+  db.ref("donations").on("value", snapshot => {
+    const data = snapshot.val();
+    let html = "";
+
+    for (let id in data) {
+      if (data[id].email === user.email) {
+        html += `<p>KES ${data[id].amount}</p>`;
+      }
+    }
+
+    document.getElementById("user-donations").innerHTML = html || "No donations yet";
+  });
+
 });
 </script>
 

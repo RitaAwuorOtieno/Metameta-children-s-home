@@ -29,9 +29,9 @@
       <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
 
       <div class="nav-actions mobile">
-        <button class="profile">Profile</button>
+        <button onclick="window.location.href"= 'profile.html'">Profile</button>
         <button onclick="window.location.href='login.html'">Login</button>
-        <button onclick="window.location.href='register.html'">Sign Up</button>
+        <button onclick="window.location.href='signup.html'">Sign Up</button>
       </div>
     </nav>
 
@@ -155,6 +155,11 @@
 <footer class="footer">
   <p>© 2026 Metameta Children's Home</p>
 </footer>
+
+<!-- Firebase (ORDER MATTERS) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <!-- MOBILE MENU -->
 <script>
