@@ -6,87 +6,373 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO -->
-  <meta name="description" content="Learn more about Metameta Children's Home, our mission, vision, and impact.">
+  <meta name="description" content="Learn more about Metameta Children's Home, our mission, vision, and impact on children's lives in Kenya.">
+  <meta name="keywords" content="children's home, charity, Kenya, orphanage, child care">
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
+  <!-- Main Script -->
   <script src="script.js" defer></script>
+  
+  <style>
+    /* Fix for about page specific issues */
+    body.about-page {
+      padding-top: 0 !important;
+    }
+    
+    /* Hero Section */
+    .about-hero-section {
+      position: relative;
+      width: 100%;
+      min-height: 500px;
+      height: auto;
+      overflow: hidden;
+      margin-top: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .about-hero-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      max-height: 600px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+    
+    .about-hero-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      text-align: center;
+      color: white;
+      width: 100%;
+      padding: 0 20px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(3px);
+    }
+    
+    .about-hero-overlay h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .about-hero-overlay p {
+      font-size: 1.3rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    
+    /* Our Story Section - Professional & Appealing */
+    .story-section {
+      position: relative;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 80px 0;
+      overflow: hidden;
+    }
+    
+    .story-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--purple), var(--green), var(--yellow));
+    }
+    
+    .story-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    
+    .story-content {
+      position: relative;
+    }
+    
+    .story-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--purple), var(--green));
+      color: white;
+      padding: 5px 15px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+    
+    .story-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--dark-bg);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .story-content h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--green));
+    }
+    
+    .story-text {
+      margin-top: 30px;
+    }
+    
+    .story-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #4a5568;
+      margin-bottom: 20px;
+    }
+    
+    .story-highlight {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border-left: 4px solid var(--purple);
+    }
+    
+    .story-highlight p {
+      margin-bottom: 0;
+      font-style: italic;
+      color: var(--purple);
+      font-weight: 500;
+    }
+    
+    .story-image {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+    
+    .story-image:hover {
+      transform: scale(1.02);
+    }
+    
+    .story-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .story-image-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    
+    /* Stats Section Enhancement */
+    .stats-section {
+      background: linear-gradient(135deg, var(--dark-bg), #0d2b4a);
+      position: relative;
+    }
+    
+    .stats-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.05)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+      background-size: cover;
+      opacity: 0.1;
+    }
+    
+    /* Card Enhancements */
+    .card {
+      background: white;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    
+    /* Professional Color Scheme for Mission Cards */
+    .mission-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .mission-card h3 {
+      color: white !important;
+    }
+    
+    .vision-card {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+    }
+    
+    .vision-card h3 {
+      color: white !important;
+    }
+    
+    .values-card {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+    }
+    
+    .values-card h3 {
+      color: white !important;
+    }
+    
+    @media (max-width: 768px) {
+      .about-hero-section {
+        min-height: 400px;
+      }
+      
+      .about-hero-overlay h1 {
+        font-size: 2rem;
+      }
+      
+      .about-hero-overlay p {
+        font-size: 1rem;
+      }
+      
+      .story-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .story-content h2 {
+        font-size: 1.8rem;
+      }
+      
+      .story-text p {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 
-<body>
+<body class="about-page">
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-bar"></div>
 
 <!-- ================= NAVBAR ================= -->
-<header class="navbar">
-  <div class="nav-container">
+<div class="nav-wrapper">
+  <div class="grad-bar"></div>
 
+  <nav class="navbar">
     <div class="logo">
-      <img src="images/metameta-logo.png" alt="Logo">
-      <span>Metameta Children’s Home</span>
+      <img src="images/metameta logo01.png" alt="Metameta Children's Home Logo">
+      <!-- <span>Metameta Children's Home</span> -->
     </div>
 
-    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
 
-    <nav class="nav-links" id="nav-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-      <a href="programs.html">Programs</a>
-      <a href="events.html">Events</a>
-      <a href="contact.html">Contact</a>
-      <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
-
-      <!-- <div class="nav-actions mobile">
-        <button class="login">Profile</button>
-        <button class="login" onclick="window.location.href='login.html'">Login</button>
-<button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
-      </div> -->
-    </nav>
-
-
-    <button class="donate">Donate</button>
-
-  </div>
-</header>
+    <ul class="nav" id="nav-links">
+      <li class="nav-item"><a href="index.html">Home</a></li>
+      <li class="nav-item"><a href="about.html" class="active">About</a></li>
+      <li class="nav-item"><a href="programs.html">Programs</a></li>
+      <li class="nav-item"><a href="events.html">Events</a></li>
+      <li class="nav-item"><a href="contact.html">Contact</a></li>
+      <!-- <li class="nav-item login"><a href="login.html">Login</a></li>
+      <li class="nav-item signup"><a href="signup.html">Sign Up</a></li> -->
+      <li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
+    </ul>
+  </nav>
+</div>
 
 <!-- ================= PAGE HERO ================= -->
-<section class="page-hero">
-
-  <img src="images/babiessmiles.jpeg" alt="About Metameta">
-
-  <div class="page-hero-overlay">
-    <h1>About Us</h1>
-    <p>Giving every child a place to belong</p>
+<section class="about-hero-section">
+  <img src="images/babiessmiles.jpeg" alt="Children at Metameta Children's Home" class="about-hero-image" onerror="this.src='images/chilled.jpeg'">
+  
+  <div class="about-hero-overlay">
+    <!-- <h1>About Us</h1>
+    <p>Giving every child a place to belong</p> -->
   </div>
-
 </section>
 
-<!-- ================= WHO WE ARE ================= -->
-<section class="section">
-  <div class="container split">
+<!-- ================= OUR STORY SECTION (REDESIGNED) ================= -->
+<section class="story-section">
+  <div class="story-container">
+    <div class="story-grid">
+      
+      <div class="story-content reveal-left">
+        <div class="story-badge">Since 2004</div>
+        <h2>Our Story</h2>
+        <div class="story-text">
+          <p>
+            <strong>Metameta Children's Home</strong> began with a simple yet powerful vision — to provide a safe haven 
+            for children who had nowhere else to go. What started as a small initiative in 2004 with just 5 children 
+            has blossomed into a loving family that continues to transform lives every single day.
+          </p>
+          
+          <p>
+            Over the past two decades, we have supported <strong>over 48 children</strong>, helping them transition from 
+            vulnerability to independence through quality education, compassionate care, and dedicated mentorship.
+          </p>
+          
+          <div class="story-highlight">
+            <p>💙 "Every child who walks through our doors becomes family. We don't just provide shelter — we provide hope, love, and a future."</p>
+          </div>
+          
+          <p>
+            Today, Metameta stands as a beacon of hope in our community, ensuring that every child receives 
+            not just the basics of food and shelter, but also the emotional support, educational opportunities, 
+            and life skills needed to break the cycle of poverty and build a brighter tomorrow.
+          </p>
+        </div>
+      </div>
+      
+      <div class="story-image reveal-right">
+        <img src="images/smile.jpeg" alt="Happy children at Metameta Home" onerror="this.src='images/chilled.jpeg'">
+        <div class="story-image-caption">
+          ❤️ Transforming lives through love and education
+        </div>
 
-    <div class="reveal-left">
-      <h2>Our Story</h2>
-<p>
-Metameta Children's Home began with a simple vision — to provide a safe place
-for children who had nowhere else to go. What started as a small initiative
-has grown into a family that continues to transform lives every day.
-</p>
-
-<p>
-Over the years, we have supported dozens of children, helping them
-transition from vulnerability to independence through education,
-care, and mentorship.
-</p>
+        <div class="story-image reveal-right">
+        <img src="images/assignment.jpeg" alt="Happy children at Metameta Home" onerror="this.src='images/chilled.jpeg'">
+        <div class="story-image-caption">
+          ❤️ Transforming lives through love and education
+        </div>
+      </div>
+      </div>
+      
     </div>
-
-    <div class="reveal-right">
-      <img src="images/smile.jpeg" alt="Children smiling" class="float">
-    </div>
-
   </div>
 </section>
 
@@ -96,7 +382,7 @@ care, and mentorship.
 
     <div class="stat-box">
       <h2 class="counter" data-target="2004">0</h2>
-      <p>Founded</p>
+      <p>Year Founded</p>
     </div>
 
     <div class="stat-box">
@@ -109,30 +395,64 @@ care, and mentorship.
       <p>Years of Impact</p>
     </div>
 
+    <div class="stat-box">
+      <h2 class="counter" data-target="100">0</h2>
+      <p>Graduation Rate</p>
+    </div>
+
   </div>
 </section>
 
-<!-- ================= MISSION & VALUES ================= -->
+<!-- ================= MISSION & VISION ================= -->
 <section class="section reveal">
   <div class="container">
 
-    <h2 class="section-title">Our Journey</h2>
+    <div class="cards stagger" style="margin-bottom: 40px;">
+      <div class="card mission-card">
+        <h3 style="color: white;">🎯 Our Mission</h3>
+        <p style="color: rgba(255,255,255,0.95);">To provide a loving, safe, and nurturing environment where every child can thrive, receive quality education, and develop essential life skills for a successful future.</p>
+      </div>
+
+      <div class="card vision-card">
+        <h3 style="color: white;">👁️ Our Vision</h3>
+        <p style="color: rgba(255,255,255,0.95);">A world where every child has a home, an education, and the opportunity to reach their full potential regardless of their background.</p>
+      </div>
+
+      <div class="card values-card">
+        <h3 style="color: white;">💖 Our Values</h3>
+        <p style="color: rgba(255,255,255,0.95);">Compassion • Integrity • Excellence • Hope • Family. These values guide everything we do at Metameta Children's Home.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= OUR JOURNEY TIMELINE ================= -->
+<section class="section reveal" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);">
+  <div class="container">
+
+    <h2 class="section-title">Our Journey Through the Years</h2>
 
     <div class="cards stagger">
 
       <div class="card">
-        <h3>2004</h3>
-        <p>Metameta Children's Home was founded.</p>
+        <h3 style="color: var(--purple); font-size: 2rem;">🏠 2004</h3>
+        <p>Metameta Children's Home was founded with just 5 children and a dream.</p>
       </div>
 
       <div class="card">
-        <h3>2010</h3>
-        <p>Expanded to support more children.</p>
+        <h3 style="color: var(--purple); font-size: 2rem;">📚 2010</h3>
+        <p>Expanded facilities to support more children and launched education programs.</p>
       </div>
 
       <div class="card">
-        <h3>2020</h3>
-        <p>Introduced digital skills programs.</p>
+        <h3 style="color: var(--purple); font-size: 2rem;">💻 2018</h3>
+        <p>Introduced digital skills and computer literacy programs.</p>
+      </div>
+
+      <div class="card">
+        <h3 style="color: var(--purple); font-size: 2rem;">🎓 2024</h3>
+        <p>Celebrated our first university graduates from the home.</p>
       </div>
 
     </div>
@@ -144,12 +464,83 @@ care, and mentorship.
 <section class="section">
   <div class="container">
 
-    <div class="card reveal-zoom">
-      <h3>A Message From The Director</h3>
-      <p>
-        Our mission has always been simple — to give children not just a place to stay,
-        but a place to call home. Every child deserves love, dignity, and hope.
+    <div class="card reveal-zoom" style="max-width: 900px; margin: 0 auto; text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px;">
+      <div style="font-size: 4rem; margin-bottom: 20px;">💬</div>
+      <h3 style="color: white; font-size: 1.8rem; margin-bottom: 20px;">A Message From The Director</h3>
+      <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 30px;">
+        "Our mission has always been simple — to give children not just a place to stay,
+        but a place to call home. Every child deserves love, dignity, and hope for a brighter tomorrow.
+        Together with our dedicated team and generous supporters like you, we are building brighter futures, 
+        one child at a time."
       </p>
+      <p style="margin-top: 20px; font-size: 1.1rem;">
+        <strong>- Angelina Owegi</strong><br>
+        <span style="font-size: 0.9rem; opacity: 0.9;">Founder & Executive Director</span>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= TEAM SECTION ================= -->
+<section class="section reveal" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+  <div class="container">
+
+    <h2 class="section-title">Meet Our Dedicated Team</h2>
+
+    <div class="cards stagger">
+      <div class="card" style="text-align: center; padding: 30px;">
+        <div style="width: 130px; height: 130px; background: linear-gradient(135deg, var(--purple), var(--green)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem;">👩‍⚖️</div>
+        <h3>Angelina Owegi</h3>
+        <p style="color: var(--purple); font-weight: 600;">Founder & Director</p>
+        <p style="font-size: 0.9rem; margin-top: 10px;">20+ years of experience in child care and social work</p>
+      </div>
+
+      <div class="card" style="text-align: center; padding: 30px;">
+        <div style="width: 130px; height: 130px; background: linear-gradient(135deg, var(--purple), var(--green)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem;">👨‍🏫</div>
+        <h3>John Kamau</h3>
+        <p style="color: var(--purple); font-weight: 600;">Education Coordinator</p>
+        <p style="font-size: 0.9rem; margin-top: 10px;">Ensuring quality education for every child</p>
+      </div>
+
+      <div class="card" style="text-align: center; padding: 30px;">
+        <div style="width: 130px; height: 130px; background: linear-gradient(135deg, var(--purple), var(--green)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem;">👩‍⚕️</div>
+        <h3>Truphena Joice</h3>
+        <p style="color: var(--purple); font-weight: 600;">Child Welfare Officer</p>
+        <p style="font-size: 0.9rem; margin-top: 10px;">Dedicated to child protection and well-being</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= IMPACT HIGHLIGHTS ================= -->
+<section class="section reveal" style="background: linear-gradient(135deg, var(--dark-bg), #0d2b4a); color: white; position: relative; overflow: hidden;">
+  <div class="container" style="text-align: center; position: relative; z-index: 2;">
+    
+    <h2 class="section-title" style="color: white;">Our Impact So Far</h2>
+    <p style="margin-bottom: 40px; font-size: 1.1rem;">Making a difference, one child at a time</p>
+
+    <div class="stats-grid" style="margin-top: 20px;">
+      <div class="stat-box">
+        <h2 style="font-size: 2.8rem; color: var(--yellow);">48+</h2>
+        <p>Children Given Hope</p>
+      </div>
+
+      <div class="stat-box">
+        <h2 style="font-size: 2.8rem; color: var(--yellow);">100%</h2>
+        <p>School Enrollment</p>
+      </div>
+
+      <div class="stat-box">
+        <h2 style="font-size: 2.8rem; color: var(--yellow);">15+</h2>
+        <p>University Graduates</p>
+      </div>
+
+      <div class="stat-box">
+        <h2 style="font-size: 2.8rem; color: var(--yellow);">200+</h2>
+        <p>Lives Transformed</p>
+      </div>
     </div>
 
   </div>
@@ -158,108 +549,47 @@ care, and mentorship.
 <!-- ================= CTA ================= -->
 <section class="cta reveal-zoom">
   <div class="container">
-    <h2>Join Us in Changing Lives</h2>
-    <p>Your support can make a difference.</p>
-    <a href="support.html" class="btn">Donate Now</a>
+    <h2>Be Part of Their Story</h2>
+    <p>Your support can transform a child's future today.</p>
+    <a href="support.html" class="btn">Support a Child Now</a>
   </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
   <div class="container">
-    <p>© 2026 Metameta Children's Home</p>
+    <p>© 2026 Metameta Children's Home. All rights reserved.</p>
+    <p style="margin-top: 10px; font-size: 14px;">📍 Located in Kenya | 💙 Transforming lives through love and education</p>
   </div>
 </footer>
 
-<!-- ================= SCRIPTS ================= -->
-
-<!-- MOBILE MENU -->
-<script>
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
-
-toggle.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
-</script>
-
-<!-- NAVBAR SCROLL -->
-<script>
-const navbar = document.querySelector(".navbar");
-
-window.addEventListener("scroll", () => {
-  if (!navbar) return;
-
-  if (window.scrollY > 50) {
-    navbar.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
-  }
-});
-</script>
-
-<!-- SCROLL ANIMATIONS -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-
-  const elements = document.querySelectorAll(
-    ".reveal, .reveal-left, .reveal-right, .reveal-zoom, .stagger"
-  );
-
-  const revealOnScroll = () => {
-    elements.forEach(el => {
-      const windowHeight = window.innerHeight;
-      const elementTop = el.getBoundingClientRect().top;
-
-      if (elementTop < windowHeight - 100) {
-        el.classList.add("active");
-      }
+  // Mobile menu toggle
+  const menuToggle = document.getElementById("mobile-menu");
+  const navLinks = document.getElementById("nav-links");
+  
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
     });
-  };
-
-  revealOnScroll();
-  window.addEventListener("scroll", revealOnScroll);
-
-});
-</script>
-
-<!-- COUNTER -->
-<script>
-const counters = document.querySelectorAll(".counter");
-
-counters.forEach(counter => {
-  const update = () => {
-    const target = +counter.getAttribute("data-target");
-    const current = +counter.innerText;
-
-    const increment = target / 100;
-
-    if (current < target) {
-      counter.innerText = Math.ceil(current + increment);
-      setTimeout(update, 20);
-    } else {
-      counter.innerText = target;
+  }
+  
+  // Highlight active page
+  const currentPage = window.location.pathname.split("/").pop();
+  const links = document.querySelectorAll(".nav a");
+  
+  links.forEach(link => {
+    const linkPage = link.getAttribute("href");
+    if (linkPage === currentPage) {
+      link.classList.add("active");
     }
-  };
-
-  update();
-});
-</script>
-
-<script>
-window.addEventListener("scroll", () => {
-  const scrollBar = document.getElementById("scroll-bar");
-
-  const scrollTop = document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-  const scrolled = (scrollTop / scrollHeight) * 100;
-
-  scrollBar.style.width = scrolled + "%";
+  });
+  
+  // Remove body padding for about page
+  document.body.style.paddingTop = "0";
 });
 </script>
 
 </body>
-
-<div id="scroll-bar"></div>
 </html>

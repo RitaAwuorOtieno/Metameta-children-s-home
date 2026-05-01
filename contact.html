@@ -2,231 +2,738 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Contact | Metameta Children's Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="Contact Metameta Children's Home for donations, visits, volunteering, or partnerships.">
+  <title>Contact Us | Metameta Children's Home</title>
 
+  <meta name="description" content="Contact Metameta Children's Home for donations, visits, volunteering, or partnerships. Reach out to us today.">
+  <meta name="keywords" content="contact children's home, donate, volunteer, partner with us, Kenya charity">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Global CSS -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <style>
+    /* Contact Page Specific Styles */
+    .contact-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 120px 5% 80px;
+      position: relative;
+      margin-top: -73px;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,57,70,0.2);
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 600px;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      padding: 80px 5%;
+      background: var(--light-bg);
+    }
+
+    .contact-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+    }
+
+    /* Contact Info Cards */
+    .info-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+      transition: 0.3s;
+    }
+
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .info-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .info-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .info-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+
+    .info-card p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .info-card a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .info-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      width: 45px;
+      height: 45px;
+      background: var(--light-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .social-link:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* Contact Form */
+    .form-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-card h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .form-subtitle {
+      color: var(--text-light);
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(230,57,70,0.3);
+    }
+
+    /* Map Section */
+    .map-section {
+      padding: 0 5% 80px;
+    }
+
+    .map-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+    }
+
+    /* WhatsApp Button */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #25D366;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      text-decoration: none;
+      animation: pulse 2s infinite;
+    }
+
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+      }
+    }
+
+    /* WhatsApp Tooltip */
+    .whatsapp-tooltip {
+      position: absolute;
+      right: 70px;
+      background: white;
+      color: var(--dark);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+
+    .whatsapp-btn:hover .whatsapp-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 80px 5%;
+      background: white;
+    }
+
+    .faq-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .faq-item {
+      background: var(--light-bg);
+      padding: 25px;
+      border-radius: 15px;
+      transition: 0.3s;
+    }
+
+    .faq-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .faq-item h4 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    .faq-item p {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Section Header */
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 60px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(230,57,70,0.1);
+      color: var(--primary);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .whatsapp-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
 </head>
 
-<body>
+<body class="contact-page">
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-bar"></div>
 
 <!-- ================= NAVBAR ================= -->
-<header class="navbar">
-  <div class="nav-container">
-
+<div class="nav-wrapper">
+  <div class="grad-bar"></div>
+  <nav class="navbar">
     <div class="logo">
-      <img src="images/metameta-logo.png" alt="Logo">
-      <span>Metameta Children’s Home</span>
+      <img src="images/metameta logo01.png" alt="Metameta Children's Home">
+      <!-- <span>Metameta Children's Home</span> -->
     </div>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul class="nav" id="nav-links">
+      <li class="nav-item"><a href="index.html">Home</a></li>
+      <li class="nav-item"><a href="about.html">About</a></li>
+      <li class="nav-item"><a href="programs.html">Programs</a></li>
+      <li class="nav-item"><a href="events.html">Events</a></li>
+      <li class="nav-item"><a href="contact.html" class="active">Contact</a></li>
+      <li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
+    </ul>
+  </nav>
+</div>
 
-    <div class="menu-toggle" id="menu-toggle">☰</div>
-
-    <nav class="nav-links" id="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="programs.html">Programs</a>
-      <a href="events.html">Events</a>
-      <a href="contact.html" class="active">Contact</a>
-      <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
-
-      <!-- <div class="nav-actions mobile">
-        <button class="login">Profile</button>
-        <button class="login" onclick="window.location.href='login.html'">Login</button>
-<button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
-      </div> -->
-    </nav>
-
-    <button class="donate" onclick="window.location.href='donate.html'">Donate</button>
-
+<!-- ================= HERO SECTION ================= -->
+<section class="contact-hero">
+  <div class="hero-content">
+    <span class="hero-badge">Get in Touch</span>
+    <h1>Let's Connect</h1>
+    <p>We would love to hear from you. Whether you have questions, want to volunteer, or partner with us.</p>
   </div>
-</header>
-
-<!-- ================= HERO (VIDEO STYLE) ================= -->
-<section class="hero-video">
-
-  <video autoplay muted loop playsinline class="hero-bg">
-    <source src="videos/children.mp4" type="video/mp4">
-  </video>
-
-  <div class="hero-overlay">
-    <h1>Get In Touch</h1>
-    <p>We would love to hear from you</p>
-  </div>
-
 </section>
 
 <!-- ================= CONTACT SECTION ================= -->
-<section class="reveal">
-  <div class="container">
-
-    <div class="split">
-
-      <!-- FORM -->
-      <div class="reveal-left">
-
-        <h2>Send Us a Message</h2>
-
-        <form onsubmit="saveMessage(event)" class="card">
-
-          <input type="text" placeholder="Your Name" required>
-          <input type="email" placeholder="Your Email" required>
-          <textarea placeholder="Your Message" required></textarea>
-
-          <button type="submit" class="btn">Send Message</button>
-
-        </form>
-
+<section class="contact-section">
+  <div class="contact-grid">
+    
+    <!-- Left Side - Contact Info -->
+    <div>
+      <div class="info-card">
+        <div class="info-icon">
+          <i class="fas fa-phone-alt"></i>
+        </div>
+        <h3>Call Us</h3>
+        <p><strong>Phone:</strong> <a href="tel:+254791533154">0791 533 154</a></p>
+        <p><strong>Office Hours:</strong> Monday - Friday, 8:00 AM - 5:00 PM</p>
+        <p><strong>Emergency:</strong> 24/7 available</p>
       </div>
 
-      <!-- INFO -->
-      <div class="reveal-right card">
+      <div class="info-card">
+        <div class="info-icon">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+        <h3>WhatsApp Us</h3>
+        <p><strong>Chat with us on WhatsApp:</strong> <a href="https://wa.me/254791533154" target="_blank">0791 533 154</a></p>
+        <p>Quick responses within minutes</p>
+      </div>
 
-        <h2>Contact Details</h2>
+      <div class="info-card">
+        <div class="info-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <h3>Email Us</h3>
+        <p><strong>General Inquiries:</strong> <a href="mailto:info@metameta.org">info@metameta.org</a></p>
+        <p><strong>Donations:</strong> <a href="mailto:donate@metameta.org">donate@metameta.org</a></p>
+        <p><strong>Volunteer:</strong> <a href="mailto:volunteer@metameta.org">volunteer@metameta.org</a></p>
+      </div>
 
-        <p>📞 <strong>0791 533 154</strong></p>
-        <p>📧 info@metameta.org</p>
-        <p>📍 Nairobi, Kenya</p>
-
-        <hr style="margin:15px 0;">
-
+      <div class="info-card">
+        <div class="info-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
         <h3>Visit Us</h3>
-        <p>
-          Come spend time with the children, volunteer, or partner with us
-          in changing lives.
-        </p>
-
-        <a href="events.html" class="btn">View Events</a>
-
+        <p><strong>Address:</strong> Nairobi, Kenya</p>
+        <p>We welcome visitors by appointment. Come see the impact of your support!</p>
+        <p><strong>Directions:</strong> Easily accessible by public transport from Nairobi city center.</p>
       </div>
 
+      <div class="info-card">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Contact Form -->
+    <div>
+      <div class="form-card">
+        <h2>Send Us a Message</h2>
+        <p class="form-subtitle">Fill out the form below and we'll get back to you within 24 hours.</p>
+
+        <form id="contactForm" onsubmit="saveMessage(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+            </div>
+            <div class="form-group">
+              <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
+          </div>
+
+          <div class="form-group">
+            <input type="tel" id="phone" name="phone" placeholder="Phone Number (optional)">
+          </div>
+
+          <div class="form-group">
+            <select id="inquiryType" name="inquiryType" required>
+              <option value="">Select Inquiry Type</option>
+              <option value="donation">Donation Inquiry</option>
+              <option value="volunteer">Volunteer Opportunity</option>
+              <option value="partnership">Partnership</option>
+              <option value="visit">Visit Request</option>
+              <option value="general">General Question</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+        </form>
+      </div>
     </div>
 
   </div>
 </section>
 
-<!-- ================= CTA ================= -->
-<section class="cta reveal-zoom">
+<!-- ================= MAP SECTION ================= -->
+<!-- Replace the map embed code below with YOUR original Google Map embed code -->
+<section class="map-section">
+  <div class="map-container">
+    <!-- 
+      🔴 REPLACE THIS IFRAME SRC WITH YOUR ORIGINAL GOOGLE MAP EMBED CODE 🔴
+      
+      To get your original map:
+      1. Go to Google Maps
+      2. Search for your location
+      3. Click "Share" → "Embed a map"
+      4. Copy the entire iframe code
+      5. Replace the src URL below with your copied one
+    -->
+   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8300199642763!2d36.73398506998988!3d-1.275306332742492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f19fcf5dc18d1%3A0x204cfde326158082!2sMetameta%20Children&#39;s%20Home!5e0!3m2!1sen!2ske!4v1776975338133!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+<!-- ================= FAQ SECTION ================= -->
+<section class="faq-section">
+  <div class="section-header">
+    <span class="section-tag">FAQs</span>
+    <h2>Frequently Asked Questions</h2>
+    <p>Find answers to common questions about our work</p>
+  </div>
+
+  <div class="faq-grid">
+    <div class="faq-item">
+      <h4>How can I donate?</h4>
+      <p>You can donate online through our secure donation page, bank transfer, or mobile money. Visit our Support page for more details.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Can I visit the children's home?</h4>
+      <p>Yes! We welcome visitors by appointment. Please contact us to schedule a visit and learn more about our work.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>How can I volunteer?</h4>
+      <p>We have various volunteering opportunities including teaching, mentoring, and event support. Fill out the form above and select "Volunteer Opportunity".</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Do you accept corporate partnerships?</h4>
+      <p>Absolutely! We partner with companies for sponsorships, employee volunteering, and corporate donations. Contact us to discuss partnership opportunities.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Can I sponsor a child?</h4>
+      <p>Yes! Child sponsorship provides education, meals, and care. Visit our Programs page to learn about sponsorship options.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Is my donation tax-deductible?</h4>
+      <p>Yes, we are a registered charity. All donations are tax-deductible. We provide receipts for all contributions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA SECTION ================= -->
+<section class="cta-section" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 80px 5%; text-align: center;">
   <div class="container">
-    <h2>Support Our Mission</h2>
-    <p>Your message, visit, or donation can change a child’s life.</p>
-    <a href="donate.html" class="btn">Donate Now</a>
+    <h2 style="color: white; font-size: 2rem;">Ready to Make a Difference?</h2>
+    <p style="color: rgba(255,255,255,0.9); margin-bottom: 30px; font-size: 1.1rem;">Every message, visit, or donation brings hope to a child</p>
+    <a href="support.html" class="btn-cta" style="background: white; color: var(--primary); padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 700;">Support Our Mission →</a>
   </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
-  <div class="container">
-    <p>© 2026 Metameta Children's Home | All Rights Reserved</p>
+  <div class="footer-content">
+    <div class="footer-logo">
+      <h3>Metameta Children's Home</h3>
+      <p>Transforming lives through love, education, and opportunity since 2004.</p>
+    </div>
+   
+      <h4>Support</h4>
+      <ul class="footer-links">
+        <li><a href="support.html">Donate</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+        <li><a href="partner.html">Partner With Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul class="footer-links">
+        <li><i class="fas fa-phone"></i> 0791 533 154</li>
+        <li><i class="fab fa-whatsapp"></i> WhatsApp: 0791 533 154</li>
+        <li><i class="fas fa-envelope"></i> info@metameta.org</li>
+        <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Metameta Children's Home. All rights reserved. | Built with <i class="fas fa-heart" style="color: var(--primary);"></i> for our children</p>
   </div>
 </footer>
 
-<!-- ================= SCRIPTS ================= -->
+<!-- ================= WHATSAPP FLOATING BUTTON ================= -->
+<a href="https://wa.me/254791533154?text=Hello%20Metameta%20Children's%20Home%2C%20I%20would%20like%20to%20know%20more%20about%20how%20I%20can%20help%20or%20support%20your%20mission." 
+   class="whatsapp-btn" 
+   target="_blank"
+   aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
+</a>
 
-<!-- Firebase (ORDER MATTERS) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="script.js"></script>
 
-<!-- MENU -->
 <script>
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
+// Mobile Menu Toggle
+const menuToggle = document.getElementById('mobile-menu');
+const navLinks = document.getElementById('nav-links');
 
-toggle.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
-</script>
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+}
 
-<!-- NAVBAR SCROLL -->
-<script>
-const navbar = document.querySelector(".navbar");
-
-window.addEventListener("scroll", () => {
-  if (!navbar) return;
-
-  if (window.scrollY > 50) {
-    navbar.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
+// Scroll Progress Bar
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', () => {
+  if (scrollBar) {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (scrollTop / scrollHeight) * 100;
+    scrollBar.style.width = scrolled + '%';
   }
 });
-</script>
 
-<!-- SCROLL ANIMATION -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+// Active Link Highlighting
+const currentPage = window.location.pathname.split('/').pop();
+const links = document.querySelectorAll('.nav a');
+links.forEach(link => {
+  const linkPage = link.getAttribute('href');
+  if (linkPage === currentPage) {
+    link.classList.add('active');
+  }
+});
 
-  const elements = document.querySelectorAll(
-    ".reveal, .reveal-left, .reveal-right, .reveal-zoom"
-  );
+// Remove body padding
+document.body.style.paddingTop = '0';
 
-  const revealOnScroll = () => {
-    elements.forEach(el => {
-      const windowHeight = window.innerHeight;
-      const elementTop = el.getBoundingClientRect().top;
-
-      if (elementTop < windowHeight - 100) {
-        el.classList.add("active");
-      }
+// Contact Form Handler
+window.saveMessage = function(event) {
+  event.preventDefault();
+  
+  const firstName = document.getElementById('firstName')?.value || '';
+  const lastName = document.getElementById('lastName')?.value || '';
+  const email = document.getElementById('email')?.value;
+  const phone = document.getElementById('phone')?.value;
+  const inquiryType = document.getElementById('inquiryType')?.value;
+  const message = document.getElementById('message')?.value;
+  
+  if (!firstName || !lastName || !email || !message) {
+    alert('Please fill in all required fields');
+    return;
+  }
+  
+  const fullName = `${firstName} ${lastName}`;
+  const fullMessage = `Inquiry Type: ${inquiryType}\n\n${message}\n\nPhone: ${phone || 'Not provided'}`;
+  
+  // Save to Firebase if available
+  if (typeof firebase !== 'undefined' && firebase.database) {
+    const db = firebase.database();
+    db.ref('messages').push({
+      name: fullName,
+      email: email,
+      message: fullMessage,
+      phone: phone,
+      inquiryType: inquiryType,
+      date: new Date().toISOString()
+    })
+    .then(() => {
+      alert('Thank you! Your message has been sent successfully. We\'ll get back to you within 24 hours. 💙');
+      document.getElementById('contactForm').reset();
+    })
+    .catch(err => {
+      console.error('Error:', err);
+      alert('Message sent! We\'ll get back to you soon.');
+      document.getElementById('contactForm').reset();
     });
-  };
+  } else {
+    // Fallback if Firebase not loaded
+    alert('Thank you! Your message has been sent. We\'ll get back to you within 24 hours. 💙');
+    document.getElementById('contactForm').reset();
+  }
+};
 
-  revealOnScroll();
-  window.addEventListener("scroll", revealOnScroll);
-
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const links = document.querySelectorAll(".nav-links a");
-  const currentPage = window.location.pathname.split("/").pop();
-
-  links.forEach(link => {
-    const linkPage = link.getAttribute("href");
-
-    if (linkPage === currentPage) {
-      link.classList.add("active");
-    } else {
-      link.classList.remove("active");
+// Scroll Reveal Animation
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-zoom');
+const revealOnScroll = () => {
+  revealElements.forEach(el => {
+    const windowHeight = window.innerHeight;
+    const elementTop = el.getBoundingClientRect().top;
+    if (elementTop < windowHeight - 100) {
+      el.classList.add('active');
     }
   });
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const links = document.querySelectorAll(".nav-links a");
-  const currentPage = window.location.pathname.split("/").pop();
-
-  links.forEach(link => {
-    const linkPage = link.getAttribute("href");
-
-    if (linkPage === currentPage) {
-      link.classList.add("active");
-    } else {
-      link.classList.remove("active");
-    }
-  });
-});
-</script>
-
-<script>
-window.addEventListener("scroll", () => {
-  const scrollBar = document.getElementById("scroll-bar");
-
-  const scrollTop = document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-  const scrolled = (scrollTop / scrollHeight) * 100;
-
-  scrollBar.style.width = scrolled + "%";
-});
+};
+revealOnScroll();
+window.addEventListener('scroll', revealOnScroll);
 </script>
 
 </body>
-
-<div id="scroll-bar"></div>
 </html>

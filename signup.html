@@ -2,35 +2,901 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sign Up | Metameta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sign Up | Metameta Children's Home</title>
+
+  <meta name="description" content="Create your Metameta Children's Home account to support children, track donations, and make a difference.">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Global CSS -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <style>
+    /* Sign Up Page Specific Styles */
+    .signup-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 100px 5% 60px;
+      position: relative;
+      margin-top: -73px;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,57,70,0.2);
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Signup Container */
+    .signup-container {
+      max-width: 500px;
+      margin: -40px auto 80px;
+      padding: 0 20px;
+    }
+
+    .signup-card {
+      background: white;
+      border-radius: 24px;
+      padding: 45px 40px;
+      box-shadow: var(--shadow-hover);
+    }
+
+    .signup-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .signup-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .signup-icon i {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .signup-header h2 {
+      font-size: 1.8rem;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .signup-header p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 15px 14px 45px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--text-light);
+    }
+
+    /* Form Row */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    /* Password Strength */
+    .password-strength {
+      margin-top: 8px;
+    }
+
+    .strength-bar {
+      height: 4px;
+      background: #e9ecef;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 5px;
+    }
+
+    .strength-progress {
+      height: 100%;
+      width: 0%;
+      transition: 0.3s;
+    }
+
+    .strength-text {
+      font-size: 0.7rem;
+      color: var(--text-light);
+    }
+
+    /* Terms Checkbox */
+    .terms-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .terms-checkbox input {
+      margin-top: 3px;
+      cursor: pointer;
+    }
+
+    .terms-checkbox label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      cursor: pointer;
+    }
+
+    .terms-checkbox a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .terms-checkbox a:hover {
+      text-decoration: underline;
+    }
+
+    /* Buttons */
+    .btn-signup {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 20px;
+    }
+
+    .btn-signup:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(230,57,70,0.3);
+    }
+
+    .btn-signup:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* Social Signup */
+    .divider {
+      text-align: center;
+      position: relative;
+      margin: 25px 0;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background: #e9ecef;
+    }
+
+    .divider span {
+      background: white;
+      padding: 0 15px;
+      position: relative;
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    .social-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn-social {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-social:hover {
+      border-color: var(--primary);
+      background: var(--light-bg);
+    }
+
+    .btn-social i {
+      font-size: 1.2rem;
+    }
+
+    .btn-google i { color: #DB4437; }
+    .btn-facebook i { color: #4267B2; }
+
+    /* Login Link */
+    .login-link {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .login-link p {
+      color: var(--text-light);
+    }
+
+    .login-link a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Alert Messages */
+    .error-alert {
+      background: #fef2f2;
+      border-left: 4px solid var(--primary);
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .error-alert p {
+      color: var(--primary);
+      font-size: 0.85rem;
+    }
+
+    .success-alert {
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .success-alert p {
+      color: #2e7d32;
+      font-size: 0.85rem;
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+      padding: 60px 5%;
+      background: var(--light-bg);
+    }
+
+    .benefits-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .benefit {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .benefit i {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .benefit h4 {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .benefit p {
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .signup-card {
+        padding: 30px 25px;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .social-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
-<body>
+<body class="signup-page">
 
-<div class="auth-container">
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-bar"></div>
 
-  <div class="auth-card">
-    <h2>Create Account ✨</h2>
-
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-
-    <button class="btn" onclick="signupUser()">Sign Up</button>
-
-    <p style="margin-top:10px;">
-      Already have an account?
-      <a href="login.html">Login</a>
-    </p>
-  </div>
-
+<!-- ================= NAVBAR ================= -->
+<div class="nav-wrapper">
+  <div class="grad-bar"></div>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/metameta logo01.png" alt="Metameta Children's Home">
+      <!-- <span>Metameta Children's Home</span> -->
+    </div>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul class="nav" id="nav-links">
+      <li class="nav-item"><a href="index.html">Home</a></li>
+      <li class="nav-item"><a href="about.html">About</a></li>
+      <li class="nav-item"><a href="programs.html">Programs</a></li>
+      <li class="nav-item"><a href="events.html">Events</a></li>
+      <li class="nav-item"><a href="contact.html">Contact</a></li>
+      <li class="nav-item"><a href="support.html" class="donate-btn">Donate</a></li>
+    </ul>
+  </nav>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<!-- ================= HERO SECTION ================= -->
+<section class="signup-hero">
+  <div class="hero-content">
+    <span class="hero-badge">Join Our Community</span>
+    <h1>Create an Account</h1>
+    <p>Start your journey of making a difference in children's lives</p>
+  </div>
+</section>
 
-<script src="script.js"></script>
+<!-- ================= SIGNUP FORM ================= -->
+<div class="signup-container">
+  <div class="signup-card">
+    <div class="signup-header">
+      <div class="signup-icon">
+        <i class="fas fa-user-plus"></i>
+      </div>
+      <h2>Get Started</h2>
+      <p>Join thousands of supporters changing lives</p>
+    </div>
+
+    <!-- Message Container -->
+    <div id="message-container"></div>
+
+    <!-- Signup Form -->
+    <form id="signupForm" onsubmit="event.preventDefault(); signupUser();">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" id="firstName" placeholder="John" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Last Name</label>
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" id="lastName" placeholder="Doe" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number (Optional)</label>
+        <div class="input-group">
+          <i class="fas fa-phone"></i>
+          <input type="tel" id="phone" placeholder="+254 XXX XXX XXX">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Create a strong password" required onkeyup="checkPasswordStrength()">
+          <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
+        </div>
+        <div class="password-strength">
+          <div class="strength-bar">
+            <div class="strength-progress" id="strengthProgress"></div>
+          </div>
+          <div class="strength-text" id="strengthText"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+          <i class="fas fa-eye password-toggle" onclick="togglePassword('confirmPassword')"></i>
+        </div>
+      </div>
+
+      <div class="terms-checkbox">
+        <input type="checkbox" id="termsCheckbox" required>
+        <label for="termsCheckbox">
+          I agree to the <a href="terms.html">Terms of Service</a> and 
+          <a href="privacy.html">Privacy Policy</a>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-signup" id="signupBtn">
+        <i class="fas fa-arrow-right"></i> Create Account
+      </button>
+    </form>
+
+    <!-- Social Signup -->
+    <div class="divider">
+      <span>Or sign up with</span>
+    </div>
+
+    <div class="social-buttons">
+      <button class="btn-social btn-google" onclick="googleSignup()">
+        <i class="fab fa-google"></i> Google
+      </button>
+      <button class="btn-social btn-facebook" onclick="facebookSignup()">
+        <i class="fab fa-facebook-f"></i> Facebook
+      </button>
+    </div>
+
+    <!-- Login Link -->
+    <div class="login-link">
+      <p>Already have an account? <a href="login.html">Sign In</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= BENEFITS SECTION ================= -->
+<section class="benefits-section">
+  <div class="benefits-grid">
+    <div class="benefit">
+      <i class="fas fa-hand-holding-heart"></i>
+      <h4>Support Children</h4>
+      <p>Make donations and sponsor children</p>
+    </div>
+    <div class="benefit">
+      <i class="fas fa-chart-line"></i>
+      <h4>Track Impact</h4>
+      <p>See how your donations help</p>
+    </div>
+    <div class="benefit">
+      <i class="fas fa-history"></i>
+      <h4>Donation History</h4>
+      <p>Access all your receipts</p>
+    </div>
+    <div class="benefit">
+      <i class="fas fa-bell"></i>
+      <h4>Get Updates</h4>
+      <p>Receive impact stories</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA SECTION ================= -->
+<section class="cta-section" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 60px 5%; text-align: center;">
+  <div class="container">
+    <h2 style="color: white;">Already Have an Account?</h2>
+    <p style="color: rgba(255,255,255,0.9); margin-bottom: 30px;">Sign in to access your dashboard and manage donations</p>
+    <a href="login.html" class="btn-cta" style="background: white; color: var(--primary); padding: 12px 35px; border-radius: 50px; text-decoration: none; font-weight: 700;">Sign In →</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <h3>Metameta Children's Home</h3>
+      <p>Transforming lives through love, education, and opportunity since 2004.</p>
+    </div>
+    
+  <div class="footer-bottom">
+    <p>© 2026 Metameta Children's Home. All rights reserved. | Built with <i class="fas fa-heart" style="color: var(--primary);"></i> for our children</p>
+  </div>
+</footer>
+
+<script>
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDjZjgSoVNXjIKVui9ZG1K6nrqi6HEFK8g",
+  authDomain: "metameta-82db5.firebaseapp.com",
+  databaseURL: "https://metameta-82db5-default-rtdb.firebaseio.com",
+  projectId: "metameta-82db5",
+  storageBucket: "metameta-82db5.firebasestorage.app",
+  messagingSenderId: "153087607234",
+  appId: "1:153087607234:web:b0883c1c192fe06447965b"
+};
+
+// Initialize Firebase if not already initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+const db = firebase.database();
+
+// Mobile Menu Toggle
+const menuToggle = document.getElementById('mobile-menu');
+const navLinks = document.getElementById('nav-links');
+
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+}
+
+// Scroll Progress Bar
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', () => {
+  if (scrollBar) {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (scrollTop / scrollHeight) * 100;
+    scrollBar.style.width = scrolled + '%';
+  }
+});
+
+// Remove body padding
+document.body.style.paddingTop = '0';
+
+// Toggle Password Visibility
+function togglePassword(fieldId) {
+  const input = document.getElementById(fieldId);
+  const toggleIcon = event.target;
+  
+  if (input.type === 'password') {
+    input.type = 'text';
+    toggleIcon.classList.remove('fa-eye');
+    toggleIcon.classList.add('fa-eye-slash');
+  } else {
+    input.type = 'password';
+    toggleIcon.classList.remove('fa-eye-slash');
+    toggleIcon.classList.add('fa-eye');
+  }
+}
+
+// Password Strength Checker
+function checkPasswordStrength() {
+  const password = document.getElementById('password').value;
+  const progressBar = document.getElementById('strengthProgress');
+  const strengthText = document.getElementById('strengthText');
+  
+  let strength = 0;
+  let message = '';
+  let color = '';
+  
+  if (password.length >= 8) strength++;
+  if (password.match(/[a-z]/)) strength++;
+  if (password.match(/[A-Z]/)) strength++;
+  if (password.match(/[0-9]/)) strength++;
+  if (password.match(/[^a-zA-Z0-9]/)) strength++;
+  
+  switch(strength) {
+    case 0:
+    case 1:
+      message = 'Weak password';
+      color = '#e63946';
+      progressBar.style.width = '20%';
+      break;
+    case 2:
+      message = 'Fair password';
+      color = '#f4a261';
+      progressBar.style.width = '40%';
+      break;
+    case 3:
+      message = 'Good password';
+      color = '#2ecc71';
+      progressBar.style.width = '60%';
+      break;
+    case 4:
+      message = 'Strong password';
+      color = '#2ecc71';
+      progressBar.style.width = '80%';
+      break;
+    case 5:
+      message = 'Very strong password';
+      color = '#27ae60';
+      progressBar.style.width = '100%';
+      break;
+  }
+  
+  progressBar.style.backgroundColor = color;
+  strengthText.textContent = message;
+  
+  if (password.length === 0) {
+    progressBar.style.width = '0%';
+    strengthText.textContent = '';
+  }
+}
+
+// Show Message Function
+function showMessage(message, type) {
+  const container = document.getElementById('message-container');
+  container.innerHTML = `
+    <div class="${type}-alert">
+      <p>${message}</p>
+    </div>
+  `;
+  
+  // Auto hide after 5 seconds
+  setTimeout(() => {
+    container.innerHTML = '';
+  }, 5000);
+}
+
+// Signup Function
+async function signupUser() {
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const termsChecked = document.getElementById('termsCheckbox').checked;
+  const signupBtn = document.getElementById('signupBtn');
+  
+  // Validation
+  if (!firstName || !lastName || !email || !password) {
+    showMessage('Please fill in all required fields', 'error');
+    return;
+  }
+  
+  if (!termsChecked) {
+    showMessage('Please agree to the Terms of Service and Privacy Policy', 'error');
+    return;
+  }
+  
+  if (password !== confirmPassword) {
+    showMessage('Passwords do not match', 'error');
+    return;
+  }
+  
+  if (password.length < 6) {
+    showMessage('Password should be at least 6 characters', 'error');
+    return;
+  }
+  
+  // Disable button and show loading
+  signupBtn.disabled = true;
+  signupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+  
+  try {
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+    
+    // Update user profile with name
+    await user.updateProfile({
+      displayName: `${firstName} ${lastName}`
+    });
+    
+    // Save additional user data to database
+    await db.ref('users/' + user.uid).set({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      createdAt: new Date().toISOString(),
+      role: 'user'
+    });
+    
+    showMessage('Account created successfully! Redirecting to login...', 'success');
+    
+    // Redirect to login after 2 seconds
+    setTimeout(() => {
+      auth.signOut();
+      window.location.href = 'login.html';
+    }, 2000);
+    
+  } catch (error) {
+    let errorMessage = 'Signup failed. Please try again.';
+    
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        errorMessage = 'This email is already registered. Please login instead.';
+        break;
+      case 'auth/invalid-email':
+        errorMessage = 'Invalid email address format.';
+        break;
+      case 'auth/weak-password':
+        errorMessage = 'Password is too weak. Please use a stronger password.';
+        break;
+      case 'auth/operation-not-allowed':
+        errorMessage = 'Email/password accounts are not enabled.';
+        break;
+    }
+    
+    showMessage(errorMessage, 'error');
+  } finally {
+    // Re-enable button
+    signupBtn.disabled = false;
+    signupBtn.innerHTML = '<i class="fas fa-arrow-right"></i> Create Account';
+  }
+}
+
+// Google Signup
+function googleSignup() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  const signupBtn = document.querySelector('.btn-google');
+  
+  signupBtn.disabled = true;
+  signupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      const user = result.user;
+      
+      // Check if user exists in database
+      db.ref('users/' + user.uid).once('value', (snapshot) => {
+        if (!snapshot.exists()) {
+          // Save new user to database
+          db.ref('users/' + user.uid).set({
+            firstName: user.displayName?.split(' ')[0] || '',
+            lastName: user.displayName?.split(' ')[1] || '',
+            email: user.email,
+            createdAt: new Date().toISOString(),
+            role: 'user'
+          });
+        }
+      });
+      
+      showMessage('Account created successfully! Redirecting...', 'success');
+      
+      setTimeout(() => {
+        window.location.href = 'profile.html';
+      }, 1500);
+    })
+    .catch((error) => {
+      showMessage(error.message, 'error');
+      signupBtn.disabled = false;
+      signupBtn.innerHTML = '<i class="fab fa-google"></i> Google';
+    });
+}
+
+// Facebook Signup
+function facebookSignup() {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  const signupBtn = document.querySelector('.btn-facebook');
+  
+  signupBtn.disabled = true;
+  signupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      const user = result.user;
+      
+      // Check if user exists in database
+      db.ref('users/' + user.uid).once('value', (snapshot) => {
+        if (!snapshot.exists()) {
+          // Save new user to database
+          db.ref('users/' + user.uid).set({
+            firstName: user.displayName?.split(' ')[0] || '',
+            lastName: user.displayName?.split(' ')[1] || '',
+            email: user.email,
+            createdAt: new Date().toISOString(),
+            role: 'user'
+          });
+        }
+      });
+      
+      showMessage('Account created successfully! Redirecting...', 'success');
+      
+      setTimeout(() => {
+        window.location.href = 'profile.html';
+      }, 1500);
+    })
+    .catch((error) => {
+      showMessage(error.message, 'error');
+      signupBtn.disabled = false;
+      signupBtn.innerHTML = '<i class="fab fa-facebook-f"></i> Facebook';
+    });
+}
+
+// Check if user is already logged in
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // User is already logged in, redirect to profile
+    window.location.href = 'profile.html';
+  }
+});
+</script>
 
 </body>
 </html>

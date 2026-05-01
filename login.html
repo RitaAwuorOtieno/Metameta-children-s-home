@@ -2,40 +2,739 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login | Metameta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login | Metameta Children's Home</title>
+
+  <meta name="description" content="Login to your Metameta Children's Home account to manage donations, track impact, and stay connected.">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Global CSS -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <style>
+    /* Login Page Specific Styles */
+    .login-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 100px 5% 60px;
+      position: relative;
+      margin-top: -73px;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,57,70,0.2);
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Login Container */
+    .login-container {
+      max-width: 450px;
+      margin: -40px auto 80px;
+      padding: 0 20px;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 24px;
+      padding: 45px 40px;
+      box-shadow: var(--shadow-hover);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .login-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .login-icon i {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .login-header h2 {
+      font-size: 1.8rem;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .login-header p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 15px 14px 45px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--text-light);
+    }
+
+    /* Form Options */
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .checkbox input {
+      cursor: pointer;
+    }
+
+    .checkbox span {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .forgot-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Buttons */
+    .btn-login {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 20px;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(230,57,70,0.3);
+    }
+
+    .btn-login:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* Social Login */
+    .divider {
+      text-align: center;
+      position: relative;
+      margin: 25px 0;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background: #e9ecef;
+    }
+
+    .divider span {
+      background: white;
+      padding: 0 15px;
+      position: relative;
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    .social-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn-social {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-social:hover {
+      border-color: var(--primary);
+      background: var(--light-bg);
+    }
+
+    .btn-social i {
+      font-size: 1.2rem;
+    }
+
+    .btn-google i { color: #DB4437; }
+    .btn-facebook i { color: #4267B2; }
+
+    /* Signup Link */
+    .signup-link {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .signup-link p {
+      color: var(--text-light);
+    }
+
+    .signup-link a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Error Alert */
+    .error-alert {
+      background: #fef2f2;
+      border-left: 4px solid var(--primary);
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .error-alert p {
+      color: var(--primary);
+      font-size: 0.85rem;
+    }
+
+    /* Success Alert */
+    .success-alert {
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .success-alert p {
+      color: #2e7d32;
+      font-size: 0.85rem;
+    }
+
+    /* Features Section */
+    .features-section {
+      padding: 60px 5%;
+      background: var(--light-bg);
+    }
+
+    .features-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .feature {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .feature i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .feature h4 {
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .login-card {
+        padding: 30px 25px;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .social-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
-<body>
+<body class="login-page">
 
-<div class="auth-container">
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-bar"></div>
 
-  <div class="auth-card">
-    <h2>Welcome Back 👋</h2>
-    <p>Login to continue</p>
-
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password" required>
-
-    <button class="btn" onclick="loginUser()">Login</button>
-
-    <p id="login-error" style="color:red; margin-top:10px;"></p>
-
-    <p style="margin-top:10px;">
-      Don’t have an account?
-      <a href="signup.html">Sign Up</a>
-    </p>
-  </div>
-
+<!-- ================= NAVBAR ================= -->
+<div class="nav-wrapper">
+  <div class="grad-bar"></div>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/metameta logo01.png" alt="Metameta Children's Home">
+      <!-- <span>Metameta Children's Home</span> -->
+    </div>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul class="nav" id="nav-links">
+      <li class="nav-item"><a href="index.html">Home</a></li>
+      <li class="nav-item"><a href="about.html">About</a></li>
+      <li class="nav-item"><a href="programs.html">Programs</a></li>
+      <li class="nav-item"><a href="events.html">Events</a></li>
+      <li class="nav-item"><a href="contact.html">Contact</a></li>
+      <li class="nav-item"><a href="support.html" class="donate-btn">Donate</a></li>
+    </ul>
+  </nav>
 </div>
 
-<!-- Firebase (ORDER MATTERS) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<!-- ================= HERO SECTION ================= -->
+<section class="login-hero">
+  <div class="hero-content">
+    <span class="hero-badge">Welcome Back</span>
+    <h1>Sign In to Your Account</h1>
+    <p>Access your donation history, track impact, and stay connected</p>
+  </div>
+</section>
 
-<script src="script.js"></script>
+<!-- ================= LOGIN FORM ================= -->
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-icon">
+        <i class="fas fa-user"></i>
+      </div>
+      <h2>Welcome Back</h2>
+      <p>Please enter your credentials to continue</p>
+    </div>
+
+    <!-- Error/Success Messages -->
+    <div id="message-container"></div>
+
+    <!-- Login Form -->
+    <form id="loginForm" onsubmit="event.preventDefault(); loginUser();">
+      <div class="form-group">
+        <label>Email Address</label>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Enter your password" required>
+          <i class="fas fa-eye password-toggle" onclick="togglePassword()"></i>
+        </div>
+      </div>
+
+      <div class="form-options">
+        <label class="checkbox">
+          <input type="checkbox" id="rememberMe">
+          <span>Remember me</span>
+        </label>
+        <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="btn-login" id="loginBtn">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </button>
+    </form>
+
+    <!-- Social Login (Optional) -->
+    <div class="divider">
+      <span>Or continue with</span>
+    </div>
+
+    <div class="social-buttons">
+      <button class="btn-social btn-google" onclick="googleLogin()">
+        <i class="fab fa-google"></i> Google
+      </button>
+      <button class="btn-social btn-facebook" onclick="facebookLogin()">
+        <i class="fab fa-facebook-f"></i> Facebook
+      </button>
+    </div>
+
+    <!-- Sign Up Link -->
+    <div class="signup-link">
+      <p>Don't have an account? <a href="signup.html">Create Account</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FEATURES SECTION ================= -->
+<section class="features-section">
+  <div class="features-grid">
+    <div class="feature">
+      <i class="fas fa-chart-line"></i>
+      <h4>Track Your Impact</h4>
+      <p>See how your donations are making a difference in children's lives</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-history"></i>
+      <h4>Donation History</h4>
+      <p>Access your complete donation history and tax receipts</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-bell"></i>
+      <h4>Get Updates</h4>
+      <p>Receive news and impact stories from the children you support</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA SECTION ================= -->
+<section class="cta-section" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 60px 5%; text-align: center;">
+  <div class="container">
+    <h2 style="color: white;">New to Metameta?</h2>
+    <p style="color: rgba(255,255,255,0.9); margin-bottom: 30px;">Join our community of supporters transforming children's lives</p>
+    <a href="signup.html" class="btn-cta" style="background: white; color: var(--primary); padding: 12px 35px; border-radius: 50px; text-decoration: none; font-weight: 700;">Create Free Account →</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <h3>Metameta Children's Home</h3>
+      <p>Transforming lives through love, education, and opportunity since 2004.</p>
+    </div>
+    
+  <div class="footer-bottom">
+    <p>© 2026 Metameta Children's Home. All rights reserved. | Built with <i class="fas fa-heart" style="color: var(--primary);"></i> for our children</p>
+  </div>
+</footer>
+
+<script>
+// Firebase Configuration (from your script.js)
+const firebaseConfig = {
+  apiKey: "AIzaSyDjZjgSoVNXjIKVui9ZG1K6nrqi6HEFK8g",
+  authDomain: "metameta-82db5.firebaseapp.com",
+  databaseURL: "https://metameta-82db5-default-rtdb.firebaseio.com",
+  projectId: "metameta-82db5",
+  storageBucket: "metameta-82db5.firebasestorage.app",
+  messagingSenderId: "153087607234",
+  appId: "1:153087607234:web:b0883c1c192fe06447965b"
+};
+
+// Initialize Firebase if not already initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+const ADMIN_EMAIL = "ritaawuor53@gmail.com";
+
+// Mobile Menu Toggle
+const menuToggle = document.getElementById('mobile-menu');
+const navLinks = document.getElementById('nav-links');
+
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+}
+
+// Scroll Progress Bar
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', () => {
+  if (scrollBar) {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (scrollTop / scrollHeight) * 100;
+    scrollBar.style.width = scrolled + '%';
+  }
+});
+
+// Remove body padding
+document.body.style.paddingTop = '0';
+
+// Toggle Password Visibility
+function togglePassword() {
+  const passwordInput = document.getElementById('password');
+  const toggleIcon = document.querySelector('.password-toggle');
+  
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggleIcon.classList.remove('fa-eye');
+    toggleIcon.classList.add('fa-eye-slash');
+  } else {
+    passwordInput.type = 'password';
+    toggleIcon.classList.remove('fa-eye-slash');
+    toggleIcon.classList.add('fa-eye');
+  }
+}
+
+// Show Message Function
+function showMessage(message, type) {
+  const container = document.getElementById('message-container');
+  container.innerHTML = `
+    <div class="${type}-alert">
+      <p>${message}</p>
+    </div>
+  `;
+  
+  // Auto hide after 5 seconds
+  setTimeout(() => {
+    container.innerHTML = '';
+  }, 5000);
+}
+
+// Login Function
+async function loginUser() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const rememberMe = document.getElementById('rememberMe').checked;
+  const loginBtn = document.getElementById('loginBtn');
+  
+  if (!email || !password) {
+    showMessage('Please enter both email and password', 'error');
+    return;
+  }
+  
+  // Disable button and show loading
+  loginBtn.disabled = true;
+  loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+  
+  try {
+    // Set persistence based on remember me
+    if (rememberMe) {
+      await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    } else {
+      await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+    }
+    
+    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+    
+    showMessage('Login successful! Redirecting...', 'success');
+    
+    // Redirect based on user role
+    setTimeout(() => {
+      if (user.email === ADMIN_EMAIL) {
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'profile.html';
+      }
+    }, 1500);
+    
+  } catch (error) {
+    let errorMessage = 'Login failed. Please try again.';
+    
+    switch (error.code) {
+      case 'auth/invalid-email':
+        errorMessage = 'Invalid email address format.';
+        break;
+      case 'auth/user-disabled':
+        errorMessage = 'This account has been disabled.';
+        break;
+      case 'auth/user-not-found':
+        errorMessage = 'No account found with this email.';
+        break;
+      case 'auth/wrong-password':
+        errorMessage = 'Incorrect password. Please try again.';
+        break;
+      case 'auth/too-many-requests':
+        errorMessage = 'Too many failed attempts. Please try again later.';
+        break;
+    }
+    
+    showMessage(errorMessage, 'error');
+  } finally {
+    // Re-enable button
+    loginBtn.disabled = false;
+    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+  }
+}
+
+// Google Login
+function googleLogin() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  const loginBtn = document.querySelector('.btn-google');
+  
+  loginBtn.disabled = true;
+  loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      const user = result.user;
+      showMessage('Login successful! Redirecting...', 'success');
+      
+      setTimeout(() => {
+        if (user.email === ADMIN_EMAIL) {
+          window.location.href = 'admin.html';
+        } else {
+          window.location.href = 'profile.html';
+        }
+      }, 1500);
+    })
+    .catch((error) => {
+      showMessage(error.message, 'error');
+      loginBtn.disabled = false;
+      loginBtn.innerHTML = '<i class="fab fa-google"></i> Google';
+    });
+}
+
+// Facebook Login
+function facebookLogin() {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  const loginBtn = document.querySelector('.btn-facebook');
+  
+  loginBtn.disabled = true;
+  loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      const user = result.user;
+      showMessage('Login successful! Redirecting...', 'success');
+      
+      setTimeout(() => {
+        if (user.email === ADMIN_EMAIL) {
+          window.location.href = 'admin.html';
+        } else {
+          window.location.href = 'profile.html';
+        }
+      }, 1500);
+    })
+    .catch((error) => {
+      showMessage(error.message, 'error');
+      loginBtn.disabled = false;
+      loginBtn.innerHTML = '<i class="fab fa-facebook-f"></i> Facebook';
+    });
+}
+
+// Check if user is already logged in
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // User is already logged in, redirect
+    if (user.email === ADMIN_EMAIL) {
+      window.location.href = 'admin.html';
+    } else {
+      window.location.href = 'profile.html';
+    }
+  }
+});
+
+// Enter key press to submit
+document.getElementById('password').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    loginUser();
+  }
+});
+</script>
 
 </body>
 </html>

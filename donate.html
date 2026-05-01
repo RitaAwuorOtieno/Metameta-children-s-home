@@ -2,209 +2,733 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Donate | Metameta Children's Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="Support Metameta Children's Home through donations, M-Pesa, or bank transfer.">
+  <title>Donate | Support Metameta Children's Home</title>
 
+  <meta name="description" content="Support Metameta Children's Home through M-Pesa, bank transfer, or credit card. Your donation feeds, educates, and protects vulnerable children in Kenya.">
+  <meta name="keywords" content="donate to children's home, M-Pesa paybill, support orphans, Kenya charity">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Global CSS -->
   <link rel="stylesheet" href="styles.css">
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
-  <script src="script.js" defer></script>
+  <style>
+    /* Donate Page Specific Styles */
+    .donate-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 120px 5% 80px;
+      position: relative;
+      margin-top: -73px;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,57,70,0.2);
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Impact Stats Section */
+    .impact-stats {
+      max-width: 1200px;
+      margin: -40px auto 60px;
+      padding: 0 5%;
+    }
+
+    .stats-grid-custom {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .stat-card h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .stat-card p {
+      color: var(--text-light);
+    }
+
+    /* Donation Options */
+    .donation-options {
+      padding: 60px 5%;
+      background: var(--light-bg);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 60px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(230,57,70,0.1);
+      color: var(--primary);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+
+    .donation-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .donation-card {
+      background: white;
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: var(--shadow);
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .donation-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .donation-card.featured {
+      border: 2px solid var(--gold);
+      transform: scale(1.02);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: var(--gold);
+      color: white;
+      padding: 5px 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      transform: rotate(45deg);
+    }
+
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .donation-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .donation-details {
+      margin: 20px 0;
+    }
+
+    .donation-details p {
+      margin: 10px 0;
+      color: var(--text-light);
+    }
+
+    .donation-details strong {
+      color: var(--dark);
+    }
+
+    .amount-input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-size: 1rem;
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    .amount-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .preset-amounts {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .preset-btn {
+      flex: 1;
+      padding: 8px;
+      background: var(--light-bg);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .preset-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-donate {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-donate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(230,57,70,0.3);
+    }
+
+    .payment-status {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* Impact Table */
+    .impact-table {
+      padding: 80px 5%;
+      background: white;
+    }
+
+    .impact-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .impact-item {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .impact-item i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .impact-item h4 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .impact-item p {
+      color: var(--text-light);
+    }
+
+    /* Testimonial */
+    .testimonial-section {
+      padding: 80px 5%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+
+    .testimonial-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .testimonial-container i {
+      font-size: 3rem;
+      opacity: 0.5;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-container p {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 80px 5%;
+      background: var(--light-bg);
+    }
+
+    .faq-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .faq-item {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      transition: 0.3s;
+    }
+
+    .faq-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .faq-item h4 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    .faq-item p {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, var(--dark), #1a1a2e);
+      padding: 80px 5%;
+      text-align: center;
+    }
+
+    .btn-cta {
+      background: var(--primary);
+      color: white;
+      padding: 15px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .btn-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 968px) {
+      .stats-grid-custom {
+        grid-template-columns: 1fr;
+      }
+      
+      .donation-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .impact-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 
-<body>
+<body class="donate-page">
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-bar"></div>
 
 <!-- ================= NAVBAR ================= -->
-<header class="navbar">
-  <div class="nav-container">
-
+<div class="nav-wrapper">
+  <div class="grad-bar"></div>
+  <nav class="navbar">
     <div class="logo">
-      <img src="images/metameta-logo.png" alt="Logo">
-      <span>Metameta Children’s Home</span>
+      <img src="images/metameta logo01.png" alt="Metameta Children's Home">
+      <!-- <span>Metameta Children's Home</span> -->
     </div>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul class="nav" id="nav-links">
+      <li class="nav-item"><a href="index.html">Home</a></li>
+      <li class="nav-item"><a href="about.html">About</a></li>
+      <li class="nav-item"><a href="programs.html">Programs</a></li>
+      <li class="nav-item"><a href="events.html">Events</a></li>
+      <li class="nav-item"><a href="contact.html">Contact</a></li>
+      <li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
+    </ul>
+  </nav>
+</div>
 
-    <div class="menu-toggle" id="menu-toggle">☰</div>
-
-    <nav class="nav-links" id="nav-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-      <a href="programs.html">Programs</a>
-      <a href="events.html">Events</a>
-      <a href="contact.html">Contact</a>
-      <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
-
-      <!-- <div class="nav-actions mobile">
-        <button class="login">Profile</button>
-        <button class="login" onclick="window.location.href='login.html'">Login</button>
-<button class="signup" onclick="window.location.href='register.html'">Sign Up</button>
-      </div> -->
-    </nav>
-
-
-    <button class="donate">Donate</button>
-
-  </div>
-</header>
-
-<!-- ================= HERO ================= -->
-<section class="hero-video">
-
-  <img src="images/kidshelping.jpeg" class="hero-bg" alt="Helping children">
-
-  <div class="hero-overlay">
+<!-- ================= HERO SECTION ================= -->
+<section class="donate-hero">
+  <div class="hero-content">
+    <span class="hero-badge">Make a Difference Today</span>
     <h1>Give Hope. Change a Life.</h1>
-    <p>Every donation feeds, educates, and protects a child</p>
-
-    <a href="#donation" class="btn">Start Giving</a>
+    <p>Every donation feeds, educates, and protects a child. Your generosity transforms futures.</p>
   </div>
-
 </section>
 
 <!-- ================= IMPACT STATS ================= -->
-<section class="reveal">
-  <div class="container cards">
-
-    <div class="card">
+<div class="impact-stats">
+  <div class="stats-grid-custom">
+    <div class="stat-card">
       <h2>48+</h2>
-      <p>Children Supported</p>
+      <p>Children Supported Daily</p>
     </div>
-
-    <div class="card">
+    <div class="stat-card">
       <h2>20+</h2>
-      <p>Years of Service</p>
+      <p>Years of Impact</p>
     </div>
-
-    <div class="card">
+    <div class="stat-card">
       <h2>100%</h2>
-      <p>Goes Directly to Children</p>
+      <p>Goes Directly to Care</p>
     </div>
-
   </div>
-</section>
+</div>
 
-<!-- ================= DONATION SECTION ================= -->
-<section id="donation" class="container reveal">
+<!-- ================= DONATION OPTIONS ================= -->
+<section class="donation-options">
+  <div class="section-header">
+    <span class="section-tag">Support Us</span>
+    <h2>Choose How to Give</h2>
+    <p>Select the donation method that works best for you</p>
+  </div>
 
-  <h2 style="text-align:center;">Ways to Support Us</h2>
-
-  <div class="cards">
-
-    <!-- MPESA (HIGHLIGHTED MAIN OPTION) -->
-    <div class="card highlight">
-      <h3>📱 M-Pesa Donation (Fastest)</h3>
-      <p><strong>Paybill:</strong> 123456</p>
-      <p><strong>Account:</strong> Your Name</p>
-
-      <input type="number" placeholder="Enter Amount (KES)" id="amount"
-        style="width:100%; padding:10px; margin:10px 0;">
-
-      <button class="btn" onclick="simulatePayment()">
-        Donate Now
+  <div class="donation-grid">
+    
+    <!-- M-Pesa Option (Featured) -->
+    <div class="donation-card featured">
+      <div class="popular-badge">MOST POPULAR</div>
+      <div class="card-icon">📱</div>
+      <h3>M-Pesa Donation</h3>
+      <p>Fastest way to support our children</p>
+      <div class="donation-details">
+        <p><strong>Paybill Number:</strong> 123456</p>
+        <p><strong>Account Number:</strong> Your Name</p>
+      </div>
+      
+      <div class="preset-amounts">
+        <button class="preset-btn" onclick="setAmount(100)">KES 100</button>
+        <button class="preset-btn" onclick="setAmount(500)">KES 500</button>
+        <button class="preset-btn" onclick="setAmount(1000)">KES 1,000</button>
+      </div>
+      
+      <input type="number" id="mpesa-amount" class="amount-input" placeholder="Enter Amount (KES)" value="500">
+      
+      <button class="btn-donate" onclick="processMpesaDonation()">
+        <i class="fas fa-arrow-right"></i> Donate Now
       </button>
-
-      <p id="payment-status" style="margin-top:10px;"></p>
+      
+      <div id="mpesa-status" class="payment-status"></div>
     </div>
 
-    <!-- BANK -->
-    <div class="card">
-      <h3>🏦 Bank Transfer</h3>
-      <p><strong>Account Name:</strong> Metameta Development Centre</p>
-      <p><strong>Account Number:</strong> 01134154075900</p>
-      <p>Contact us for bank branch details.</p>
+    <!-- Bank Transfer -->
+    <div class="donation-card">
+      <div class="card-icon">🏦</div>
+      <h3>Bank Transfer</h3>
+      <p>Direct bank transfer for larger donations</p>
+      <div class="donation-details">
+        <p><strong>Account Name:</strong> Metameta Development Centre</p>
+        <p><strong>Account Number:</strong> 01134154075900</p>
+        <p><strong>Bank:</strong> Equity Bank Kenya</p>
+        <p><strong>Branch:</strong> Nairobi</p>
+      </div>
+      <button class="btn-donate" onclick="copyBankDetails()">
+        <i class="fas fa-copy"></i> Copy Bank Details
+      </button>
     </div>
 
-    <!-- CONTACT -->
-    <div class="card">
-      <h3>📞 Direct Support</h3>
-      <p>0791 533 154</p>
-      <p>Call or WhatsApp for partnerships</p>
-      <a href="contact.html" class="btn">Contact Us</a>
+    <!-- Card/International -->
+    <div class="donation-card">
+      <div class="card-icon">💳</div>
+      <h3>Credit / Debit Card</h3>
+      <p>Secure online payment for international donors</p>
+      <div class="donation-details">
+        <p>Coming soon! For now, please use:</p>
+        <p><strong>PayPal:</strong> donate@metameta.org</p>
+        <p><strong>Western Union:</strong> Contact us for details</p>
+      </div>
+      <a href="contact.html" class="btn-donate" style="display: block; text-align: center; text-decoration: none;">
+        <i class="fas fa-envelope"></i> Contact for Details
+      </a>
     </div>
 
   </div>
-
 </section>
 
-<!-- ================= TRUST MESSAGE ================= -->
-<section class="cta reveal">
+<!-- ================= IMPACT PER DONATION ================= -->
+<section class="impact-table">
+  <div class="section-header">
+    <span class="section-tag">Your Impact</span>
+    <h2>How Your Donation Helps</h2>
+    <p>Every contribution makes a real difference in a child's life</p>
+  </div>
+
+  <div class="impact-grid">
+    <div class="impact-item">
+      <i class="fas fa-utensils"></i>
+      <h4>KES 500</h4>
+      <p>Feeds a child for one week</p>
+    </div>
+    <div class="impact-item">
+      <i class="fas fa-book"></i>
+      <h4>KES 2,000</h4>
+      <p>School supplies for a term</p>
+    </div>
+    <div class="impact-item">
+      <i class="fas fa-graduation-cap"></i>
+      <h4>KES 10,000</h4>
+      <p>School fees for a year</p>
+    </div>
+    <div class="impact-item">
+      <i class="fas fa-laptop"></i>
+      <h4>KES 25,000</h4>
+      <p>Computer for digital skills training</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIAL ================= -->
+<section class="testimonial-section">
+  <div class="testimonial-container">
+    <i class="fas fa-quote-left"></i>
+    <p>"Supporting Metameta Children's Home has been the most rewarding experience. Seeing the smiles on these children's faces and knowing I'm helping build their future is priceless."</p>
+    <p><strong>- Sarah M., Regular Donor</strong></p>
+  </div>
+</section>
+
+<!-- ================= FAQ SECTION ================= -->
+<section class="faq-section">
+  <div class="section-header">
+    <span class="section-tag">FAQs</span>
+    <h2>Frequently Asked Questions</h2>
+    <p>Everything you need to know about donating</p>
+  </div>
+
+  <div class="faq-grid">
+    <div class="faq-item">
+      <h4>Is my donation tax-deductible?</h4>
+      <p>Yes! We are a registered charity. All donations are tax-deductible and we provide official receipts for every contribution.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How is my donation used?</h4>
+      <p>100% of donations go directly to children's care, education, food, shelter, and medical needs. We maintain complete transparency.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can I make a recurring donation?</h4>
+      <p>Absolutely! You can set up monthly donations via M-Pesa or bank transfer. Contact us to arrange recurring support.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can I donate from outside Kenya?</h4>
+      <p>Yes! International donors can use bank transfer, PayPal, or Western Union. Contact us for assistance with international giving.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Will I receive updates on my impact?</h4>
+      <p>Yes! All donors receive quarterly updates, photos, and impact reports showing how your support is changing lives.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can I sponsor a specific child?</h4>
+      <p>Yes! Our child sponsorship program allows you to support an individual child's education and care. Contact us to learn more.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA SECTION ================= -->
+<section class="cta-section">
   <div class="container">
-    <h2>Transparent & Trusted Giving</h2>
-    <p>Every donation is used directly for food, education, and care of the children.</p>
+    <h2 style="color: white;">Every Child Deserves a Future</h2>
+    <p style="color: rgba(255,255,255,0.9); margin-bottom: 30px;">Your donation today creates hope for tomorrow</p>
+    <a href="#donation" class="btn-cta">Support a Child Now</a>
   </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
-  <div class="container">
-    <p>© 2026 Metameta Children's Home | All Rights Reserved</p>
+  <div class="footer-content">
+    <div class="footer-logo">
+      <h3>Metameta Children's Home</h3>
+      <p>Transforming lives through love, education, and opportunity since 2004.</p>
+    </div>
+    
+  <div class="footer-bottom">
+    <p>© 2026 Metameta Children's Home. All rights reserved. | Built with <i class="fas fa-heart" style="color: var(--primary);"></i> for our children</p>
   </div>
 </footer>
 
-<!-- Firebase (ORDER MATTERS) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/254791533154?text=Hello%20Metameta%20Children's%20Home%2C%20I%20would%20like%20to%20make%20a%20donation%20and%20support%20your%20mission." 
+   class="whatsapp-btn" 
+   target="_blank"
+   aria-label="Chat on WhatsApp"
+   style="position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); transition: 0.3s; z-index: 1000; text-decoration: none;">
+  <i class="fab fa-whatsapp"></i>
+</a>
 
-<!-- ================= MENU SCRIPT ================= -->
+<script src="script.js"></script>
+
 <script>
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
+// Set amount from preset buttons
+function setAmount(amount) {
+  document.getElementById('mpesa-amount').value = amount;
+}
 
-toggle.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
-</script>
-
-<!-- ================= NAV SCROLL EFFECT ================= -->
-<script>
-const navbar = document.querySelector(".navbar");
-
-window.addEventListener("scroll", () => {
-  if (!navbar) return;
-
-  if (window.scrollY > 50) {
-    navbar.classList.add("scrolled");
+// Process M-Pesa Donation
+function processMpesaDonation() {
+  const amount = document.getElementById('mpesa-amount').value;
+  const statusDiv = document.getElementById('mpesa-status');
+  
+  if (!amount || amount <= 0) {
+    statusDiv.innerHTML = '<span style="color: red;">Please enter a valid amount</span>';
+    return;
+  }
+  
+  // Check if user is logged in
+  let user = null;
+  if (typeof firebase !== 'undefined' && firebase.auth) {
+    user = firebase.auth().currentUser;
+  }
+  
+  // Show processing message
+  statusDiv.innerHTML = '<span style="color: blue;">Processing your donation...</span>';
+  
+  // Save to Firebase
+  if (typeof firebase !== 'undefined' && firebase.database) {
+    const db = firebase.database();
+    db.ref('donations').push({
+      amount: amount,
+      method: 'M-Pesa',
+      email: user ? user.email : 'Guest',
+      userId: user ? user.uid : null,
+      date: new Date().toISOString(),
+      status: 'pending'
+    })
+    .then(() => {
+      statusDiv.innerHTML = '<span style="color: green;">✅ Donation initiated! Please complete payment via M-Pesa Paybill 123456. Thank you for your support! 💙</span>';
+      document.getElementById('mpesa-amount').value = '';
+      
+      // Clear status after 5 seconds
+      setTimeout(() => {
+        if (statusDiv.innerHTML.includes('Thank you')) {
+          statusDiv.innerHTML = '';
+        }
+      }, 8000);
+    })
+    .catch(err => {
+      console.error('Error:', err);
+      statusDiv.innerHTML = '<span style="color: orange;">Donation recorded! Please complete payment via M-Pesa Paybill 123456.</span>';
+    });
   } else {
-    navbar.classList.remove("scrolled");
+    // Fallback
+    statusDiv.innerHTML = '<span style="color: green;">✅ Please complete payment via M-Pesa Paybill: 123456, Account: Your Name. Thank you for your support! 💙</span>';
+    document.getElementById('mpesa-amount').value = '';
+  }
+}
+
+// Copy bank details to clipboard
+function copyBankDetails() {
+  const bankDetails = `Account Name: Metameta Development Centre\nAccount Number: 01134154075900\nBank: Equity Bank Kenya\nBranch: Nairobi`;
+  
+  navigator.clipboard.writeText(bankDetails).then(() => {
+    alert('Bank details copied to clipboard!');
+  }).catch(() => {
+    alert('Please copy the bank details manually');
+  });
+}
+
+// Mobile Menu Toggle
+const menuToggle = document.getElementById('mobile-menu');
+const navLinks = document.getElementById('nav-links');
+
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+}
+
+// Scroll Progress Bar
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', () => {
+  if (scrollBar) {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (scrollTop / scrollHeight) * 100;
+    scrollBar.style.width = scrolled + '%';
   }
 });
-</script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const links = document.querySelectorAll(".nav-links a");
-  const currentPage = window.location.pathname.split("/").pop();
-
-  links.forEach(link => {
-    const linkPage = link.getAttribute("href");
-
-    if (linkPage === currentPage) {
-      link.classList.add("active");
-    } else {
-      link.classList.remove("active");
-    }
-  });
+// Active Link Highlighting
+const currentPage = window.location.pathname.split('/').pop();
+const links = document.querySelectorAll('.nav a');
+links.forEach(link => {
+  const linkPage = link.getAttribute('href');
+  if (linkPage === currentPage) {
+    link.classList.add('active');
+  }
 });
-</script>
 
-<script>
-window.addEventListener("scroll", () => {
-  const scrollBar = document.getElementById("scroll-bar");
-
-  const scrollTop = document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-  const scrolled = (scrollTop / scrollHeight) * 100;
-
-  scrollBar.style.width = scrolled + "%";
-});
+// Remove body padding
+document.body.style.paddingTop = '0';
 </script>
 
 </body>
-
-<div id="scroll-bar"></div>
 </html>

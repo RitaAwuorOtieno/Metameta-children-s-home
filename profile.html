@@ -2,75 +2,780 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Profile | Metameta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Profile | Metameta Children's Home</title>
+
+  <meta name="description" content="View your donation history, manage your account, and track your impact at Metameta Children's Home.">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js for Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- Global CSS -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <style>
+    /* Profile Page Specific Styles */
+    .profile-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 100px 5% 60px;
+      position: relative;
+      margin-top: -73px;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,57,70,0.2);
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Profile Container */
+    .profile-container {
+      max-width: 1200px;
+      margin: -40px auto 60px;
+      padding: 0 20px;
+    }
+
+    /* Welcome Banner */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 20px;
+      padding: 30px;
+      color: white;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .welcome-text h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .welcome-text p {
+      opacity: 0.9;
+    }
+
+    .logout-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Profile Grid */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .profile-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-card h3 i {
+      color: var(--primary);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .info-value {
+      color: var(--dark);
+    }
+
+    .edit-btn {
+      background: var(--light-bg);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .edit-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+      background: var(--light-bg);
+      border-radius: 16px;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 5px;
+    }
+
+    /* Donations Section */
+    .donations-section {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .section-header h3 {
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .donation-filters {
+      display: flex;
+      gap: 10px;
+    }
+
+    .filter-btn {
+      padding: 6px 15px;
+      border: 1px solid #e9ecef;
+      background: white;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Donations Table */
+    .donations-table {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .donation-amount {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-success {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .badge-pending {
+      background: #fff3e0;
+      color: #ed6c02;
+    }
+
+    /* Impact Chart */
+    .chart-container {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+    }
+
+    canvas {
+      max-height: 300px;
+    }
+
+    /* Impact Section */
+    .impact-section {
+      background: linear-gradient(135deg, var(--dark), #1a1a2e);
+      border-radius: 20px;
+      padding: 40px;
+      color: white;
+      text-align: center;
+    }
+
+    .impact-message {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .impact-btn {
+      background: var(--primary);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .impact-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(230,57,70,0.3);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .welcome-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      th, td {
+        padding: 10px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
 </head>
 
-<body>
+<body class="profile-page">
 
-<!-- NAVBAR -->
-<header class="navbar">
-  <div class="nav-container">
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-bar"></div>
+
+<!-- ================= NAVBAR ================= -->
+<div class="nav-wrapper">
+  <div class="grad-bar"></div>
+  <nav class="navbar">
     <div class="logo">
-      <span>Metameta Dashboard</span>
+      <img src="images/metameta logo01.png" alt="Metameta Children's Home">
+      <!-- <span>Metameta Children's Home</span> -->
     </div>
-
-    <button class="donate" onclick="logout()">Logout</button>
-  </div>
-</header>
-
-<!-- PROFILE CONTENT -->
-<section>
-  <div class="container">
-
-    <div class="card">
-      <h2>My Profile</h2>
-      <p><strong>Email:</strong> <span id="user-email"></span></p>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
     </div>
+    <ul class="nav" id="nav-links">
+      <li class="nav-item"><a href="index.html">Home</a></li>
+      <li class="nav-item"><a href="about.html">About</a></li>
+      <li class="nav-item"><a href="programs.html">Programs</a></li>
+      <li class="nav-item"><a href="events.html">Events</a></li>
+      <li class="nav-item"><a href="contact.html">Contact</a></li>
+      <li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
+    </ul>
+  </nav>
+</div>
 
-    <div class="card">
-      <h3>My Donations</h3>
-      <div id="user-donations"></div>
-    </div>
-
+<!-- ================= HERO SECTION ================= -->
+<section class="profile-hero">
+  <div class="hero-content">
+    <span class="hero-badge">Welcome Back</span>
+    <h1>My Dashboard</h1>
+    <p>Track your impact and manage your account</p>
   </div>
 </section>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<!-- ================= PROFILE CONTENT ================= -->
+<div class="profile-container">
+  
+  <!-- Welcome Banner -->
+  <div class="welcome-banner">
+    <div class="welcome-text">
+      <h2 id="welcomeName">Welcome back!</h2>
+      <p>Thank you for being part of our mission to transform lives</p>
+    </div>
+    <button class="logout-btn" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </div>
 
-<script src="script.js"></script>
+  <!-- Profile Grid -->
+  <div class="profile-grid">
+    
+    <!-- Profile Information -->
+    <div class="profile-card">
+      <h3><i class="fas fa-user-circle"></i> Profile Information</h3>
+      <div class="info-row">
+        <span class="info-label">Full Name</span>
+        <span class="info-value" id="userName">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Email Address</span>
+        <span class="info-value" id="userEmail">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Member Since</span>
+        <span class="info-value" id="memberSince">-</span>
+      </div>
+      <button class="edit-btn" onclick="editProfile()">
+        <i class="fas fa-edit"></i> Edit Profile
+      </button>
+    </div>
+
+    <!-- Donation Stats -->
+    <div class="profile-card">
+      <h3><i class="fas fa-chart-pie"></i> Donation Summary</h3>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" id="totalDonations">0</div>
+          <div class="stat-label">Total Donations</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="totalAmount">KES 0</div>
+          <div class="stat-label">Total Amount</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="avgDonation">KES 0</div>
+          <div class="stat-label">Average Donation</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="largestDonation">KES 0</div>
+          <div class="stat-label">Largest Donation</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Donations History -->
+  <div class="donations-section">
+    <div class="section-header">
+      <h3><i class="fas fa-history"></i> Donation History</h3>
+      <div class="donation-filters">
+        <button class="filter-btn active" onclick="filterDonations('all')">All</button>
+        <button class="filter-btn" onclick="filterDonations('year')">This Year</button>
+        <button class="filter-btn" onclick="filterDonations('month')">This Month</button>
+      </div>
+    </div>
+
+    <div class="donations-table">
+      <table id="donationsTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Amount (KES)</th>
+            <th>Method</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="donationsList">
+          <tr>
+            <td colspan="4" style="text-align: center;">Loading donations...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Impact Chart -->
+  <div class="chart-container">
+    <h3><i class="fas fa-chart-line"></i> Donation Trends</h3>
+    <canvas id="donationChart"></canvas>
+  </div>
+
+  <!-- Impact Message -->
+  <div class="impact-section">
+    <div class="impact-message" id="impactMessage">
+      <i class="fas fa-heart" style="font-size: 2rem; margin-bottom: 15px; display: block;"></i>
+      Your generosity has transformed lives!
+    </div>
+    <a href="support.html" class="impact-btn">
+      <i class="fas fa-hand-holding-heart"></i> Make Another Donation
+    </a>
+  </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <h3>Metameta Children's Home</h3>
+      <p>Transforming lives through love, education, and opportunity since 2004.</p>
+    </div>
+    
+  <div class="footer-bottom">
+    <p>© 2026 Metameta Children's Home. All rights reserved. | Built with <i class="fas fa-heart" style="color: var(--primary);"></i> for our children</p>
+  </div>
+</footer>
 
 <script>
-// PROTECT PAGE + LOAD USER DATA
-auth.onAuthStateChanged(user => {
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDjZjgSoVNXjIKVui9ZG1K6nrqi6HEFK8g",
+  authDomain: "metameta-82db5.firebaseapp.com",
+  databaseURL: "https://metameta-82db5-default-rtdb.firebaseio.com",
+  projectId: "metameta-82db5",
+  storageBucket: "metameta-82db5.firebasestorage.app",
+  messagingSenderId: "153087607234",
+  appId: "1:153087607234:web:b0883c1c192fe06447965b"
+};
 
+// Initialize Firebase if not already initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+const db = firebase.database();
+
+let userDonations = [];
+let donationChart = null;
+
+// Mobile Menu Toggle
+const menuToggle = document.getElementById('mobile-menu');
+const navLinks = document.getElementById('nav-links');
+
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+}
+
+// Scroll Progress Bar
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', () => {
+  if (scrollBar) {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (scrollTop / scrollHeight) * 100;
+    scrollBar.style.width = scrolled + '%';
+  }
+});
+
+// Remove body padding
+document.body.style.paddingTop = '0';
+
+// Logout Function
+function logout() {
+  auth.signOut().then(() => {
+    window.location.href = 'index.html';
+  }).catch((error) => {
+    console.error('Logout error:', error);
+    alert('Error logging out. Please try again.');
+  });
+}
+
+// Edit Profile (Simplified)
+function editProfile() {
+  const newName = prompt('Enter your full name:');
+  if (newName && newName.trim()) {
+    const user = auth.currentUser;
+    user.updateProfile({
+      displayName: newName
+    }).then(() => {
+      document.getElementById('userName').innerText = newName;
+      alert('Profile updated successfully!');
+    }).catch((error) => {
+      alert('Error updating profile: ' + error.message);
+    });
+  }
+}
+
+// Format Date
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
+// Update Donation Stats
+function updateStats(donations) {
+  const totalCount = donations.length;
+  const totalAmount = donations.reduce((sum, d) => sum + parseFloat(d.amount), 0);
+  const avgAmount = totalCount > 0 ? totalAmount / totalCount : 0;
+  const largestAmount = donations.length > 0 ? Math.max(...donations.map(d => parseFloat(d.amount))) : 0;
+  
+  document.getElementById('totalDonations').innerText = totalCount;
+  document.getElementById('totalAmount').innerHTML = `KES ${totalAmount.toLocaleString()}`;
+  document.getElementById('avgDonation').innerHTML = `KES ${Math.round(avgAmount).toLocaleString()}`;
+  document.getElementById('largestDonation').innerHTML = `KES ${largestAmount.toLocaleString()}`;
+  
+  // Update impact message
+  const impactMessage = document.getElementById('impactMessage');
+  if (totalAmount >= 100000) {
+    impactMessage.innerHTML = '<i class="fas fa-trophy" style="font-size: 2rem; margin-bottom: 15px; display: block;"></i>🏆 Amazing! Your generosity has made you a Champion Donor!';
+  } else if (totalAmount >= 50000) {
+    impactMessage.innerHTML = '<i class="fas fa-star" style="font-size: 2rem; margin-bottom: 15px; display: block;"></i>⭐ Incredible! You\'re a Guardian Angel to our children!';
+  } else if (totalAmount >= 10000) {
+    impactMessage.innerHTML = '<i class="fas fa-heart" style="font-size: 2rem; margin-bottom: 15px; display: block;"></i>💖 Thank you! You\'ve made a significant impact!';
+  } else if (totalAmount > 0) {
+    impactMessage.innerHTML = '<i class="fas fa-smile" style="font-size: 2rem; margin-bottom: 15px; display: block;"></i>🙏 Every donation matters. Thank you for your kindness!';
+  }
+}
+
+// Update Donation Chart
+function updateChart(donations) {
+  const monthlyData = {};
+  donations.forEach(d => {
+    const date = new Date(d.date);
+    const monthYear = `${date.getFullYear()}-${date.getMonth() + 1}`;
+    monthlyData[monthYear] = (monthlyData[monthYear] || 0) + parseFloat(d.amount);
+  });
+  
+  const sortedMonths = Object.keys(monthlyData).sort();
+  const amounts = sortedMonths.map(month => monthlyData[month]);
+  
+  const ctx = document.getElementById('donationChart').getContext('2d');
+  
+  if (donationChart) {
+    donationChart.destroy();
+  }
+  
+  donationChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: sortedMonths,
+      datasets: [{
+        label: 'Donations (KES)',
+        data: amounts,
+        borderColor: '#e63946',
+        backgroundColor: 'rgba(230, 57, 70, 0.1)',
+        tension: 0.3,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        }
+      }
+    }
+  });
+}
+
+// Display Donations
+function displayDonations(donations) {
+  const tbody = document.getElementById('donationsList');
+  
+  if (donations.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No donations found</td></tr>';
+    return;
+  }
+  
+  tbody.innerHTML = donations.map(d => `
+    <tr>
+      <td>${formatDate(d.date)}</td>
+      <td class="donation-amount">KES ${parseFloat(d.amount).toLocaleString()}</td>
+      <td>${d.method || 'M-Pesa'}</td>
+      <td><span class="badge badge-success">Completed</span></td>
+    </tr>
+  `).join('');
+}
+
+// Filter Donations
+let currentFilter = 'all';
+function filterDonations(filter) {
+  currentFilter = filter;
+  
+  // Update active button
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+  
+  let filtered = [...userDonations];
+  const now = new Date();
+  
+  if (filter === 'year') {
+    filtered = userDonations.filter(d => new Date(d.date).getFullYear() === now.getFullYear());
+  } else if (filter === 'month') {
+    filtered = userDonations.filter(d => {
+      const date = new Date(d.date);
+      return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth();
+    });
+  }
+  
+  displayDonations(filtered);
+}
+
+// Load User Data
+auth.onAuthStateChanged(async (user) => {
   if (!user) {
-    // NOT LOGGED IN → SEND BACK
     window.location.href = "login.html";
     return;
   }
-
-  // SHOW USER EMAIL
-  document.getElementById("user-email").innerText = user.email;
-
-  // LOAD USER DONATIONS
-  db.ref("donations").on("value", snapshot => {
+  
+  // Display user info
+  document.getElementById('userEmail').innerText = user.email;
+  document.getElementById('userName').innerText = user.displayName || 'User';
+  document.getElementById('welcomeName').innerHTML = `Welcome back, ${user.displayName?.split(' ')[0] || 'Friend'}!`;
+  
+  // Get member since (from user metadata)
+  if (user.metadata.creationTime) {
+    const joinedDate = new Date(user.metadata.creationTime);
+    document.getElementById('memberSince').innerText = joinedDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  }
+  
+  // Load user donations
+  db.ref("donations").on("value", (snapshot) => {
     const data = snapshot.val();
-    let html = "";
-
+    userDonations = [];
+    
     for (let id in data) {
-      if (data[id].email === user.email) {
-        html += `<p>KES ${data[id].amount}</p>`;
+      if (data[id].email === user.email || data[id].userId === user.uid) {
+        userDonations.push({
+          id: id,
+          amount: data[id].amount,
+          method: data[id].method || 'M-Pesa',
+          date: data[id].date,
+          status: data[id].status || 'completed'
+        });
       }
     }
-
-    document.getElementById("user-donations").innerHTML = html || "No donations yet";
+    
+    // Sort by date (newest first)
+    userDonations.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    // Update everything
+    updateStats(userDonations);
+    displayDonations(userDonations);
+    updateChart(userDonations);
+    
+    // Reset filter
+    currentFilter = 'all';
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.innerText === 'All') btn.classList.add('active');
+    });
   });
-
 });
 </script>
 

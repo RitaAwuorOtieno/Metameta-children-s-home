@@ -2,110 +2,687 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Events | Metameta Children's Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="See our events, outreach programs, and real stories from Metameta Children's Home.">
+  <title>Events & Impact | Metameta Children's Home</title>
 
+  <meta name="description" content="Discover upcoming events, past impact stories, and ways to get involved with Metameta Children's Home. Join us in making a difference.">
+  <meta name="keywords" content="children's home events, charity events Kenya, fundraising, volunteer opportunities">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Global CSS -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <style>
+    /* Events Page Specific Styles */
+    .events-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 120px 5% 80px;
+      position: relative;
+      margin-top: -73px;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,57,70,0.2);
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 600px;
+    }
+
+    /* Featured Event Section */
+    .featured-event {
+      max-width: 1200px;
+      margin: -40px auto 60px;
+      padding: 0 5%;
+    }
+
+    .featured-card {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 20px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: var(--shadow-hover);
+    }
+
+    .featured-content {
+      padding: 40px;
+      color: white;
+    }
+
+    .featured-label {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .featured-content h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .featured-date {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .featured-date span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .featured-content p {
+      margin-bottom: 25px;
+      line-height: 1.7;
+      opacity: 0.95;
+    }
+
+    .btn-featured {
+      background: white;
+      color: var(--primary);
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .btn-featured:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .featured-image {
+      background-size: cover;
+      background-position: center;
+      min-height: 300px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 60px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(230,57,70,0.1);
+      color: var(--primary);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+
+    /* Events Grid */
+    .events-section {
+      padding: 60px 5%;
+      background: var(--light-bg);
+    }
+
+    .events-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .event-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .event-image {
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .event-date-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 12px;
+      text-align: center;
+      min-width: 60px;
+    }
+
+    .event-date-badge .day {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .event-date-badge .month {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+    }
+
+    .event-content {
+      padding: 25px;
+    }
+
+    .event-category {
+      display: inline-block;
+      background: rgba(230,57,70,0.1);
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .event-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .event-meta {
+      display: flex;
+      gap: 15px;
+      margin: 15px 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .event-meta i {
+      color: var(--primary);
+      margin-right: 5px;
+    }
+
+    .event-content p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .event-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .btn-event {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn-event:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Past Events Section */
+    .past-events {
+      padding: 60px 5%;
+      background: white;
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      padding: 60px 5%;
+      background: var(--light-bg);
+    }
+
+    .gallery-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .gallery-item {
+      border-radius: 15px;
+      overflow: hidden;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    /* Newsletter Section */
+    .newsletter-section {
+      background: linear-gradient(135deg, var(--dark), #1a1a2e);
+      padding: 60px 5%;
+      text-align: center;
+    }
+
+    .newsletter-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .newsletter-section h2 {
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .newsletter-section p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 30px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 15px;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+    }
+
+    .newsletter-form button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .newsletter-form button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px;
+      background: white;
+      border-radius: 20px;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      color: var(--primary);
+      opacity: 0.5;
+      margin-bottom: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .featured-card {
+        grid-template-columns: 1fr;
+      }
+      
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .newsletter-form {
+        flex-direction: column;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
-<body>
+<body class="events-page">
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-bar"></div>
 
 <!-- ================= NAVBAR ================= -->
-<header class="navbar">
-  <div class="nav-container">
-
+<div class="nav-wrapper">
+  <div class="grad-bar"></div>
+  <nav class="navbar">
     <div class="logo">
-      <img src="images/metameta-logo.png" alt="Logo">
-      <span>Metameta Children’s Home</span>
+      <img src="images/metameta logo01.png" alt="Metameta Children's Home">
+      <!-- <span>Metameta Children's Home</span> -->
+    </div>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul class="nav" id="nav-links">
+      <li class="nav-item"><a href="index.html">Home</a></li>
+      <li class="nav-item"><a href="about.html">About</a></li>
+      <li class="nav-item"><a href="programs.html">Programs</a></li>
+      <li class="nav-item"><a href="events.html" class="active">Events</a></li>
+      <li class="nav-item"><a href="contact.html">Contact</a></li>
+      <li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
+    </ul>
+  </nav>
+</div>
+
+<!-- ================= HERO SECTION ================= -->
+<section class="events-hero">
+  <div class="hero-content">
+    <span class="hero-badge">Stay Updated</span>
+    <h1>Events & Impact</h1>
+    <p>Bringing hope through community, outreach, and love. Join us in making a difference.</p>
+  </div>
+</section>
+
+<!-- ================= FEATURED EVENT ================= -->
+<div class="featured-event">
+  <div class="featured-card">
+    <div class="featured-content">
+      <span class="featured-label">🌟 Featured Event</span>
+      <h2>Annual Charity Gala 2026</h2>
+      <div class="featured-date">
+        <span><i class="fas fa-calendar"></i> December 15, 2026</span>
+        <span><i class="fas fa-clock"></i> 6:00 PM - 10:00 PM</span>
+        <span><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</span>
+      </div>
+      <p>Join us for an unforgettable evening of hope, celebration, and fundraising. All proceeds go directly to supporting our children's education and care programs.</p>
+      <a href="support.html" class="btn-featured">Register Now →</a>
+    </div>
+    <div class="featured-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/home.jpeg');"></div>
+  </div>
+</div>
+
+<!-- ================= UPCOMING EVENTS SECTION ================= -->
+<section class="events-section">
+  <div class="section-header">
+    <span class="section-tag">Join Us</span>
+    <h2>Upcoming Events</h2>
+    <p>Be part of our mission through these upcoming opportunities</p>
+  </div>
+
+  <div id="events-container" class="events-grid">
+    <!-- Events will be loaded dynamically from Firebase -->
+    <div class="empty-state" id="loading-events">
+      <i class="fas fa-calendar-alt"></i>
+      <h3>Loading Events...</h3>
+      <p>Please wait while we fetch upcoming events.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAST EVENTS HIGHLIGHTS ================= -->
+<section class="past-events">
+  <div class="section-header">
+    <span class="section-tag">Memories</span>
+    <h2>Past Events Highlights</h2>
+    <p>Celebrating the impact we've made together</p>
+  </div>
+
+  <div class="events-grid">
+    <div class="event-card">
+      <div class="event-image" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('images/chilled.jpeg');">
+        <div class="event-date-badge">
+          <div class="day">15</div>
+          <div class="month">Dec</div>
+        </div>
+      </div>
+      <div class="event-content">
+        <span class="event-category">Fundraiser</span>
+        <h3>Christmas Charity Drive 2025</h3>
+        <div class="event-meta">
+          <span><i class="fas fa-users"></i> 200+ Attendees</span>
+          <span><i class="fas fa-heart"></i> $15,000 Raised</span>
+        </div>
+        <p>Our annual Christmas celebration brought together donors, volunteers, and community members to support our children.</p>
+        <div class="event-footer">
+          <span><i class="fas fa-check-circle" style="color: var(--success);"></i> Completed</span>
+          <a href="#" class="btn-event">View Gallery</a>
+        </div>
+      </div>
     </div>
 
-    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <div class="event-card">
+      <div class="event-image" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('images/smile.jpeg');">
+        <div class="event-date-badge">
+          <div class="day">10</div>
+          <div class="month">Oct</div>
+        </div>
+      </div>
+      <div class="event-content">
+        <span class="event-category">Sports</span>
+        <h3>Annual Sports Day</h3>
+        <div class="event-meta">
+          <span><i class="fas fa-users"></i> 150+ Participants</span>
+          <span><i class="fas fa-trophy"></i> 6 Schools</span>
+        </div>
+        <p>Inter-school sports competition promoting teamwork, health, and community spirit among children.</p>
+        <div class="event-footer">
+          <span><i class="fas fa-check-circle" style="color: var(--success);"></i> Completed</span>
+          <a href="#" class="btn-event">View Gallery</a>
+        </div>
+      </div>
+    </div>
 
-    <nav class="nav-links" id="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="programs.html">Programs</a>
-      <a href="events.html" class="active">Events</a>
-      <a href="contact.html">Contact</a>
-      <a href="admin.html" id="admin-link" style="display:none;">Admin</a>
-    </nav>
-
-    <button class="donate" onclick="window.location.href='donate.html'">Donate</button>
-
+    <div class="event-card">
+      <div class="event-image" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('images/daycare1.jpeg');">
+        <div class="event-date-badge">
+          <div class="day">05</div>
+          <div class="month">Sep</div>
+        </div>
+      </div>
+      <div class="event-content">
+        <span class="event-category">Education</span>
+        <h3>Digital Skills Workshop</h3>
+        <div class="event-meta">
+          <span><i class="fas fa-users"></i> 45 Students</span>
+          <span><i class="fas fa-laptop"></i> 20 Computers</span>
+        </div>
+        <p>Empowering our youth with essential computer and digital literacy skills for future opportunities.</p>
+        <div class="event-footer">
+          <span><i class="fas fa-check-circle" style="color: var(--success);"></i> Completed</span>
+          <a href="#" class="btn-event">View Gallery</a>
+        </div>
+      </div>
+    </div>
   </div>
-</header>
-
-<!-- ================= HERO ================= -->
-<section class="hero-video">
-
-  <video autoplay muted loop playsinline class="hero-bg">
-    <source src="videos/children.mp4" type="video/mp4">
-  </video>
-
-  <div class="hero-overlay">
-    <h1>Our Events & Impact</h1>
-    <p>Bringing hope through community, outreach, and love</p>
-  </div>
-
 </section>
 
-<!-- ================= EVENTS SECTION (FIXED) ================= -->
-<section>
-  <div class="container">
+<!-- ================= GALLERY SECTION ================= -->
+<section class="gallery-section">
+  <div class="section-header">
+    <span class="section-tag">Moments</span>
+    <h2>Event Gallery</h2>
+    <p>Capturing smiles, hope, and transformation</p>
+  </div>
 
-    <h2 class="section-title">Upcoming Events</h2>
-
-    <!-- ✅ ONLY ONE CONTAINER (IMPORTANT FIX) -->
-    <div id="events-container" class="cards"></div>
-
+  <div class="gallery-grid">
+    <div class="gallery-item" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('images/home.jpeg');"></div>
+    <div class="gallery-item" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('images/chilled.jpeg');"></div>
+    <div class="gallery-item" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('images/smile.jpeg');"></div>
+    <div class="gallery-item" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('images/daycare1.jpeg');"></div>
   </div>
 </section>
 
-<!-- ================= CTA ================= -->
-<section class="cta reveal-zoom">
+<!-- ================= NEWSLETTER SECTION ================= -->
+<section class="newsletter-section">
+  <div class="newsletter-container">
+    <h2>Stay Updated</h2>
+    <p>Subscribe to our newsletter to receive updates about upcoming events and impact stories</p>
+    <form class="newsletter-form" id="newsletter-form">
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit">Subscribe <i class="fas fa-paper-plane"></i></button>
+    </form>
+  </div>
+</section>
+
+<!-- ================= CTA SECTION ================= -->
+<section class="cta-section" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 80px 5%; text-align: center;">
   <div class="container">
-    <h2>Be Part of Our Next Event</h2>
-    <p>Join us, volunteer, or support our mission today.</p>
-    <a href="contact.html" class="btn">Join Us</a>
+    <h2 style="color: white;">Want to Host an Event?</h2>
+    <p style="color: rgba(255,255,255,0.9); margin-bottom: 30px;">Partner with us to create meaningful experiences for our children</p>
+    <a href="contact.html" class="btn-cta" style="background: white; color: var(--primary); padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 700;">Partner With Us →</a>
   </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
-  <div class="container">
-    <p>&copy; 2026 Metameta Children's Home | All Rights Reserved</p>
+  <div class="footer-content">
+    <div class="footer-logo">
+      <h3>Metameta Children's Home</h3>
+      <p>Transforming lives through love, education, and opportunity since 2004.</p>
+    </div>
+    
+    <div>
+      <h4>Contact</h4>
+      <ul class="footer-links">
+        <li><i class="fas fa-phone"></i> +254 791 533 154</li>
+        <li><i class="fas fa-envelope"></i> info@metameta.org</li>
+        <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Metameta Children's Home. All rights reserved. | Built with <i class="fas fa-heart" style="color: var(--primary);"></i> for our children</p>
   </div>
 </footer>
 
-<!-- ================= FIREBASE ================= -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-<!-- YOUR MAIN SCRIPT -->
 <script src="script.js"></script>
 
-<!-- MENU TOGGLE -->
 <script>
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
+// Mobile Menu Toggle
+const menuToggle = document.getElementById('mobile-menu');
+const navLinks = document.getElementById('nav-links');
 
-toggle.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+}
+
+// Scroll Progress Bar
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', () => {
+  if (scrollBar) {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (scrollTop / scrollHeight) * 100;
+    scrollBar.style.width = scrolled + '%';
+  }
 });
-</script>
 
-<!-- SCROLL EFFECT -->
-<script>
-const navbar = document.querySelector(".navbar");
+// Active Link Highlighting
+const currentPage = window.location.pathname.split('/').pop();
+const links = document.querySelectorAll('.nav a');
+links.forEach(link => {
+  const linkPage = link.getAttribute('href');
+  if (linkPage === currentPage) {
+    link.classList.add('active');
+  }
+});
 
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 50) {
-    navbar.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
+// Newsletter Form Submission
+const newsletterForm = document.getElementById('newsletter-form');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = newsletterForm.querySelector('input').value;
+    alert(`Thank you for subscribing! We'll send updates to ${email}`);
+    newsletterForm.reset();
+  });
+}
+
+// Load Events from Firebase (if your script.js has loadPublicEvents, it will work)
+// If not, we'll show a message
+document.addEventListener('DOMContentLoaded', () => {
+  const eventsContainer = document.getElementById('events-container');
+  if (eventsContainer && eventsContainer.innerHTML.includes('Loading Events')) {
+    // Check if events loaded after 3 seconds
+    setTimeout(() => {
+      if (eventsContainer.innerHTML.includes('Loading Events')) {
+        eventsContainer.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-calendar-alt"></i>
+            <h3>No Upcoming Events</h3>
+            <p>Check back soon for our upcoming events and activities!</p>
+            <a href="contact.html" class="btn-primary" style="margin-top: 20px; display: inline-block;">Contact Us</a>
+          </div>
+        `;
+      }
+    }, 3000);
   }
 });
 </script>
