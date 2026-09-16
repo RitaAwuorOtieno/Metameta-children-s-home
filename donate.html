@@ -134,10 +134,11 @@
     }
 
     .donation-card {
-      background: white;
+      background: #1a1a2e;
+      color: #f8f9fa;
       border-radius: 20px;
       padding: 35px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
       transition: 0.3s;
       position: relative;
     }
@@ -172,6 +173,11 @@
     .donation-card h3 {
       font-size: 1.5rem;
       margin-bottom: 15px;
+      color: #ffffff;
+    }
+
+    .donation-card > p {
+      color: rgba(255, 255, 255, 0.82);
     }
 
     .donation-details {
@@ -180,11 +186,11 @@
 
     .donation-details p {
       margin: 10px 0;
-      color: var(--text-light);
+      color: rgba(255, 255, 255, 0.82);
     }
 
     .donation-details strong {
-      color: var(--dark);
+      color: #ffffff;
     }
 
     .amount-input {
@@ -211,9 +217,10 @@
     .preset-btn {
       flex: 1;
       padding: 8px;
-      background: var(--light-bg);
-      border: none;
+      background: #29334f;
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 8px;
+      color: #ffffff;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -250,7 +257,15 @@
     /* Impact Table */
     .impact-table {
       padding: 80px 5%;
-      background: white;
+      background: #111827;
+    }
+
+    .impact-table .section-header h2 {
+      color: #ffffff;
+    }
+
+    .impact-table .section-header p {
+      color: rgba(255, 255, 255, 0.82);
     }
 
     .impact-grid {
@@ -263,7 +278,11 @@
 
     .impact-item {
       text-align: center;
-      padding: 20px;
+      padding: 25px 20px;
+      background: #1a1a2e;
+      color: #f8f9fa;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
     .impact-item i {
@@ -275,10 +294,11 @@
     .impact-item h4 {
       font-size: 1.5rem;
       margin-bottom: 10px;
+      color: #ffffff;
     }
 
     .impact-item p {
-      color: var(--text-light);
+      color: rgba(255, 255, 255, 0.82);
     }
 
     /* Testimonial */

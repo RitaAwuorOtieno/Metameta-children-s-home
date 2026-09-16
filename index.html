@@ -15,32 +15,38 @@
 
   <style>
     /* Home Page Specific Enhancements */
+    body {
+      background: #111827;
+      color: #f8f9fa;
+    }
+
     .hero-video {
       position: relative;
-      height: 90vh;
+      height: auto;
       overflow: hidden;
       margin-top: -73px;
+      background: #000;
     }
 
     .hero-bg {
-      position: absolute;
+      position: relative;
+      display: block;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
     }
 
     .hero-video::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.45);
       z-index: 1;
     }
 
     .hero-overlay {
-      position: relative;
+      position: absolute;
+      inset: 0;
       z-index: 2;
-      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -132,7 +138,7 @@
     .section-title {
       text-align: center;
       font-size: 2.5rem;
-      color: var(--dark-bg);
+      color: #ffffff;
       margin-bottom: 50px;
       position: relative;
     }
@@ -156,10 +162,11 @@
     }
 
     .card {
-      background: white;
+      background: #1a1a2e;
+      color: #f8f9fa;
       padding: 30px;
       border-radius: 20px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
       transition: all 0.3s ease;
       text-align: center;
     }
@@ -172,11 +179,11 @@
     .card h3 {
       font-size: 1.5rem;
       margin-bottom: 15px;
-      color: var(--primary);
+      color: #ffffff;
     }
 
     .card p {
-      color: var(--text-light);
+      color: rgba(255, 255, 255, 0.84);
       line-height: 1.6;
     }
 
@@ -193,7 +200,7 @@
 
     /* Testimonials */
     .testimonials {
-      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      background: linear-gradient(135deg, #111827, #1a1a2e);
       padding: 80px 20px;
       text-align: center;
     }
@@ -202,10 +209,10 @@
       display: none;
       max-width: 700px;
       margin: 0 auto;
-      background: white;
+      background: #1a1a2e;
       padding: 40px;
       border-radius: 20px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
     }
 
     .testimonial-box.active {
@@ -217,13 +224,79 @@
       font-size: 1.2rem;
       font-style: italic;
       margin-bottom: 20px;
-      color: var(--dark);
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .testimonial-box h4 {
       color: var(--primary);
       font-size: 1.1rem;
     }
+
+    .testimonial-form {
+      max-width: 700px;
+      margin: 35px auto 0;
+      padding: 30px;
+      border-radius: 20px;
+      background: #1a1a2e;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
+      text-align: left;
+    }
+
+    .testimonial-form h3 {
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .testimonial-form > p {
+      color: rgba(255, 255, 255, 0.82);
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .testimonial-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .testimonial-form input,
+    .testimonial-form textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      background: #29334f;
+      color: #ffffff;
+      font: inherit;
+    }
+
+    .testimonial-form textarea {
+      min-height: 120px;
+      margin-top: 15px;
+      resize: vertical;
+    }
+
+    .testimonial-form input::placeholder,
+    .testimonial-form textarea::placeholder {
+      color: rgba(255, 255, 255, 0.62);
+    }
+
+    .testimonial-form button {
+      width: 100%;
+      margin-top: 15px;
+      border: 0;
+      padding: 13px;
+      border-radius: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .testimonial-form button:hover { background: var(--primary-dark); }
+    .testimonial-status { min-height: 1.4em; margin-top: 12px; text-align: center; color: #ffffff; }
 
     /* CTA Section */
     .cta {
@@ -279,7 +352,7 @@
     }
 
     .footer-links a {
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.82);
       text-decoration: none;
       transition: 0.3s;
     }
@@ -471,6 +544,18 @@
       <p>"They believed in me when no one else did. This place didn't just give me shelter - it gave me a family and a future."</p>
       <h4>- Silas, Business Owner</h4>
     </div>
+
+    <form class="testimonial-form" id="testimonial-form">
+      <h3>Share Your Metameta Story</h3>
+      <p>Are you a former student or resident? We would love to hear how Metameta has shaped your journey.</p>
+      <div class="testimonial-form-grid">
+        <input id="alumni-name" name="name" type="text" placeholder="Your name" maxlength="80" required>
+        <input id="alumni-role" name="role" type="text" placeholder="Your current role or achievement" maxlength="100" required>
+      </div>
+      <textarea id="alumni-testimonial" name="testimonial" placeholder="Write your testimonial..." maxlength="1000" required></textarea>
+      <button type="submit"><i class="fas fa-paper-plane"></i> Submit Testimonial</button>
+      <p class="testimonial-status" id="testimonial-status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -588,6 +673,50 @@ const counterObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 
 counters.forEach(counter => counterObserver.observe(counter));
+
+// Alumni testimonial submission - entries are saved for review before publishing.
+const testimonialForm = document.getElementById('testimonial-form');
+const testimonialStatus = document.getElementById('testimonial-status');
+
+if (testimonialForm && testimonialStatus) {
+  testimonialForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const name = document.getElementById('alumni-name').value.trim();
+    const role = document.getElementById('alumni-role').value.trim();
+    const message = document.getElementById('alumni-testimonial').value.trim();
+
+    if (!name || !role || !message) return;
+
+    if (typeof db === 'undefined') {
+      testimonialStatus.textContent = 'Unable to submit right now. Please try again later.';
+      return;
+    }
+
+    const submitButton = testimonialForm.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    testimonialStatus.textContent = 'Submitting your story...';
+
+    try {
+      const user = typeof auth !== 'undefined' ? auth.currentUser : null;
+      await db.ref('testimonialSubmissions').push({
+        name,
+        role,
+        message,
+        status: 'pending',
+        userId: user ? user.uid : null,
+        email: user ? user.email : null,
+        createdAt: firebase.database.ServerValue.TIMESTAMP
+      });
+      testimonialForm.reset();
+      testimonialStatus.textContent = 'Thank you! Your testimonial has been submitted for review.';
+    } catch (error) {
+      console.error('Testimonial submission failed:', error);
+      testimonialStatus.textContent = 'We could not submit your testimonial. Please try again later.';
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+}
 
 // Testimonial Slider
 let currentIndex = 0;

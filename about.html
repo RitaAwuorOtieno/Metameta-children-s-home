@@ -24,6 +24,8 @@
     /* Fix for about page specific issues */
     body.about-page {
       padding-top: 0 !important;
+      background: #111827;
+      color: #f8f9fa;
     }
     
     /* Hero Section */
@@ -75,7 +77,7 @@
     /* Our Story Section - Professional & Appealing */
     .story-section {
       position: relative;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      background: linear-gradient(135deg, #111827 0%, #1a1a2e 100%);
       padding: 80px 0;
       overflow: hidden;
     }
@@ -122,7 +124,7 @@
     .story-content h2 {
       font-size: 2.5rem;
       margin-bottom: 20px;
-      color: var(--dark-bg);
+      color: #ffffff;
       position: relative;
       display: inline-block;
     }
@@ -144,12 +146,12 @@
     .story-text p {
       font-size: 1.05rem;
       line-height: 1.8;
-      color: #4a5568;
+      color: rgba(255, 255, 255, 0.82);
       margin-bottom: 20px;
     }
     
     .story-highlight {
-      background: white;
+      background: #1a1a2e;
       padding: 20px;
       border-radius: 15px;
       margin-top: 30px;
@@ -214,10 +216,33 @@
     
     /* Card Enhancements */
     .card {
-      background: white;
+      background: #1a1a2e;
+      color: #f8f9fa;
       border-radius: 16px;
       transition: all 0.3s ease;
-      border: 1px solid rgba(0,0,0,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    body.about-page .section {
+      background: #111827;
+    }
+
+    body.about-page .section-title {
+      color: #ffffff;
+    }
+
+    .card:not(.mission-card):not(.vision-card):not(.values-card) h3 {
+      color: #ffffff;
+    }
+
+    .card:not(.mission-card):not(.vision-card):not(.values-card) p {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .stagger.active .card:nth-child(4) {
+      transition-delay: 0.4s;
+      opacity: 1;
+      transform: translateY(0);
     }
     
     .card:hover {
@@ -347,7 +372,7 @@
           </p>
           
           <div class="story-highlight">
-            <p>💙 "Every child who walks through our doors becomes family. We don't just provide shelter — we provide hope, love, and a future."</p>
+            <p>💙 "Every child who walks through our doors becomes family. We don't just provide shelter we provide hope, love, and a future."</p>
           </div>
           
           <p>
@@ -391,7 +416,7 @@
     </div>
 
     <div class="stat-box">
-      <h2 class="counter" data-target="20">0</h2>
+      <h2 class="counter" data-target="22">0</h2>
       <p>Years of Impact</p>
     </div>
 
@@ -428,7 +453,7 @@
 </section>
 
 <!-- ================= OUR JOURNEY TIMELINE ================= -->
-<section class="section reveal" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);">
+<section class="section reveal" style="background: linear-gradient(135deg, #111827 0%, #1a1a2e 100%);">
   <div class="container">
 
     <h2 class="section-title">Our Journey Through the Years</h2>
@@ -446,7 +471,7 @@
       </div>
 
       <div class="card">
-        <h3 style="color: var(--purple); font-size: 2rem;">💻 2018</h3>
+        <h3 style="color: var(--purple); font-size: 2rem;">💻 2020</h3>
         <p>Introduced digital skills and computer literacy programs.</p>
       </div>
 
@@ -468,7 +493,7 @@
       <div style="font-size: 4rem; margin-bottom: 20px;">💬</div>
       <h3 style="color: white; font-size: 1.8rem; margin-bottom: 20px;">A Message From The Director</h3>
       <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 30px;">
-        "Our mission has always been simple — to give children not just a place to stay,
+        "Our mission has always been simple to give children not just a place to stay,
         but a place to call home. Every child deserves love, dignity, and hope for a brighter tomorrow.
         Together with our dedicated team and generous supporters like you, we are building brighter futures, 
         one child at a time."
@@ -483,7 +508,7 @@
 </section>
 
 <!-- ================= TEAM SECTION ================= -->
-<section class="section reveal" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+<section class="section reveal" style="background: linear-gradient(135deg, #111827 0%, #1a1a2e 100%);">
   <div class="container">
 
     <h2 class="section-title">Meet Our Dedicated Team</h2>
@@ -498,16 +523,22 @@
 
       <div class="card" style="text-align: center; padding: 30px;">
         <div style="width: 130px; height: 130px; background: linear-gradient(135deg, var(--purple), var(--green)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem;">👨‍🏫</div>
-        <h3>John Kamau</h3>
-        <p style="color: var(--purple); font-weight: 600;">Education Coordinator</p>
+        <h3>Faith Patricia</h3>
+        <p style="color: var(--purple); font-weight: 600;">Social Worker</p>
         <p style="font-size: 0.9rem; margin-top: 10px;">Ensuring quality education for every child</p>
       </div>
 
       <div class="card" style="text-align: center; padding: 30px;">
         <div style="width: 130px; height: 130px; background: linear-gradient(135deg, var(--purple), var(--green)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem;">👩‍⚕️</div>
-        <h3>Truphena Joice</h3>
+        <h3>Timothy Munyongiro</h3>
         <p style="color: var(--purple); font-weight: 600;">Child Welfare Officer</p>
         <p style="font-size: 0.9rem; margin-top: 10px;">Dedicated to child protection and well-being</p>
+      </div>
+    <div class="card" style="text-align: center; padding: 30px;">
+        <div style="width: 130px; height: 130px; background: linear-gradient(135deg, var(--purple), var(--green)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem;">👩‍⚕️</div>
+        <h3>Alice Joyce</h3>
+        <p style="color: var(--purple); font-weight: 600;">House mother</p>
+        <p style="font-size: 0.9rem; margin-top: 10px;">Provides daily care and a nurturing home environment.</p>
       </div>
     </div>
 
