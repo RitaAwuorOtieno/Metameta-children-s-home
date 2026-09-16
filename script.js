@@ -741,6 +741,86 @@ function getAuthErrorMessage(errorCode) {
   return messages[errorCode] || "An error occurred. Please try again.";
 }
 
+// ========================================
+// METAMETA PAYMENT INTEGRATION
+// Project: metameta-82db5
+// ========================================
+
+// Base URL for Firebase Functions
+const API_BASE_URL = 'https://us-central1-metameta-82db5.cloudfunctions.net';
+
+// ================= M-PESA PAYMENT =================
+async function initiateMpesaPayment(phone, amount, email, name) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/mpesaSTKPush`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone, amount, email, name })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      alert('✅ Please check your phone and enter your M-Pesa PIN to complete the donation.');
+      return true;
+    } else {
+      alert('❌ Error: ' + data.error);
+      return false;
+    }
+  } catch (error) {
+    console.error('Payment error:', error);
+    alert('Payment failed. Please try again.');
+    return false;
+  }
+}
+
+// ================= RECURRING DONATION SETUP =================
+async function setupRecurringDonation(phone, amount, email, name) {
+  const db = firebase.database();
+  const now = Date.now();
+  
+  try {
+    await db.ref('recurring_donations').push({
+      phone,
+      amount,
+      email,
+      name,
+      status: 'active',
+      createdDate: now,
+      nextPaymentDate: now + (30 * 24 * 60 * 60 * 1000), // 30 days later
+      failures: []
+    });
+    
+    alert('✅ Recurring donation set up! You will be prompted to donate every month.');
+    return true;
+  } catch (error) {
+    alert('❌ Error setting up recurring donation: ' + error.message);
+    return false;
+  }
+}
+
+// ================= PESAPAL PAYMENT =================
+async function initiatePesapalPayment(amount, email, firstName, lastName, phone) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/pesapalSubmit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount, email, firstName, lastName, phone })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      window.location.href = data.redirectUrl; // Redirect to Pesapal
+    } else {
+      alert('❌ Pesapal error: ' + data.error);
+    }
+  } catch (error) {
+    console.error('Pesapal error:', error);
+    alert('Payment failed. Please try again.');
+  }
+}
+
 // ===============================
 // TEST FUNCTION (for debugging)
 // ===============================
