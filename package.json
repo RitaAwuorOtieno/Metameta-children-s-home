@@ -1,24 +1,20 @@
 {
   "name": "metameta-childrens-home",
   "version": "1.0.0",
-  "description": "Metameta Children's Home",
-  "main": "admin.js",
+  "description": "Metameta Children's Home - Official website",
+  "private": true,
   "scripts": {
-    "build": "echo 'Build script needed'"
+    "build": "echo 'Static site - no build needed' && exit 0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RitaAwuorOtieno/Metameta-children-s-home.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["charity", "children", "kenya", "ngo"],
+  "author": "Rita Awuor",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/RitaAwuorOtieno/Metameta-children-s-home/issues"
   },
   "homepage": "https://github.com/RitaAwuorOtieno/Metameta-children-s-home#readme"
 }
-
-
-
