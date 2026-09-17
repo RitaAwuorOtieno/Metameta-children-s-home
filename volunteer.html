@@ -47,7 +47,10 @@
     .form-group { display: flex; flex-direction: column; gap: 6px; }
     .form-group.full { grid-column: 1 / -1; }
     .form-group label { font-weight: 700; font-size: .9rem; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; border: 1px solid rgba(255,255,255,.2); border-radius: 9px; padding: 12px; font: inherit; color: var(--text); background: #fff; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; border: 1px solid rgba(255,255,255,.32); border-radius: 9px; padding: 12px; font: inherit; color: #fff; background: #111827; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.62); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: 2px solid var(--gold); outline-offset: 2px; border-color: var(--gold); }
+    .form-group select option { color: #fff; background: #111827; }
     .form-group textarea { min-height: 115px; resize: vertical; }
     .consent { display: flex; gap: 9px; align-items: start; font-size: .9rem; color: rgba(255,255,255,.82); margin: 20px 0; }
     .consent input { margin-top: 4px; }
@@ -60,7 +63,7 @@
   <div class="nav-wrapper"><div class="grad-bar"></div><nav class="navbar">
     <div class="logo"><img src="images/metameta logo01.png" alt="Metameta Children's Home"></div>
     <div class="menu-toggle" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
-    <ul class="nav" id="nav-links"><li class="nav-item"><a href="index.html">Home</a></li><li class="nav-item"><a href="about.html">About</a></li><li class="nav-item"><a href="programs.html">Programs</a></li><li class="nav-item"><a href="events.html">Events</a></li><li class="nav-item"><a href="contact.html">Contact</a></li><li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li></ul>
+    <ul class="nav" id="nav-links"><li class="nav-item"><a href="index.html">Home</a></li><li class="nav-item"><a href="about.html">About</a></li><li class="nav-item"><a href="programs.html">Programs</a></li><li class="nav-item"><a href="volunteer.html" class="active">Volunteer</a></li><li class="nav-item"><a href="partner.html">Partner</a></li><li class="nav-item"><a href="events.html">Events</a></li><li class="nav-item"><a href="contact.html">Contact</a></li><li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li></ul>
   </nav></div>
 
   <main>

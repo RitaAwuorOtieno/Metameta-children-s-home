@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner With Us | Metameta Children's Home</title>
+  <meta name="description" content="Build a meaningful corporate partnership with Metameta Children's Home and help children in Nairobi thrive through care, education, and opportunity.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .partner-hero { background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fff; padding: 145px 5% 100px; margin-top: -73px; text-align: center; }
+    .eyebrow, .section-tag { display: inline-block; border-radius: 999px; padding: 6px 15px; font-size: .82rem; font-weight: 700; }
+    .eyebrow { background: rgba(230,57,70,.25); color: #fff; }
+    .partner-hero h1 { color: #fff; font-size: clamp(2.3rem, 5vw, 4rem); margin: 18px 0 14px; }
+    .partner-hero p { max-width: 730px; margin: 0 auto 28px; color: rgba(255,255,255,.86); font-size: 1.12rem; }
+    .hero-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .hero-actions .btn { text-decoration: none; }
+    .hero-actions .btn-light { background: #fff; color: var(--primary); }
+    .hero-actions .btn-outline-light { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.7); }
+    .partner-section { padding: 80px 5%; }
+    .partner-section.dark { background: #111827; }
+    .content-wrap { max-width: 1200px; margin: 0 auto; }
+    .section-heading { max-width: 720px; margin: 0 auto 45px; text-align: center; }
+    .section-tag { background: rgba(230,57,70,.12); color: var(--primary); }
+    .section-heading h2 { font-size: clamp(1.9rem, 4vw, 2.7rem); margin: 12px 0; }
+    .section-heading p { color: var(--text-light); }
+    .intro-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center; }
+    .intro-copy h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin: 15px 0; }
+    .intro-copy p { color: var(--text-light); margin-bottom: 18px; }
+    .impact-list { list-style: none; margin-top: 25px; }
+    .impact-list li { padding: 10px 0; font-weight: 600; }
+    .impact-list i { color: var(--primary); margin-right: 10px; }
+    .impact-panel { border-radius: 20px; background: #1a1a2e; color: #fff; padding: 35px; box-shadow: var(--shadow); }
+    .impact-panel h3 { margin-bottom: 24px; }
+    .impact-stat { padding: 17px 0; border-bottom: 1px solid rgba(255,255,255,.13); }
+    .impact-stat:last-child { border-bottom: 0; }
+    .impact-stat strong { display: block; color: var(--gold); font-size: 2rem; }
+    .impact-stat span { color: rgba(255,255,255,.8); }
+    .package-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; align-items: stretch; }
+    .package-card { background: #1a1a2e; color: #fff; border-radius: 20px; padding: 34px 28px; box-shadow: var(--shadow); display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,.1); }
+    .package-card.featured { border: 2px solid var(--gold); transform: translateY(-10px); }
+    .package-label { color: var(--gold); font-weight: 800; font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; }
+    .package-card h3 { font-size: 1.65rem; margin: 12px 0; }
+    .package-card > p { color: rgba(255,255,255,.78); min-height: 50px; }
+    .package-card ul { list-style: none; margin: 24px 0; }
+    .package-card li { color: rgba(255,255,255,.87); padding: 8px 0; }
+    .package-card li i { color: var(--gold); margin-right: 8px; }
+    .package-card .btn { margin-top: auto; text-decoration: none; text-align: center; }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .testimonial-card { background: #fff; border-radius: 18px; padding: 30px; box-shadow: var(--shadow); }
+    .quote-icon { color: var(--primary); font-size: 2rem; margin-bottom: 15px; }
+    .testimonial-card blockquote { color: var(--text); line-height: 1.75; margin: 0 0 22px; font-style: italic; }
+    .testimonial-person { display: flex; align-items: center; gap: 12px; }
+    .initials { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: var(--secondary); color: #fff; font-weight: 800; }
+    .testimonial-person strong, .testimonial-person small { display: block; }
+    .testimonial-person small { color: var(--text-light); }
+    .partner-cta { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; padding: 75px 5%; text-align: center; }
+    .partner-cta h2 { color: #fff; font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 14px; }
+    .partner-cta p { max-width: 620px; margin: 0 auto 28px; color: rgba(255,255,255,.9); }
+    .partner-cta .btn { display: inline-block; background: #fff; color: var(--primary); text-decoration: none; }
+    @media (max-width: 850px) { .intro-grid, .package-grid, .testimonial-grid { grid-template-columns: 1fr; } .package-card.featured { transform: none; } }
+  </style>
+</head>
+<body>
+  <div class="nav-wrapper"><div class="grad-bar"></div><nav class="navbar">
+    <div class="logo"><img src="images/metameta logo01.png" alt="Metameta Children's Home"></div>
+    <div class="menu-toggle" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+    <ul class="nav" id="nav-links"><li class="nav-item"><a href="index.html">Home</a></li><li class="nav-item"><a href="about.html">About</a></li><li class="nav-item"><a href="programs.html">Programs</a></li><li class="nav-item"><a href="volunteer.html">Volunteer</a></li><li class="nav-item"><a href="partner.html" class="active">Partner</a></li><li class="nav-item"><a href="events.html">Events</a></li><li class="nav-item"><a href="contact.html">Contact</a></li><li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li></ul>
+  </nav></div>
+
+  <main>
+    <section class="partner-hero">
+      <span class="eyebrow">Corporate Partnerships</span>
+      <h1>Partner for Brighter Futures</h1>
+      <p>When your organisation partners with Metameta, your resources and expertise help children grow with safety, confidence, and opportunity.</p>
+      <div class="hero-actions"><a class="btn btn-light" href="#packages">Explore Packages</a><a class="btn btn-outline-light" href="contact.html">Talk to Our Team</a></div>
+    </section>
+
+    <section class="partner-section"><div class="content-wrap intro-grid">
+      <div class="intro-copy"><span class="section-tag">Why Partner</span><h2>Corporate purpose with a personal impact</h2><p>We build thoughtful partnerships that connect your company’s values with practical support for children and young people in our care.</p><p>From employee volunteering to funding education, meals, and safe spaces, we will shape a partnership that is meaningful, measurable, and genuine.</p><ul class="impact-list"><li><i class="fas fa-check-circle"></i>Align your social-impact goals with local needs</li><li><i class="fas fa-check-circle"></i>Engage employees through hands-on opportunities</li><li><i class="fas fa-check-circle"></i>Receive impact updates and partnership recognition</li></ul></div>
+      <aside class="impact-panel"><h3>Your partnership can support</h3><div class="impact-stat"><strong>Education</strong><span>School fees, supplies, tutoring, and digital learning</span></div><div class="impact-stat"><strong>Care</strong><span>Nutritious meals, safe shelter, and essential health care</span></div><div class="impact-stat"><strong>Opportunity</strong><span>Skills, mentoring, sports, arts, and career preparation</span></div></aside>
+    </div></section>
+
+    <section class="partner-section dark" id="packages"><div class="content-wrap"><div class="section-heading"><span class="section-tag">Sponsorship Packages</span><h2 style="color:#fff;">Build a partnership that fits your goals</h2><p style="color:rgba(255,255,255,.8);">Packages are flexible; our team will tailor them to your organisation, budget, and desired impact.</p></div>
+      <div class="package-grid">
+        <article class="package-card"><span class="package-label">Community Partner</span><h3>Start Local</h3><p>A practical way to begin supporting children and involve your team.</p><ul><li><i class="fas fa-check"></i>Fund a focused need or activity</li><li><i class="fas fa-check"></i>Annual impact update</li><li><i class="fas fa-check"></i>Social-media recognition</li><li><i class="fas fa-check"></i>One employee volunteer day</li></ul><a class="btn" href="contact.html?subject=Community%20Partner">Enquire Now</a></article>
+        <article class="package-card featured"><span class="package-label">Impact Partner</span><h3>Grow Together</h3><p>Deliver sustained support for a programme that changes children’s daily lives.</p><ul><li><i class="fas fa-check"></i>Support a named programme</li><li><i class="fas fa-check"></i>Quarterly impact updates</li><li><i class="fas fa-check"></i>Staff engagement opportunities</li><li><i class="fas fa-check"></i>Co-branded partnership recognition</li><li><i class="fas fa-check"></i>Annual visit or impact session</li></ul><a class="btn" href="contact.html?subject=Impact%20Partner">Become an Impact Partner</a></article>
+        <article class="package-card"><span class="package-label">Legacy Partner</span><h3>Lead Change</h3><p>Create a long-term, strategic partnership with a deeper community impact.</p><ul><li><i class="fas fa-check"></i>Multi-year programme partnership</li><li><i class="fas fa-check"></i>Tailored impact reporting</li><li><i class="fas fa-check"></i>Leadership and employee engagement</li><li><i class="fas fa-check"></i>Joint campaign opportunities</li><li><i class="fas fa-check"></i>Custom recognition plan</li></ul><a class="btn" href="contact.html?subject=Legacy%20Partner">Start a Conversation</a></article>
+      </div>
+    </div></section>
+
+    <section class="partner-section"><div class="content-wrap"><div class="section-heading"><span class="section-tag">Partner Stories</span><h2>What partnership means to our supporters</h2><p>These sample stories show the kind of shared impact a corporate partnership can create.</p></div>
+      <div class="testimonial-grid">
+        <article class="testimonial-card"><i class="fas fa-quote-left quote-icon"></i><blockquote>“Partnering with Metameta gave our team a tangible way to serve. We saw exactly how our contribution supported children’s learning and confidence.”</blockquote><div class="testimonial-person"><span class="initials">AN</span><div><strong>Angela N.</strong><small>CSR Lead, Community Partner</small></div></div></article>
+        <article class="testimonial-card"><i class="fas fa-quote-left quote-icon"></i><blockquote>“The relationship feels collaborative and transparent. Our employees value the volunteer days, and our leadership values the clear impact updates.”</blockquote><div class="testimonial-person"><span class="initials">DM</span><div><strong>David M.</strong><small>People Director, Impact Partner</small></div></div></article>
+        <article class="testimonial-card"><i class="fas fa-quote-left quote-icon"></i><blockquote>“This is more than a donation; it is a long-term investment in young people’s futures. We are proud to be part of that story.”</blockquote><div class="testimonial-person"><span class="initials">RW</span><div><strong>Ruth W.</strong><small>Managing Director, Legacy Partner</small></div></div></article>
+      </div>
+    </div></section>
+
+    <section class="partner-cta"><h2>Let’s create meaningful impact together</h2><p>Tell us about your organisation and the change you want to make. We will build a partnership plan with you.</p><a class="btn" href="contact.html">Contact Our Partnership Team</a></section>
+  </main>
+
+  <footer class="footer"><div class="footer-content"><div class="footer-logo"><h3>Metameta Children's Home</h3><p>Transforming lives through love, education, and opportunity since 2004.</p></div><div><h4>Get Involved</h4><ul class="footer-links"><li><a href="volunteer.html">Volunteer</a></li><li><a href="partner.html">Partner With Us</a></li><li><a href="donate.html">Donate</a></li></ul></div></div><div class="footer-bottom"><p>&copy; 2026 Metameta Children's Home. All rights reserved.</p></div></footer>
+  <script>
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+    if (menuToggle && navLinks) menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+  </script>
+</body>
+</html>
