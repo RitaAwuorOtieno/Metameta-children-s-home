@@ -372,12 +372,13 @@ window.addEvent = function() {
 function loadPublicEvents() {
   const container = document.getElementById("events-container");
   if (!container) return;
+
+  const featuredEvent = container.querySelector(".featured-upcoming-event")?.outerHTML || "";
   
   db.ref("events").on("value", (snapshot) => {
-    container.innerHTML = "";
+    container.innerHTML = featuredEvent;
     
     if (!snapshot.exists()) {
-      container.innerHTML = "<p>No upcoming events at the moment. Check back soon!</p>";
       return;
     }
     

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volunteer With Us | Metameta Children's Home</title>
+  <meta name="description" content="Explore volunteer opportunities at Metameta Children's Home and apply to share your time, skills, and care with children in Nairobi.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <style>
+    .volunteer-hero { background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fff; padding: 140px 5% 90px; margin-top: -73px; text-align: center; }
+    .volunteer-hero .eyebrow, .section-tag { display: inline-block; border-radius: 999px; padding: 6px 14px; font-size: .82rem; font-weight: 700; }
+    .volunteer-hero .eyebrow { background: rgba(230,57,70,.25); color: #fff; }
+    .volunteer-hero h1 { color: #fff; font-size: clamp(2.3rem, 5vw, 4rem); margin: 18px 0 14px; }
+    .volunteer-hero p { max-width: 690px; margin: 0 auto; color: rgba(255,255,255,.86); font-size: 1.12rem; }
+    .volunteer-section { padding: 80px 5%; }
+    .volunteer-section.alt { background: #111827; }
+    .content-wrap { max-width: 1200px; margin: 0 auto; }
+    .section-heading { text-align: center; max-width: 700px; margin: 0 auto 45px; }
+    .section-tag { background: rgba(230,57,70,.12); color: var(--primary); }
+    .section-heading h2 { margin: 12px 0; font-size: clamp(1.9rem, 4vw, 2.7rem); }
+    .section-heading p { color: var(--text-light); }
+    .opportunity-grid, .info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .opportunity-card, .info-card, .form-card { border-radius: 18px; box-shadow: var(--shadow); }
+    .opportunity-card { background: #1a1a2e; color: #fff; padding: 30px; border-top: 4px solid var(--primary); }
+    .opportunity-card i { color: var(--primary); font-size: 2rem; margin-bottom: 18px; }
+    .opportunity-card h3 { margin-bottom: 10px; }
+    .opportunity-card p { color: rgba(255,255,255,.82); margin-bottom: 16px; }
+    .opportunity-card small { color: var(--gold); font-weight: 700; }
+    .info-card { background: #1a1a2e; padding: 30px; color: #fff; }
+    .info-card i { color: var(--gold); font-size: 1.8rem; margin-bottom: 15px; }
+    .info-card h3 { margin-bottom: 12px; }
+    .info-card ul { list-style: none; }
+    .info-card li { color: rgba(255,255,255,.82); padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .info-card li:last-child { border-bottom: 0; }
+    .info-card li::before { content: '✓'; color: var(--gold); font-weight: 800; margin-right: 9px; }
+    .application-layout { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: .8fr 1.2fr; gap: 30px; align-items: start; }
+    .application-copy { padding: 25px 10px; }
+    .application-copy h2 { margin-bottom: 16px; }
+    .application-copy p { color: var(--text-light); margin-bottom: 20px; }
+    .application-copy a { color: var(--primary); font-weight: 700; }
+    .form-card { background: #1a1a2e; color: #fff; padding: 34px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label { font-weight: 700; font-size: .9rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; border: 1px solid rgba(255,255,255,.2); border-radius: 9px; padding: 12px; font: inherit; color: var(--text); background: #fff; }
+    .form-group textarea { min-height: 115px; resize: vertical; }
+    .consent { display: flex; gap: 9px; align-items: start; font-size: .9rem; color: rgba(255,255,255,.82); margin: 20px 0; }
+    .consent input { margin-top: 4px; }
+    #form-status { margin-top: 15px; font-weight: 600; }
+    @media (max-width: 850px) { .opportunity-grid, .info-grid { grid-template-columns: 1fr; } .application-layout { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } .form-group.full { grid-column: auto; } .form-card { padding: 24px; } }
+  </style>
+</head>
+<body>
+  <div class="nav-wrapper"><div class="grad-bar"></div><nav class="navbar">
+    <div class="logo"><img src="images/metameta logo01.png" alt="Metameta Children's Home"></div>
+    <div class="menu-toggle" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+    <ul class="nav" id="nav-links"><li class="nav-item"><a href="index.html">Home</a></li><li class="nav-item"><a href="about.html">About</a></li><li class="nav-item"><a href="programs.html">Programs</a></li><li class="nav-item"><a href="events.html">Events</a></li><li class="nav-item"><a href="contact.html">Contact</a></li><li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li></ul>
+  </nav></div>
+
+  <main>
+    <section class="volunteer-hero">
+      <span class="eyebrow">Make a Difference</span>
+      <h1>Volunteer With Us</h1>
+      <p>Share your time, talents, and care to help children at Metameta feel safe, supported, and inspired to thrive.</p>
+    </section>
+
+    <section class="volunteer-section">
+      <div class="content-wrap"><div class="section-heading"><span class="section-tag">Opportunities</span><h2>Find Your Place in Our Community</h2><p>Whether you have a few hours to give or a specialist skill to share, there is a meaningful way to help.</p></div>
+        <div class="opportunity-grid">
+          <article class="opportunity-card"><i class="fas fa-book-open"></i><h3>Learning Support</h3><p>Help with homework, reading practice, tutoring, and creative learning activities.</p><small>Weekdays · 2–4 hours/week</small></article>
+          <article class="opportunity-card"><i class="fas fa-heart"></i><h3>Child Care & Mentorship</h3><p>Lead games, arts, music, sports, and positive mentoring sessions alongside our team.</p><small>Weekends or school holidays</small></article>
+          <article class="opportunity-card"><i class="fas fa-laptop"></i><h3>Skills-Based Volunteering</h3><p>Share professional skills in digital literacy, health, counselling, fundraising, photography, or administration.</p><small>Flexible commitment</small></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="volunteer-section alt">
+      <div class="content-wrap"><div class="section-heading"><span class="section-tag">What to Expect</span><h2 style="color:#fff;">A Safe and Rewarding Experience</h2><p style="color:rgba(255,255,255,.8);">We match volunteers thoughtfully so every contribution benefits both you and the children.</p></div>
+        <div class="info-grid">
+          <article class="info-card"><i class="fas fa-clipboard-check"></i><h3>Requirements</h3><ul><li>Be at least 18 years old</li><li>Complete the application and orientation</li><li>Provide a valid ID and two references</li><li>Pass safeguarding checks where required</li><li>Commit to our child-protection guidelines</li></ul></article>
+          <article class="info-card"><i class="fas fa-gift"></i><h3>Benefits</h3><ul><li>Make a direct, lasting difference</li><li>Build skills and experience</li><li>Join a caring community</li><li>Receive guidance from our team</li><li>Get a volunteer recognition letter</li></ul></article>
+          <article class="info-card"><i class="fas fa-calendar-days"></i><h3>Before You Begin</h3><ul><li>Choose an opportunity that suits you</li><li>Tell us your availability</li><li>Attend a short orientation</li><li>Agree your role with our coordinator</li><li>Start creating brighter days</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="volunteer-section" id="apply">
+      <div class="application-layout">
+        <div class="application-copy"><span class="section-tag">Apply Today</span><h2>Ready to lend a hand?</h2><p>Send us your details and our volunteer coordinator will contact you about a suitable next step.</p><p>Prefer to speak first? Call <a href="tel:+254791533154">+254 791 533 154</a> or email <a href="mailto:metametachildrenshome@gmail.com">metametachildrenshome@gmail.com</a>.</p></div>
+        <form class="form-card" id="volunteer-form">
+          <div class="form-grid">
+            <div class="form-group"><label for="name">Full name</label><input id="name" name="name" required autocomplete="name"></div>
+            <div class="form-group"><label for="email">Email address</label><input id="email" name="email" type="email" required autocomplete="email"></div>
+            <div class="form-group"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" required autocomplete="tel"></div>
+            <div class="form-group"><label for="opportunity">Preferred opportunity</label><select id="opportunity" name="opportunity" required><option value="">Select one</option><option>Learning Support</option><option>Child Care & Mentorship</option><option>Skills-Based Volunteering</option><option>Other / Not sure yet</option></select></div>
+            <div class="form-group full"><label for="availability">Availability</label><input id="availability" name="availability" placeholder="For example: Saturdays, 10 AM–2 PM" required></div>
+            <div class="form-group full"><label for="message">Why would you like to volunteer?</label><textarea id="message" name="message" required></textarea></div>
+          </div>
+          <label class="consent"><input type="checkbox" required> <span>I confirm that the information above is accurate and agree to be contacted about volunteering.</span></label>
+          <button class="btn" type="submit">Submit Application <i class="fas fa-arrow-right"></i></button>
+          <p id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="footer-content"><div class="footer-logo"><h3>Metameta Children's Home</h3><p>Transforming lives through love, education, and opportunity since 2004.</p></div><div><h4>Get Involved</h4><ul class="footer-links"><li><a href="volunteer.html">Volunteer</a></li><li><a href="donate.html">Donate</a></li><li><a href="contact.html">Contact Us</a></li></ul></div></div><div class="footer-bottom"><p>&copy; 2026 Metameta Children's Home. All rights reserved.</p></div></footer>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('volunteer-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const status = document.getElementById('form-status');
+      const application = Object.fromEntries(new FormData(form).entries());
+      application.createdAt = new Date().toISOString();
+      status.textContent = 'Submitting your application…';
+      status.style.color = 'var(--text-light)';
+      db.ref('volunteerApplications').push(application).then(function () {
+        form.reset();
+        status.textContent = 'Thank you! Your application has been received. Our volunteer coordinator will be in touch soon.';
+        status.style.color = '#198754';
+      }).catch(function () {
+        status.textContent = 'We could not submit your application right now. Please email us at metametachildrenshome@gmail.com.';
+        status.style.color = 'var(--primary)';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -505,10 +505,30 @@
   </div>
 
   <div id="events-container" class="events-grid">
-    <!-- Events will be loaded dynamically from Firebase -->
+    <article class="event-card featured-upcoming-event">
+      <div class="event-image" style="background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.65)), url('images/home.jpeg');">
+        <div class="event-date-badge">
+          <div class="day">15</div>
+          <div class="month">Dec</div>
+        </div>
+      </div>
+      <div class="event-content">
+        <span class="event-category">Fundraiser</span>
+        <h3>Annual Charity Gala 2026</h3>
+        <div class="event-meta">
+          <span><i class="fas fa-clock"></i> 6:00 PM – 10:00 PM</span>
+          <span><i class="fas fa-map-marker-alt"></i> Nairobi</span>
+        </div>
+        <p>An evening of celebration and fundraising for the education and care of children at Metameta.</p>
+        <div class="event-footer">
+          <span><i class="fas fa-calendar-check" style="color: var(--primary);"></i> December 15, 2026</span>
+          <a href="support.html" class="btn-event">Event Details</a>
+        </div>
+      </div>
+    </article>
     <div class="empty-state" id="loading-events">
       <i class="fas fa-calendar-alt"></i>
-      <h3>Loading Events...</h3>
+      <h3>Loading more events...</h3>
       <p>Please wait while we fetch upcoming events.</p>
     </div>
   </div>
@@ -695,26 +715,6 @@ if (newsletterForm) {
   });
 }
 
-// Load Events from Firebase (if your script.js has loadPublicEvents, it will work)
-// If not, we'll show a message
-document.addEventListener('DOMContentLoaded', () => {
-  const eventsContainer = document.getElementById('events-container');
-  if (eventsContainer && eventsContainer.innerHTML.includes('Loading Events')) {
-    // Check if events loaded after 3 seconds
-    setTimeout(() => {
-      if (eventsContainer.innerHTML.includes('Loading Events')) {
-        eventsContainer.innerHTML = `
-          <div class="empty-state">
-            <i class="fas fa-calendar-alt"></i>
-            <h3>No Upcoming Events</h3>
-            <p>Check back soon for our upcoming events and activities!</p>
-            <a href="contact.html" class="btn-primary" style="margin-top: 20px; display: inline-block;">Contact Us</a>
-          </div>
-        `;
-      }
-    }, 3000);
-  }
-});
 </script>
 
 </body>

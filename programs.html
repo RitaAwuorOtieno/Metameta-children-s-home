@@ -270,8 +270,9 @@
       max-width: 1200px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 30px;
+      padding: 12px 0;
     }
 
     .sponsorship-card {
@@ -292,18 +293,20 @@
 
     .sponsorship-card.featured {
       border: 2px solid var(--gold);
-      transform: scale(1.05);
+      transform: none;
+      box-shadow: 0 16px 35px rgba(244, 162, 97, 0.18);
     }
 
     .popular-badge {
       position: absolute;
-      top: 20px;
-      right: -30px;
+      top: 16px;
+      right: 16px;
       background: var(--gold);
       color: white;
-      padding: 5px 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
       font-size: 0.75rem;
-      transform: rotate(45deg);
+      transform: none;
     }
 
     .sponsorship-card .price {
@@ -472,7 +475,7 @@
       <li class="nav-item"><a href="programs.html" class="active">Programs</a></li>
       <li class="nav-item"><a href="events.html">Events</a></li>
       <li class="nav-item"><a href="contact.html">Contact</a></li>
-      <li class="nav-item"><a href="support.html" class="donate-btn">Donate</a></li>
+      <li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
     </ul>
   </nav>
 </div>
@@ -668,7 +671,7 @@
         <li><i class="fas fa-check"></i> Safe shelter</li>
         <li><i class="fas fa-check"></i> Basic medical care</li>
       </ul>
-      <a href="support.html" class="btn-outline">Sponsor Now</a>
+      <a href="donate.html" class="btn-outline">Sponsor Now</a>
     </div>
     <div class="sponsorship-card featured">
       <div class="popular-badge">MOST POPULAR</div>
@@ -679,7 +682,7 @@
         <li><i class="fas fa-check"></i> Books & supplies</li>
         <li><i class="fas fa-check"></i> Tutoring support</li>
       </ul>
-      <a href="support.html" class="btn-primary">Sponsor Now</a>
+      <a href="donate.html" class="btn-primary">Sponsor Now</a>
     </div>
     <div class="sponsorship-card">
       <h3>Future Builder</h3>
@@ -689,7 +692,7 @@
         <li><i class="fas fa-check"></i> Digital skills training</li>
         <li><i class="fas fa-check"></i> Career mentorship</li>
       </ul>
-      <a href="support.html" class="btn-outline">Sponsor Now</a>
+      <a href="donate.html" class="btn-outline">Sponsor Now</a>
     </div>
   </div>
 </section>
@@ -699,7 +702,7 @@
   <div class="container">
     <h2>Be Part of Their Story</h2>
     <p>Your support can transform a child's future today.</p>
-    <a href="support.html" class="btn-cta">Support a Child Now</a>
+    <a href="donate.html" class="btn-cta">Support a Child Now</a>
   </div>
 </section>
 
@@ -714,7 +717,7 @@
     <div>
       <h4>Support</h4>
       <ul class="footer-links">
-        <li><a href="support.html">Donate</a></li>
+        <li><a href="donate.html">Donate</a></li>
         <li><a href="volunteer.html">Volunteer</a></li>
         <li><a href="partner.html">Partner With Us</a></li>
       </ul>
