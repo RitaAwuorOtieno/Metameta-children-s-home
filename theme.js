@@ -23,6 +23,13 @@
     ['donate.html', 'Donate']
   ];
 
+  function normalizePageHref(href) {
+    if (!href) return '';
+    const path = href.split(/[?#]/, 1)[0].replace(/^\.\//, '').replace(/^\//, '');
+    if (!path || path === 'index' || path === 'index.html') return 'index.html';
+    return path.endsWith('.html') ? path : `${path}.html`;
+  }
+
   function initThemeButton(button) {
     button.id = 'theme-mode-toggle';
     button.type = 'button';
@@ -64,17 +71,18 @@
     existingItems.forEach(item => {
       const link = item.querySelector('a[href]');
       const href = link?.getAttribute('href');
-      if (href && pages.some(([pageHref]) => pageHref === href)) {
-        if (seenHrefs.has(href)) item.remove();
-        else seenHrefs.add(href);
+      const normalizedHref = normalizePageHref(href);
+      if (pages.some(([pageHref]) => pageHref === normalizedHref)) {
+        if (seenHrefs.has(normalizedHref)) item.remove();
+        else seenHrefs.add(normalizedHref);
       }
     });
     const uniqueItems = [...list.children].filter(item => item.tagName === 'LI');
     const extras = uniqueItems.filter(item => {
       const link = item.querySelector('a[href]');
-      return !link || !pages.some(([href]) => href === link.getAttribute('href'));
+      return !link || !pages.some(([href]) => href === normalizePageHref(link.getAttribute('href')));
     });
-    const byHref = new Map([...list.querySelectorAll('a[href]')].map(link => [link.getAttribute('href'), link.closest('li')]));
+    const byHref = new Map([...list.querySelectorAll('a[href]')].map(link => [normalizePageHref(link.getAttribute('href')), link.closest('li')]));
 
     pages.forEach(([href, label]) => {
       let item = byHref.get(href);
