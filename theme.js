@@ -60,7 +60,17 @@
 
     nav.setAttribute('aria-label', 'Main navigation');
     const existingItems = [...list.children].filter(item => item.tagName === 'LI');
-    const extras = existingItems.filter(item => {
+    const seenHrefs = new Set();
+    existingItems.forEach(item => {
+      const link = item.querySelector('a[href]');
+      const href = link?.getAttribute('href');
+      if (href && pages.some(([pageHref]) => pageHref === href)) {
+        if (seenHrefs.has(href)) item.remove();
+        else seenHrefs.add(href);
+      }
+    });
+    const uniqueItems = [...list.children].filter(item => item.tagName === 'LI');
+    const extras = uniqueItems.filter(item => {
       const link = item.querySelector('a[href]');
       return !link || !pages.some(([href]) => href === link.getAttribute('href'));
     });
