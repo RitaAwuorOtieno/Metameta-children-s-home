@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Global CSS -->
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css">
 
   <!-- Firebase -->
@@ -465,6 +466,7 @@
       <li class="nav-item"><a href="volunteer.html">Volunteer</a></li>
       <li class="nav-item"><a href="partner.html">Partner</a></li>
       <li class="nav-item"><a href="events.html" class="active">Events</a></li>
+      <li class="nav-item"><a href="gallery.html">Gallery</a></li>
       <li class="nav-item"><a href="contact.html">Contact</a></li>
       <li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
     </ul>
@@ -685,16 +687,6 @@
 <script src="script.js"></script>
 
 <script>
-// Mobile Menu Toggle
-const menuToggle = document.getElementById('mobile-menu');
-const navLinks = document.getElementById('nav-links');
-
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-  });
-}
-
 // Scroll Progress Bar
 const scrollBar = document.getElementById('scroll-bar');
 window.addEventListener('scroll', () => {

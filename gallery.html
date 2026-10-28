@@ -1,139 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Metameta Children's Home | Hope for Every Child</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO -->
-    <meta name="keywords" content="children home Kenya, orphanage Nairobi, donate Kenya, help children">
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
-
-    <!-- Script -->
-
-    <!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Photos and videos from Metameta Children's Home.">
+  <title>Gallery | Metameta Children's Home</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .gallery-hero { background: linear-gradient(135deg,#111827,#1a1a2e); color:#fff; padding:70px 5% 58px; text-align:center }
+    .gallery-hero h1 { color:#fff; font-size:clamp(2rem,5vw,3.5rem); margin-bottom:12px }
+    .gallery-hero p { color:#e5e7eb; max-width:650px; margin:auto }
+    .gallery-section { padding:56px 5%; }
+    .gallery-section h2 { text-align:center; margin:0 0 24px }
+    .gallery-grid,.video-grid { max-width:1200px; margin:auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:20px }
+    .gallery-card,.video-card { background:#fff; border-radius:14px; overflow:hidden; box-shadow:var(--shadow,0 6px 20px rgba(0,0,0,.08)) }
+    .gallery-card button { display:block; width:100%; padding:0; border:0; background:#111827; cursor:zoom-in }
+    .gallery-card img { display:block; width:100%; height:240px; object-fit:cover; transition:transform .2s ease }
+    .gallery-card button:hover img { transform:scale(1.025) }
+    .gallery-card p,.video-card p { padding:14px 16px; color:#333 }
+    .video-card video { display:block; width:100%; aspect-ratio:16/9; background:#111 }
+    .video-card h3 { padding:14px 16px 0; font-size:1.05rem }
+    .gallery-empty { text-align:center; padding:24px }
+    .lightbox { position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,.92); display:none; align-items:center; justify-content:center; padding:24px }
+    .lightbox[open] { display:flex }
+    .lightbox figure { margin:0; max-width:min(100%,1100px); text-align:center }
+    .lightbox img { max-width:100%; max-height:80vh; object-fit:contain }
+    .lightbox figcaption { color:#fff; margin-top:10px }
+    .lightbox-close { position:absolute; top:12px; right:18px; color:white; background:transparent; border:0; font-size:2.5rem; cursor:pointer; min-width:48px; min-height:48px }
+    :focus-visible { outline:3px solid #f4c542; outline-offset:3px }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important } }
+  </style>
 </head>
-
 <body>
-
-    <div id="progress-bar"></div>
-<!-- HEADER -->
-<header class="header">
-    <div class="container header-container">
-        
-        <div class="logo">
-            <img src="images/metameta-logo.png" alt="Metameta Children's Home Logo">
-            <span>Metameta Children's Home</span>
-        </div>
-
-        <nav class="nav" id="nav-menu">
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="programs.html">Programs</a></li>
-                <li><a href="volunteer.html">Volunteer</a></li>
-                <li><a href="partner.html">Partner</a></li>
-                <li><a href="support.html">Support Us</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="contact.html">Contact</a></li>
-
-                <div class="nav-actions">
-    <button class="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-icon">☀️</span>
-    </button>
-</div>
-            </ul>
-             <br>
-
-
-
-</nav>
-
-<div class="menu-toggle">☰</div>
-       
-
-
-        <!-- <div class="nav-actions">
-                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
-               
-            </div> -->
-              
-    </div>
-</header>
-
-<!-- ================= HERO ================= -->
-<section class="hero small-hero">
-  <div class="container">
-    <h1>Our Gallery</h1>
-    <p>Moments of love, learning, and impact at Metameta Children's Home.</p>
-  </div>
-</section>
-
-<!-- ================= GALLERY ================= -->
-<section class="section reveal">
-  <div class="container">
-
-    <h2 class="section-title">Our Moments</h2>
-
-    <div class="gallery-grid">
-
-      <div class="gallery-item">
-        <img src="images/chilled.jpeg" alt="" onclick="openLightbox(this)">
+  <div class="nav-wrapper"><div class="grad-bar"></div><nav class="navbar" aria-label="Main navigation">
+    <a class="logo" href="index.html" aria-label="Metameta Children's Home, home"><img src="images/metameta logo01.png" alt="Metameta Children's Home"></a>
+    <button class="menu-toggle" id="mobile-menu" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+    <ul class="nav" id="nav-links">
+      <li class="nav-item"><a href="index.html">Home</a></li><li class="nav-item"><a href="about.html">About</a></li><li class="nav-item"><a href="programs.html">Programs</a></li><li class="nav-item"><a href="volunteer.html">Volunteer</a></li><li class="nav-item"><a href="partner.html">Partner</a></li><li class="nav-item"><a href="events.html">Events</a></li><li class="nav-item"><a href="gallery.html" aria-current="page">Gallery</a></li><li class="nav-item"><a href="contact.html">Contact</a></li><li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
+    </ul>
+  </nav></div>
+  <main>
+    <header class="gallery-hero"><h1>Photos and videos</h1><p>A collection of photographs and recordings shared by Metameta Children's Home.</p></header>
+    <section class="gallery-section" aria-labelledby="photos-heading"><h2 id="photos-heading">Photo gallery</h2>
+      <div class="gallery-grid">
       </div>
-
-      <div class="gallery-item">
-        <img src="images/daycare1.jpeg" alt="" onclick="openLightbox(this)">
+    </section>
+    <section class="gallery-section" aria-labelledby="videos-heading"><h2 id="videos-heading">Videos</h2>
+      <div class="video-grid">
+        <article class="video-card"><video controls preload="metadata" playsinline><source src="videos/schoolprep.mp4" type="video/mp4">Your browser does not support this video.</video><h3>School preparation</h3></article>
+        <article class="video-card"><video controls preload="metadata" playsinline><source src="videos/mealtime.mp4" type="video/mp4">Your browser does not support this video.</video><h3>Mealtime</h3></article>
+        <article class="video-card"><video controls preload="metadata" playsinline><source src="videos/fruits.mp4" type="video/mp4">Your browser does not support this video.</video><h3>Fruits</h3></article>
+        <article class="video-card"><video controls preload="metadata" playsinline><source src="videos/children.mp4" type="video/mp4">Your browser does not support this video.</video><h3>Children at the home</h3></article>
       </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="container"><p>&copy; 2026 Metameta Children's Home</p><p><a href="contact.html">Contact us</a> · <a href="support.html">Support</a></p></div></footer>
+  <dialog class="lightbox" id="lightbox" aria-label="Photo viewer"><button type="button" class="lightbox-close" aria-label="Close photo viewer">&times;</button><figure><img id="lightbox-img" alt=""><figcaption id="lightbox-caption"></figcaption></figure></dialog>
+  <script>
 
-      <div class="gallery-item">
-        <img src="images/home.jpeg" alt="" onclick="openLightbox(this)">
-      </div>
-
-      <div class="gallery-item">
-        <img src="images/kabetevisit.jpeg" alt="" onclick="openLightbox(this)">
-      </div>
-
-      <div class="gallery-item">
-        <img src="images/gifts.jpeg" alt="" onclick="openLightbox(this)">
-      </div>
-
-      <div class="gallery-item">
-        <img src="images/visitors.jpeg" alt="" onclick="openLightbox(this)">
-      </div>
-
-      <div class="gallery-item">
-        <img src="images/daycare2.jpeg" alt="" onclick="openLightbox(this)">
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- ================= LIGHTBOX ================= -->
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img" src="">
-</div>
-
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2026 Metameta Children's Home | All Rights Reserved</p>
-    </div>
-</footer>
-
-<!-- ================= CHATBOT ================= -->
-<div id="chatbot">
-  <div id="chat-header">Chat with us 💬</div>
-  <div id="chat-body"></div>
-  <input type="text" id="chat-input" placeholder="Type a message...">
-</div>
-
+    const viewer = document.getElementById('lightbox');
+    const viewerImage = document.getElementById('lightbox-img');
+    const viewerCaption = document.getElementById('lightbox-caption');
+    const photoFiles = [
+      '.jpeg','assignment.jpeg','babiessmiles.jpeg','before.jpeg','Bryson.jpeg','chilled.jpeg','chores.jpeg','christmas.jpeg','David.jpeg','daycare1.jpeg','daycare2.jpeg','director.jpeg','director54.jpeg','directorg.jpeg','Emmanuel.jpeg','fun.jpeg','gift.jpeg','gifts.jpeg','hero.jpg','home.jpeg','Homework.jpeg','Job.jpeg','kabetevisit.jpeg','kids01.jpeg','kids02.jpeg','kidshelping.jpeg','metadr.jpeg','metajh.jpeg','metameta32.jpeg','metameta4.jpeg','metametadc.jpeg','metametaf.jpeg','metametafd.jpeg','metametafr.jpeg','metametaop.jpeg','metametar.jpeg','metametaxs.jpeg','metatf.jpeg','photo1.jpeg','play.jpeg','Rita.jpeg','sch.jpeg','school - Copy.jpeg','school.jpeg','schoolh.jpeg','schoolp.jpeg','schsmile.jpeg','selfie.jpeg','silas.jpeg','smallies.jpeg','smile - Copy.jpeg','smile.jpeg','Stacy.jpeg','visit002.jpeg','visit01.jpeg','visitors.jpeg','water.jpeg','waterstorage.jpeg'
+    ].map(file => `images/${file}`);
+    const photoGrid = document.querySelector('.gallery-grid');
+    const describePhoto = file => {
+      const name = file.toLowerCase();
+      if (name.includes('school') || name.includes('homework') || name.includes('assignment') || name === 'sch.jpeg' || name.includes('schsmile')) return 'Learning and school photo';
+      if (name.includes('visit') || name.includes('visitor') || name.includes('kabete')) return 'Visit photo';
+      if (name.includes('gift')) return 'Gift photo';
+      if (name.includes('water')) return 'Water and home facilities photo';
+      if (name.includes('play') || name.includes('fun') || name.includes('smile') || name.includes('chilled')) return 'Children at the home';
+      if (name.includes('daycare') || name.includes('smallies')) return 'Daycare photo';
+      if (name.includes('chores') || name.includes('kidshelping')) return 'Daily activity photo';
+      return 'Photo from Metameta Children\'s Home';
+    };
+    photoFiles.forEach(src => {
+      const description = describePhoto(src.split('/').pop());
+      const card = document.createElement('article');
+      card.className = 'gallery-card';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'photo-open';
+      button.dataset.src = src;
+      button.dataset.caption = description;
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = description;
+      img.loading = 'lazy';
+      button.appendChild(img);
+      const caption = document.createElement('p');
+      caption.textContent = description;
+      card.append(button, caption);
+      photoGrid.appendChild(card);
+    });
+    let lastOpener;
+    document.querySelectorAll('.photo-open').forEach(button => button.addEventListener('click', () => { lastOpener = button; viewerImage.src = button.dataset.src; viewerImage.alt = button.querySelector('img').alt; viewerCaption.textContent = button.dataset.caption; viewer.showModal(); }));
+    function closeViewer() { viewer.close(); }
+    viewer.querySelector('.lightbox-close').addEventListener('click', closeViewer);
+    viewer.addEventListener('click', event => { if (event.target === viewer) closeViewer(); });
+    viewer.addEventListener('close', () => { viewerImage.removeAttribute('src'); if (lastOpener) lastOpener.focus(); });
+  </script>
 </body>
 </html>

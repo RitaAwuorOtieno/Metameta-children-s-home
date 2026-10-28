@@ -10,6 +10,7 @@
   <meta name="keywords" content="children's home, charity, Kenya, orphanage, child care">
 
   <!-- Styles -->
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css">
 
   <!-- Firebase -->
@@ -335,6 +336,7 @@
       <li class="nav-item"><a href="volunteer.html">Volunteer</a></li>
       <li class="nav-item"><a href="partner.html">Partner</a></li>
       <li class="nav-item"><a href="events.html">Events</a></li>
+      <li class="nav-item"><a href="gallery.html">Gallery</a></li>
       <li class="nav-item"><a href="contact.html">Contact</a></li>
       <!-- <li class="nav-item login"><a href="login.html">Login</a></li>
       <li class="nav-item signup"><a href="signup.html">Sign Up</a></li> -->
@@ -598,16 +600,6 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Mobile menu toggle
-  const menuToggle = document.getElementById("mobile-menu");
-  const navLinks = document.getElementById("nav-links");
-  
-  if (menuToggle && navLinks) {
-    menuToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-    });
-  }
-  
   // Highlight active page
   const currentPage = window.location.pathname.split("/").pop();
   const links = document.querySelectorAll(".nav a");

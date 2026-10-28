@@ -15,6 +15,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   
   <!-- Global CSS -->
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css">
 
   <!-- Firebase -->
@@ -389,6 +390,7 @@
       <li class="nav-item"><a href="volunteer.html">Volunteer</a></li>
       <li class="nav-item"><a href="partner.html">Partner</a></li>
       <li class="nav-item"><a href="events.html">Events</a></li>
+      <li class="nav-item"><a href="gallery.html">Gallery</a></li>
       <li class="nav-item"><a href="contact.html">Contact</a></li>
       <li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
     </ul>
@@ -550,17 +552,6 @@ const db = firebase.database();
 
 let userDonations = [];
 let donationChart = null;
-
-// Mobile Menu Toggle
-const menuToggle = document.getElementById('mobile-menu');
-const navLinks = document.getElementById('nav-links');
-
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-  });
-}
-
 // Scroll Progress Bar
 const scrollBar = document.getElementById('scroll-bar');
 window.addEventListener('scroll', () => {

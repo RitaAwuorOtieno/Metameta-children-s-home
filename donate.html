@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Global CSS -->
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css">
 
   <!-- Firebase -->
@@ -435,6 +436,7 @@
       <li class="nav-item"><a href="volunteer.html">Volunteer</a></li>
       <li class="nav-item"><a href="partner.html">Partner</a></li>
       <li class="nav-item"><a href="events.html">Events</a></li>
+      <li class="nav-item"><a href="gallery.html">Gallery</a></li>
       <li class="nav-item"><a href="contact.html">Contact</a></li>
       <li class="nav-item"><a href="donate.html" class="donate-btn">Donate</a></li>
     </ul>
@@ -481,7 +483,7 @@
     <!-- M-Pesa Option (Featured) -->
     <div class="donation-card featured">
       <div class="popular-badge">MOST POPULAR</div>
-      <div class="card-icon">📱</div>
+      <div class="card-icon" aria-hidden="true"><i class="fas fa-mobile-alt"></i></div>
       <h3>M-Pesa Donation</h3>
       <p>Fastest way to support our children</p>
       <div class="donation-details">
@@ -506,7 +508,7 @@
 
     <!-- Bank Transfer -->
     <div class="donation-card">
-      <div class="card-icon">🏦</div>
+      <div class="card-icon" aria-hidden="true"><i class="fas fa-university"></i></div>
       <h3>Bank Transfer</h3>
       <p>Direct bank transfer for larger donations</p>
       <div class="donation-details">
@@ -522,7 +524,7 @@
 
     <!-- Card/International -->
     <div class="donation-card">
-      <div class="card-icon">💳</div>
+      <div class="card-icon" aria-hidden="true"><i class="fas fa-credit-card"></i></div>
       <h3>Credit / Debit Card</h3>
       <p>Secure online payment for international donors</p>
       <div class="donation-details">
@@ -716,17 +718,6 @@ function copyBankDetails() {
     alert('Please copy the bank details manually');
   });
 }
-
-// Mobile Menu Toggle
-const menuToggle = document.getElementById('mobile-menu');
-const navLinks = document.getElementById('nav-links');
-
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-  });
-}
-
 // Scroll Progress Bar
 const scrollBar = document.getElementById('scroll-bar');
 window.addEventListener('scroll', () => {
