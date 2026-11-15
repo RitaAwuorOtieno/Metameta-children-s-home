@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel=" href="/favicon.ico" sizes="any">
-  <link rel=" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel=" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel=" type="image/png" sizes="48x48" href="/favicon-48x48.png">
-  <link rel=" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel=" href="/site.webmanifest">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Photos and videos from Metameta Children's Home.">
   <title>Gallery | Metameta Children's Home</title>
@@ -25,6 +25,8 @@
     .gallery-card img { display:block; width:100%; height:240px; object-fit:cover; transition:transform .2s ease }
     .gallery-card button:hover img { transform:scale(1.025) }
     .gallery-card p,.video-card p { padding:14px 16px; color:#333 }
+    .gallery-note { max-width:900px; margin:0 auto 28px; padding:16px 20px; border-left:4px solid var(--primary); background:var(--card-bg); border-radius:8px; color:var(--text) }
+    .gallery-note a { color:var(--primary); font-weight:700 }
     .video-card video { display:block; width:100%; aspect-ratio:16/9; background:#111 }
     .video-card h3 { padding:14px 16px 0; font-size:1.05rem }
     .gallery-empty { text-align:center; padding:24px }
@@ -49,16 +51,11 @@
   <main>
     <header class="gallery-hero"><h1>Photos and videos</h1><p>A collection of photographs and recordings shared by Metameta Children's Home.</p></header>
     <section class="gallery-section" aria-labelledby="photos-heading"><h2 id="photos-heading">Photo gallery</h2>
-      <div class="gallery-grid">
-      </div>
+      <p class="gallery-note">The Metameta team manages this gallery. To ask about sharing approved photos or videos, <a href="contact.html">contact us</a>.</p>
+      <div class="gallery-grid"></div>
     </section>
     <section class="gallery-section" aria-labelledby="videos-heading"><h2 id="videos-heading">Videos</h2>
-      <div class="video-grid">
-        <article class="video-card"><video controls preload="metadata" playsinline><source src="videos/schoolprep.mp4" type="video/mp4">Your browser does not support this video.</video><h3>School preparation</h3></article>
-        <article class="video-card"><video controls preload="metadata" playsinline><source src="videos/mealtime.mp4" type="video/mp4">Your browser does not support this video.</video><h3>Mealtime</h3></article>
-        <article class="video-card"><video controls preload="metadata" playsinline><source src="videos/fruits.mp4" type="video/mp4">Your browser does not support this video.</video><h3>Fruits</h3></article>
-        <article class="video-card"><video controls preload="metadata" playsinline><source src="videos/children.mp4" type="video/mp4">Your browser does not support this video.</video><h3>Children at the home</h3></article>
-      </div>
+      <div class="video-grid" id="video-grid"></div>
     </section>
   </main>
   <footer class="footer"><div class="container"><p>&copy; 2026 Metameta Children's Home</p><p><a href="contact.html">Contact us</a> · <a href="support.html">Support</a></p></div></footer>
@@ -68,9 +65,11 @@
     const viewer = document.getElementById('lightbox');
     const viewerImage = document.getElementById('lightbox-img');
     const viewerCaption = document.getElementById('lightbox-caption');
+    // Add a filename to this list after placing the photo in images/.
+    // For a custom accessible caption, use { file: 'photo.jpeg', alt: '...', caption: '...' }.
     const photoFiles = [
       '.jpeg','assignment.jpeg','babiessmiles.jpeg','before.jpeg','Bryson.jpeg','chilled.jpeg','chores.jpeg','christmas.jpeg','David.jpeg','daycare1.jpeg','daycare2.jpeg','director.jpeg','director54.jpeg','directorg.jpeg','Emmanuel.jpeg','fun.jpeg','gift.jpeg','gifts.jpeg','hero.jpg','home.jpeg','Homework.jpeg','Job.jpeg','kabetevisit.jpeg','kids01.jpeg','kids02.jpeg','kidshelping.jpeg','metadr.jpeg','metajh.jpeg','metameta32.jpeg','metameta4.jpeg','metametadc.jpeg','metametaf.jpeg','metametafd.jpeg','metametafr.jpeg','metametaop.jpeg','metametar.jpeg','metametaxs.jpeg','metatf.jpeg','photo1.jpeg','play.jpeg','Rita.jpeg','sch.jpeg','school - Copy.jpeg','school.jpeg','schoolh.jpeg','schoolp.jpeg','schsmile.jpeg','selfie.jpeg','silas.jpeg','smallies.jpeg','smile - Copy.jpeg','smile.jpeg','Stacy.jpeg','visit002.jpeg','visit01.jpeg','visitors.jpeg','water.jpeg','waterstorage.jpeg'
-    ].map(file => `images/${file}`);
+    ];
     const photoGrid = document.querySelector('.gallery-grid');
     const describePhoto = file => {
       const name = file.toLowerCase();
@@ -83,24 +82,54 @@
       if (name.includes('chores') || name.includes('kidshelping')) return 'Daily activity photo';
       return 'Photo from Metameta Children\'s Home';
     };
-    photoFiles.forEach(src => {
-      const description = describePhoto(src.split('/').pop());
+    photoFiles.forEach(photo => {
+      const file = typeof photo === 'string' ? photo : photo.file;
+      const src = file.startsWith('images/') ? file : `images/${file}`;
+      const defaultDescription = describePhoto(file.split('/').pop());
+      const description = typeof photo === 'string' ? defaultDescription : (photo.alt || defaultDescription);
+      const captionText = typeof photo === 'string' ? defaultDescription : (photo.caption || defaultDescription);
       const card = document.createElement('article');
       card.className = 'gallery-card';
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'photo-open';
       button.dataset.src = src;
-      button.dataset.caption = description;
+      button.dataset.caption = captionText;
       const img = document.createElement('img');
       img.src = src;
       img.alt = description;
       img.loading = 'lazy';
       button.appendChild(img);
       const caption = document.createElement('p');
-      caption.textContent = description;
+      caption.textContent = captionText;
       card.append(button, caption);
       photoGrid.appendChild(card);
+    });
+
+    // Add an MP4 to videos/ and an entry here to show it in the gallery.
+    const videoItems = [
+      { file: 'schoolprep.mp4', title: 'School preparation' },
+      { file: 'mealtime.mp4', title: 'Mealtime' },
+      { file: 'fruits.mp4', title: 'Fruits' },
+      { file: 'children.mp4', title: 'Children at the home' }
+    ];
+    const videoGrid = document.getElementById('video-grid');
+    videoItems.forEach(({ file, title }) => {
+      const card = document.createElement('article');
+      card.className = 'video-card';
+      const video = document.createElement('video');
+      video.controls = true;
+      video.preload = 'metadata';
+      video.playsInline = true;
+      const source = document.createElement('source');
+      source.src = `videos/${file}`;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      video.appendChild(document.createTextNode('Your browser does not support this video.'));
+      const heading = document.createElement('h3');
+      heading.textContent = title;
+      card.append(video, heading);
+      videoGrid.appendChild(card);
     });
     let lastOpener;
     document.querySelectorAll('.photo-open').forEach(button => button.addEventListener('click', () => { lastOpener = button; viewerImage.src = button.dataset.src; viewerImage.alt = button.querySelector('img').alt; viewerCaption.textContent = button.dataset.caption; viewer.showModal(); }));

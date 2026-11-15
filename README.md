@@ -16,7 +16,7 @@ Connect the repository to Netlify and use the included `netlify.toml`. Set the b
 
 ## Gallery maintenance
 
-The public gallery is `gallery.html`. Add photos as files under `images/`, then add each filename to the `photoFiles` list in the page script. The page creates responsive cards and lazy-loaded images from that list. Keep alt descriptions accurate and do not add children's names or identifying information in captions without approval. Add local MP4 videos under `videos/` and add a `<video controls preload="metadata" playsinline>` card with a `<source>` pointing to the actual file. The page currently displays the four existing MP4 files. Gallery content is maintained in the page; there is no gallery admin interface.
+The public gallery is `gallery.html`. Add photos to `images/`, then add the filename to `photoFiles` in the page script. For a custom accessible description and caption, add an object such as `{ file: 'garden.jpeg', alt: 'Children tending a garden', caption: 'Learning to grow vegetables' }`. Add MP4 files to `videos/`, then add `{ file: 'filename.mp4', title: 'Short video title' }` to `videoItems`. Keep descriptions accurate and do not include children's names or identifying details without approval. The gallery is a static page, so adding a file to a folder alone will not publish it; there is no gallery upload/admin interface.
 
 ## Firebase status and security
 
